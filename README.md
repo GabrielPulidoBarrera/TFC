@@ -48,5 +48,5 @@ Feel free to check [our documentation](https://docs.astro.build) or jump into ou
 
 ## Tecnologias usadas:
 Astro (framework)
-AstroDB (Base de datos)
+MySQL + prisma (Base de datos)
 BetterAuth (logging)
