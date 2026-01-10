@@ -1,0 +1,19 @@
+---
+import "../styles/global.css";
+import { PrismaClient, Prisma } from '../generated/prisma/client'
+---
+
+<form>
+    <fieldset>nueva familia</fieldset>
+    <label for="cod">boton</label>
+    <input type="button" id="cod" name="cod">
+</form>
+
+<script>
+    let boton = document.querySelector('#cod')
+    boton?.addEventListener("click", nuevaFamilia)
+    function nuevaFamilia(){
+      alert("hola");
+    }
+
+</script>
