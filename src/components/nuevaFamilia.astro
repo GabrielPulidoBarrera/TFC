@@ -18,6 +18,7 @@ import { PrismaClient, Prisma } from '../generated/prisma/client'
     
     button?.addEventListener("click", newFamily)
     async function newFamily(){
+        alert("funciono!")
         //odio typescript ya que es igual que javascript en el 99% de casos menos en cosas como estas que te quedas flipado
         let cod = (document.querySelector('#cod') as HTMLInputElement).value;
         let name = (document.querySelector('#name') as HTMLInputElement).value;
