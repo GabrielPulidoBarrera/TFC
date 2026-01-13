@@ -10,7 +10,7 @@ import { PrismaClient, Prisma } from '../generated/prisma/client'
     <label for="name">name</label>
     <input type="text" id="name" name="name">
     <label for="send">enviar</label>
-    <input type="button" id="send" name="send">
+    <input type="submit" id="send" name="send">
 </form>
 
 <script>
@@ -23,7 +23,7 @@ import { PrismaClient, Prisma } from '../generated/prisma/client'
         let cod = (document.querySelector('#cod') as HTMLInputElement).value;
         let name = (document.querySelector('#name') as HTMLInputElement).value;
 
-        await fetch('src/api/crud.ts', {
+        await fetch('/api/nueva-familia', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
