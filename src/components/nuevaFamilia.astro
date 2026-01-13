@@ -1,6 +1,5 @@
 ---
 import "../styles/global.css";
-import { PrismaClient, Prisma } from '../generated/prisma/client'
 ---
 
 <form>
@@ -10,7 +9,7 @@ import { PrismaClient, Prisma } from '../generated/prisma/client'
     <label for="name">name</label>
     <input type="text" id="name" name="name">
     <label for="send">enviar</label>
-    <input type="submit" id="send" name="send">
+    <input type="button" id="send" name="send">
 </form>
 
 <script>
@@ -23,7 +22,7 @@ import { PrismaClient, Prisma } from '../generated/prisma/client'
         let cod = (document.querySelector('#cod') as HTMLInputElement).value;
         let name = (document.querySelector('#name') as HTMLInputElement).value;
 
-        await fetch('/api/nueva-familia', {
+        const response = await fetch('/api/nueva-familia', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,6 +32,10 @@ import { PrismaClient, Prisma } from '../generated/prisma/client'
                 name: name,
             }),
         });
+        console.log(response)
+         const result = await response.json();
+        console.log("Response data:", result);
+        alert("Response: " + result.message);
     }
 
 </script>
