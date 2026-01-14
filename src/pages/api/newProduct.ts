@@ -14,7 +14,7 @@ const adapter = new PrismaMariaDb({
 })
 const prisma = new PrismaClient({ adapter })
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async function({ request }){
   try {
     const { cod, name } = await request.json();
     
@@ -26,7 +26,7 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const result = await prisma.family.create({
+    const result = await prisma.product.create({
       data: { cod, name }
     });
     

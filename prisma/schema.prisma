@@ -7,39 +7,35 @@ datasource db {
   provider = "mysql"
 }
 
-model family {
-  cod      String    @id @db.VarChar(6)
+model users {
+  id      String    @id @db.VarChar(6)
   name     String    @db.VarChar(200)
-  products product[]
+  collections collection[]
 }
 
 model product {
-  cod         String  @id @db.VarChar(12)
+  id         String  @id @db.VarChar(12)
   name        String? @db.VarChar(200)
   short_name  String  @unique(map: "short_name") @db.VarChar(50)
   description String? @db.Text
   RRP         Decimal @db.Decimal(10, 2)
-  family      String  @db.VarChar(6)
-  familyRel   family  @relation(fields: [family], references: [cod], map: "product_ibfk_1")
-  stocks      stock[]
+  collections collectionProducts[]
 
-  @@index([family], map: "family")
 }
 
-model store {
-  cod    Int     @id @default(autoincrement())
+model collectionProducts {
+  productID String
+  collectionID Int
+  product product @relation(fields: [productID], references: [id])
+  collections collection @relation(fields: [collectionID], references: [id])
+
+  @@id([productID, collectionID])
+}
+
+model collection {
+  id    Int     @id @default(autoincrement())
   name   String  @db.VarChar(100)
-  tlf    String? @db.VarChar(13)
-  stocks stock[]
-}
-
-model stock {
-  product    String  @db.VarChar(12)
-  store      Int
-  units      Int
-  productRel product @relation(fields: [product], references: [cod], map: "stock_ibfk_1")
-  storeRel   store   @relation(fields: [store], references: [cod], map: "stock_ibfk_2")
-
-  @@id([product, store])
-  @@index([store], map: "stock_ibfk_2")
+  userID String @db.VarChar(6)
+  usuario users @relation(fields: [userID], references: [id])
+  products collectionProducts[]
 }

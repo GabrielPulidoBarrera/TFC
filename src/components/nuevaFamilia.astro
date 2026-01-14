@@ -10,12 +10,14 @@ import "../styles/global.css";
     <input type="text" id="name" name="name">
     <label for="send">enviar</label>
     <input type="button" id="send" name="send">
+    <label for="read">leer</label>
+    <input type="button" id="read" name="read">
 </form>
 
 <script>
-    let button = document.querySelector('#send')
-    
-    button?.addEventListener("click", newFamily)
+    let buttonCreate = document.querySelector('#send')
+
+    buttonCreate?.addEventListener("click", newFamily)
     async function newFamily(){
         alert("funciono!")
         //odio typescript ya que es igual que javascript en el 99% de casos menos en cosas como estas que te quedas flipado
@@ -38,4 +40,14 @@ import "../styles/global.css";
         alert("Response: " + result.message);
     }
 
+
+    let buttonRead = document.querySelector('#read')
+
+    buttonRead?.addEventListener("click", readFamily)
+    async function readFamily() {
+        const response = await fetch('/api/leer-familia', {
+            method: 'POST'
+        })
+    await console.log(await response.json())
+    }
 </script>
