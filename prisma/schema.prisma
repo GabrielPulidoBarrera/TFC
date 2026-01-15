@@ -14,7 +14,7 @@ model users {
 }
 
 model product {
-  id         String  @id @db.VarChar(12)
+  id          String  @id @db.VarChar(12)
   name        String? @db.VarChar(200)
   short_name  String  @unique(map: "short_name") @db.VarChar(50)
   description String? @db.Text

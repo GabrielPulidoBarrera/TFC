@@ -4,10 +4,21 @@ import "../styles/global.css";
 
 <form>
     <fieldset>new family</fieldset>
-    <label for="cod">cod</label>
-    <input type="text" id="cod" name="cod">
+    <label for="id">id</label>
+    <input type="text" id="id" name="id">
+
     <label for="name">name</label>
     <input type="text" id="name" name="name">
+
+    <label for="short_name">short_name</label>
+    <input type="text" id="short_name" name="short_name">
+
+    <label for="description">description</label>
+    <input type="text" id="description" name="description">
+
+    <label for="RRP">RRP</label>
+    <input type="text" id="RRP" name="RRP">
+
     <label for="send">enviar</label>
     <input type="button" id="send" name="send">
     <label for="read">leer</label>
@@ -17,21 +28,28 @@ import "../styles/global.css";
 <script>
     let buttonCreate = document.querySelector('#send')
 
-    buttonCreate?.addEventListener("click", newFamily)
-    async function newFamily(){
+    buttonCreate?.addEventListener("click", newProduct)
+    async function newProduct(){
         alert("funciono!")
         //odio typescript ya que es igual que javascript en el 99% de casos menos en cosas como estas que te quedas flipado
-        let cod = (document.querySelector('#cod') as HTMLInputElement).value;
+        let id = (document.querySelector('#id') as HTMLInputElement).value;
         let name = (document.querySelector('#name') as HTMLInputElement).value;
+        let short_name = (document.querySelector('#short_name') as HTMLInputElement).value;
+        let description = (document.querySelector('#description') as HTMLInputElement).value;
+        let RRP = (document.querySelector('#RRP') as HTMLInputElement).value;
 
-        const response = await fetch('/api/nueva-familia', {
+
+        const response = await fetch('/api/newProduct', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                cod: cod,
+                id: id,
                 name: name,
+                short_name: short_name,
+                description: description,
+                RRP: RRP
             }),
         });
         console.log(response)

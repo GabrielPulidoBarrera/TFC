@@ -15,7 +15,7 @@ const adapter = new PrismaMariaDb({
 const prisma = new PrismaClient({ adapter })
 
 export const POST: APIRoute = async function({ request }){
-  const result = await prisma.family.findMany();
+  const result = await prisma.product.findMany
     return new Response(
       JSON.stringify({ 
         success: true, 
