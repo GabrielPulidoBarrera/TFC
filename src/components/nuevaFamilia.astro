@@ -3,9 +3,7 @@ import "../styles/global.css";
 ---
 
 <form>
-    <fieldset>new family</fieldset>
-    <label for="id">id</label>
-    <input type="text" id="id" name="id">
+    <fieldset>new product</fieldset>
 
     <label for="name">name</label>
     <input type="text" id="name" name="name">
@@ -32,7 +30,6 @@ import "../styles/global.css";
     async function newProduct(){
         alert("funciono!")
         //odio typescript ya que es igual que javascript en el 99% de casos menos en cosas como estas que te quedas flipado
-        let id = (document.querySelector('#id') as HTMLInputElement).value;
         let name = (document.querySelector('#name') as HTMLInputElement).value;
         let short_name = (document.querySelector('#short_name') as HTMLInputElement).value;
         let description = (document.querySelector('#description') as HTMLInputElement).value;
@@ -45,7 +42,6 @@ import "../styles/global.css";
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                id: id,
                 name: name,
                 short_name: short_name,
                 description: description,
@@ -61,11 +57,91 @@ import "../styles/global.css";
 
     let buttonRead = document.querySelector('#read')
 
-    buttonRead?.addEventListener("click", readFamily)
-    async function readFamily() {
-        const response = await fetch('/api/leer-familia', {
+    buttonRead?.addEventListener("click", readProduct)
+    async function readProduct() {
+        const response = await fetch('/api/readProduct', {
             method: 'POST'
         })
-    await console.log(await response.json())
+    let resultado = await response.json()
+    console.log (resultado.data);
+    crearTablaProductos(resultado.data);
     }
+
+
+
+    interface Producto {
+  id: number;
+  name: string;
+  short_name: string;
+  description: string;
+  RRP: string;
+}
+
+const crearTablaProductos = (productos: Producto[]): void => {
+  // Eliminar tabla previa
+  const tabla = document.querySelector<HTMLTableElement>("#tabla");
+  if (tabla) {
+    tabla.remove();
+  }
+
+  const table: HTMLTableElement = document.createElement("table");
+  table.id = "tabla";
+
+  // ===== CABECERA =====
+  const thead = document.createElement("thead");
+  const trHead = document.createElement("tr");
+
+  const headers = ["ID", "Name", "Short name", "Description", "RRP", "Acciones"];
+  headers.forEach(texto => {
+    const th = document.createElement("th");
+    th.textContent = texto;
+    trHead.append(th);
+  });
+
+  thead.append(trHead);
+  table.append(thead);
+
+  // ===== BODY =====
+  const tbody = document.createElement("tbody");
+
+  for (const producto of productos) {
+    const tr = document.createElement("tr");
+    tr.dataset.id = producto.id.toString();
+
+    const tdId = document.createElement("td");
+    tdId.textContent = producto.id.toString();
+
+    const tdName = document.createElement("td");
+    tdName.textContent = producto.name;
+
+    const tdShort = document.createElement("td");
+    tdShort.textContent = producto.short_name;
+
+    const tdDesc = document.createElement("td");
+    tdDesc.textContent = producto.description;
+
+    const tdRRP = document.createElement("td");
+    tdRRP.textContent = producto.RRP;
+
+    const tdAcciones = document.createElement("td");
+    const btnEliminar = document.createElement("button");
+    btnEliminar.textContent = "Eliminar";
+
+    btnEliminar.addEventListener("click", () => {
+      console.log("Eliminar producto:", producto.id);
+    });
+
+    tdAcciones.append(btnEliminar);
+
+    tr.append(tdId, tdName, tdShort, tdDesc, tdRRP, tdAcciones);
+    tbody.append(tr);
+  }
+
+  table.append(tbody);
+  document.body.append(table);
+};
+
+
+
+    
 </script>

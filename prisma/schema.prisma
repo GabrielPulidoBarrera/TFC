@@ -8,13 +8,13 @@ datasource db {
 }
 
 model users {
-  id      String    @id @db.VarChar(6)
+  id       Int    @id @default(autoincrement()) 
   name     String    @db.VarChar(200)
   collections collection[]
 }
 
 model product {
-  id          String  @id @db.VarChar(12)
+  id          Int     @id @default(autoincrement())
   name        String? @db.VarChar(200)
   short_name  String  @unique(map: "short_name") @db.VarChar(50)
   description String? @db.Text
@@ -24,7 +24,7 @@ model product {
 }
 
 model collectionProducts {
-  productID String
+  productID Int
   collectionID Int
   product product @relation(fields: [productID], references: [id])
   collections collection @relation(fields: [collectionID], references: [id])
@@ -35,7 +35,7 @@ model collectionProducts {
 model collection {
   id    Int     @id @default(autoincrement())
   name   String  @db.VarChar(100)
-  userID String @db.VarChar(6)
+  userID Int 
   usuario users @relation(fields: [userID], references: [id])
   products collectionProducts[]
 }

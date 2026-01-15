@@ -16,18 +16,16 @@ const prisma = new PrismaClient({ adapter })
 
 export const POST: APIRoute = async function({ request }){
   try {
-    const { id, name, short_name, description, RRP } = await request.json();
+    let {name, short_name, description, RRP } = await request.json();
     
     //TODO: Quizas haz ID un autoincrement y te ahorras esto?
-    if (!id) {
-      return new Response(
-        JSON.stringify({ error: 'ID is required' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
+
+    if(typeof RRP != "number"){
+      RRP = 0.00;
     }
 
     const result = await prisma.product.create({
-      data: { id, name, short_name, description, RRP }
+      data: {name, short_name, description, RRP }
     });
     
     console.log("Family created:", result);
