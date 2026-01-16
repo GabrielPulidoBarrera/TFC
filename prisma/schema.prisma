@@ -16,9 +16,9 @@ model users {
 model product {
   id          Int     @id @default(autoincrement())
   name        String? @db.VarChar(200)
-  short_name  String  @unique(map: "short_name") @db.VarChar(50)
+  short_name  String?  @unique(map: "short_name") @db.VarChar(50)
   description String? @db.Text
-  RRP         Decimal @db.Decimal(10, 2)
+  RRP         Decimal? @db.Decimal(10, 2)
   collections collectionProducts[]
 
 }

@@ -3,145 +3,225 @@ import "../styles/global.css";
 ---
 
 <form>
-    <fieldset>new product</fieldset>
+  <fieldset>new product</fieldset>
 
-    <label for="name">name</label>
-    <input type="text" id="name" name="name">
+  <label for="name">name</label>
+  <input type="text" id="name" name="name" />
 
-    <label for="short_name">short_name</label>
-    <input type="text" id="short_name" name="short_name">
+  <label for="short_name">short_name</label>
+  <input type="text" id="short_name" name="short_name" />
 
-    <label for="description">description</label>
-    <input type="text" id="description" name="description">
+  <label for="description">description</label>
+  <input type="text" id="description" name="description" />
 
-    <label for="RRP">RRP</label>
-    <input type="text" id="RRP" name="RRP">
+  <label for="RRP">RRP</label>
+  <input type="number" id="RRP" name="RRP" />
 
-    <label for="send">enviar</label>
-    <input type="button" id="send" name="send">
-    <label for="read">leer</label>
-    <input type="button" id="read" name="read">
+  <label for="send">enviar</label>
+  <input type="button" id="send" name="send" />
+  <label for="read">leer</label>
+  <input type="button" id="read" name="read" />
+</form>
+
+<form>
+  <fieldset>new collection</fieldset>
+
+  <label for="nameCollection">name</label>
+  <input type="text" id="nameCollection" name="nameCollection" />
+  <label for="idUser">user ID</label>
+  <input type="number" id="idUser" name="idUser" />
+
+  <label for="sendCollection">enviar</label>
+  <input type="button" id="sendCollection" name="sendCollection" />
+  <label for="readCollection">leer</label>
+  <input type="button" id="readCollection" name="readCollection" />
+</form>
+
+
+<form>
+  <fieldset>new user</fieldset>
+
+  <label for="nameUser">name</label>
+  <input type="text" id="nameUser" name="nameUser" />
+  <label for="sendUser">enviar</label>
+  <input type="button" id="sendUser" name="sendUser" />
+  <label for="readUser">leer</label>
+  <input type="button" id="readUser" name="readUser" />
 </form>
 
 <script>
-    let buttonCreate = document.querySelector('#send')
+  let buttonCreate = document.querySelector("#send");
 
-    buttonCreate?.addEventListener("click", newProduct)
-    async function newProduct(){
-        alert("funciono!")
-        //odio typescript ya que es igual que javascript en el 99% de casos menos en cosas como estas que te quedas flipado
-        let name = (document.querySelector('#name') as HTMLInputElement).value;
-        let short_name = (document.querySelector('#short_name') as HTMLInputElement).value;
-        let description = (document.querySelector('#description') as HTMLInputElement).value;
-        let RRP = (document.querySelector('#RRP') as HTMLInputElement).value;
+  buttonCreate?.addEventListener("click", newProduct);
+  async function newProduct() {
+    alert("funciono!");
+    //odio typescript ya que es igual que javascript en el 99% de casos menos en cosas como estas que te quedas flipado
+    let name = (document.querySelector("#name") as HTMLInputElement).value;
+    let short_name = (document.querySelector("#short_name") as HTMLInputElement)
+      .value;
+    let description = (
+      document.querySelector("#description") as HTMLInputElement
+    ).value;
+    let RRP = (document.querySelector("#RRP") as HTMLInputElement).value;
 
-
-        const response = await fetch('/api/newProduct', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: name,
-                short_name: short_name,
-                description: description,
-                RRP: RRP
-            }),
-        });
-        console.log(response)
-         const result = await response.json();
-        console.log("Response data:", result);
-        alert("Response: " + result.message);
-    }
-
-
-    let buttonRead = document.querySelector('#read')
-
-    buttonRead?.addEventListener("click", readProduct)
-    async function readProduct() {
-        const response = await fetch('/api/readProduct', {
-            method: 'POST'
-        })
-    let resultado = await response.json()
-    console.log (resultado.data);
-    crearTablaProductos(resultado.data);
-    }
-
-
-
-    interface Producto {
-  id: number;
-  name: string;
-  short_name: string;
-  description: string;
-  RRP: string;
-}
-
-const crearTablaProductos = (productos: Producto[]): void => {
-  // Eliminar tabla previa
-  const tabla = document.querySelector<HTMLTableElement>("#tabla");
-  if (tabla) {
-    tabla.remove();
+    const response = await fetch("/api/newProduct", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        short_name: short_name,
+        description: description,
+        RRP: RRP,
+      }),
+    });
+    console.log(response);
+    const result = await response.json();
+    console.log("Response data:", result);
+    alert("Response: " + result.message);
   }
 
-  const table: HTMLTableElement = document.createElement("table");
-  table.id = "tabla";
+  let buttonRead = document.querySelector("#read");
 
-  // ===== CABECERA =====
-  const thead = document.createElement("thead");
-  const trHead = document.createElement("tr");
+  buttonRead?.addEventListener("click", readProduct);
+  async function readProduct() {
+    const response = await fetch("/api/readProduct", {
+      method: "POST",
+    });
+    let resultado = await response.json();
+    console.log(resultado.data);
+    crearTablaProductos(resultado.data);
+  }
 
-  const headers = ["ID", "Name", "Short name", "Description", "RRP", "Acciones"];
-  headers.forEach(texto => {
-    const th = document.createElement("th");
-    th.textContent = texto;
-    trHead.append(th);
-  });
+  interface Producto {
+    id: number;
+    name: string;
+    short_name: string;
+    description: string;
+    RRP: string;
+  }
 
-  thead.append(trHead);
-  table.append(thead);
+  const crearTablaProductos = (productos: Producto[]): void => {
+    // Eliminar tabla previa
+    const tabla = document.querySelector<HTMLTableElement>("#tabla");
+    if (tabla) {
+      tabla.remove();
+    }
 
-  // ===== BODY =====
-  const tbody = document.createElement("tbody");
+    const table: HTMLTableElement = document.createElement("table");
+    table.id = "tabla";
 
-  for (const producto of productos) {
-    const tr = document.createElement("tr");
-    tr.dataset.id = producto.id.toString();
+    // ===== CABECERA =====
+    const thead = document.createElement("thead");
+    const trHead = document.createElement("tr");
 
-    const tdId = document.createElement("td");
-    tdId.textContent = producto.id.toString();
-
-    const tdName = document.createElement("td");
-    tdName.textContent = producto.name;
-
-    const tdShort = document.createElement("td");
-    tdShort.textContent = producto.short_name;
-
-    const tdDesc = document.createElement("td");
-    tdDesc.textContent = producto.description;
-
-    const tdRRP = document.createElement("td");
-    tdRRP.textContent = producto.RRP;
-
-    const tdAcciones = document.createElement("td");
-    const btnEliminar = document.createElement("button");
-    btnEliminar.textContent = "Eliminar";
-
-    btnEliminar.addEventListener("click", () => {
-      console.log("Eliminar producto:", producto.id);
+    const headers = [
+      "ID",
+      "Name",
+      "Short name",
+      "Description",
+      "RRP",
+      "Acciones",
+    ];
+    headers.forEach((texto) => {
+      const th = document.createElement("th");
+      th.textContent = texto;
+      trHead.append(th);
     });
 
-    tdAcciones.append(btnEliminar);
+    thead.append(trHead);
+    table.append(thead);
 
-    tr.append(tdId, tdName, tdShort, tdDesc, tdRRP, tdAcciones);
-    tbody.append(tr);
+    // ===== BODY =====
+    const tbody = document.createElement("tbody");
+
+    for (const producto of productos) {
+      const tr = document.createElement("tr");
+      tr.dataset.id = producto.id.toString();
+
+      const tdId = document.createElement("td");
+      tdId.textContent = producto.id.toString();
+
+      const tdName = document.createElement("td");
+      tdName.textContent = producto.name;
+
+      const tdShort = document.createElement("td");
+      tdShort.textContent = producto.short_name;
+
+      const tdDesc = document.createElement("td");
+      tdDesc.textContent = producto.description;
+
+      const tdRRP = document.createElement("td");
+      tdRRP.textContent = producto.RRP;
+
+      const tdAcciones = document.createElement("td");
+      const btnEliminar = document.createElement("button");
+      btnEliminar.textContent = "Eliminar";
+
+      btnEliminar.addEventListener("click", () => {
+        console.log("Eliminar producto:", producto.id);
+      });
+
+      tdAcciones.append(btnEliminar);
+
+      tr.append(tdId, tdName, tdShort, tdDesc, tdRRP, tdAcciones);
+      tbody.append(tr);
+    }
+
+    table.append(tbody);
+    document.body.append(table);
+  };
+
+  //  ===== COLLECTION =====
+
+  let collectionButton = document.querySelector("#sendCollection");
+
+  collectionButton?.addEventListener("click", newCollection);
+
+  async function newCollection() {
+    let collectionName =(document.querySelector("#nameCollection") as HTMLInputElement).value;
+    let userID =(document.querySelector("#idUser") as HTMLInputElement).valueAsNumber;
+
+    const response = await fetch("/api/newCollection", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: collectionName,
+        userID: userID
+      }),
+    });
+    console.log(response);
+    const result = await response.json();
+    console.log("Response data:", result);
+    alert("Response: " + result.message);
   }
 
-  table.append(tbody);
-  document.body.append(table);
-};
 
+  
+  //  ===== USERS =====
 
+  let userButton = document.querySelector("#sendUser");
 
-    
+  userButton?.addEventListener("click", newUser);
+
+  async function newUser() {
+    let username = (document.querySelector("#nameUser") as HTMLInputElement).value;
+    const response = await fetch("/api/newUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: username,
+
+      }),
+    });
+    console.log(response);
+    const result = await response.json();
+    console.log("Response data:", result);
+    alert("Response: " + result.message);
+  }
 </script>
