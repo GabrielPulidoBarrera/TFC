@@ -17,7 +17,6 @@ const prisma = new PrismaClient({ adapter })
 export const POST: APIRoute = async function({ request }){
   try {
     let {productID, collectionID} = await request.json();
-    console.log(name)
   
     const result = await prisma.collectionProducts.create({
       data: {productID, collectionID}

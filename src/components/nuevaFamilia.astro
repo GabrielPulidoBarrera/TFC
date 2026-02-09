@@ -53,10 +53,10 @@ import "../styles/global.css";
   <fieldset>Add product to collection</fieldset>
 
   <label for="productID">productID</label>
-  <input type="text" id="productID" name="productID" />
+  <input type="number" id="productID" name="productID" />
   <label for="collectionID">collectionID</label>
-  <input type="button" id="collectionID" name="collectionID" />
-  <label for="productCollection">productCollection</label>
+  <input type="number" id="collectionID" name="collectionID" />
+  <label for="productCollection">enviar</label>
   <input type="button" id="productCollection" name="productCollection" />
 </form>
 
@@ -241,11 +241,11 @@ import "../styles/global.css";
 
   let productCollection = document.querySelector("#productCollection");
 
-  userButton?.addEventListener("click", newUser);
+  productCollection?.addEventListener("click", newProductCollection);
 
   async function newProductCollection() {
-    let productID = (document.querySelector("#productID") as HTMLInputElement).value;
-    let collectionID = (document.querySelector("#collectionID") as HTMLInputElement).value;
+    let productID = (document.querySelector("#productID") as HTMLInputElement).valueAsNumber;
+    let collectionID = (document.querySelector("#collectionID") as HTMLInputElement).valueAsNumber;
     const response = await fetch("/api/newCollectionProduct", {
       method: "POST",
       headers: {
