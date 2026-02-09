@@ -60,7 +60,23 @@ import "../styles/global.css";
   <input type="button" id="productCollection" name="productCollection" />
 </form>
 
+
+<form>
+  <fieldset>Read collections</fieldset>
+
+  <label for="productCollection">read collection</label>
+  <input type="button" id="readCollection" name="readCollection" />
+</form>
+
 <script>
+
+
+
+
+
+
+
+
   let buttonCreate = document.querySelector("#send");
 
   buttonCreate?.addEventListener("click", newProduct);
@@ -261,6 +277,10 @@ import "../styles/global.css";
     console.log("Response data:", result);
     alert("Response: " + result.message);
   }
+
+
+  // ===== READ PRODUCT =====
+
 
 
 </script>

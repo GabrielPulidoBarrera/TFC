@@ -1,0 +1,67 @@
+---
+import "../styles/global.css";
+
+---
+<div class="container p-2 mx-auto sm:p-4 dark:text-gray-800">
+	<h2 class="mb-4 text-2xl font-semibold leading-tight">Invoices</h2>
+	<div class="overflow-x-auto">
+		<table class="min-w-full text-xs">
+			<colgroup>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col class="w-24">
+			</colgroup>
+			<thead class="dark:bg-gray-300">
+				<tr class="text-left">
+					<th class="p-3">Invoice #</th>
+					<th class="p-3">Client</th>
+					<th class="p-3">Issued</th>
+					<th class="p-3">Due</th>
+					<th class="p-3 text-right">Amount</th>
+					<th class="p-3">Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="border-b border-opacity-20 dark:border-gray-300 dark:bg-gray-50">
+				</tr>
+				
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+<script>
+  async function readProduct() {
+    const response = await fetch("/api/readProduct", {
+      method: "POST",
+    });
+    let resultado = await response.json();
+    console.log(resultado.data);
+
+
+
+    let tbody = document.querySelector('tbody');
+
+
+    for (let i of resultado.data){
+        console.log(i)
+        for (let iterable in i){
+            console.log(iterable)
+    let td = document.createElement("td");
+    td.classList.add("p-3")
+    td.textContent = i[iterable];
+    tbody?.lastElementChild.append(td);
+        }
+    let nuevoTR = document.createElement("tr")
+    tbody?.append(nuevoTR)
+    
+  }
+
+  }
+readProduct();
+
+</script>
