@@ -1,9 +1,15 @@
 ---
 import "../styles/global.css";
 
+
 ---
 <div class="container p-2 mx-auto sm:p-4 dark:text-gray-800">
-	<h2 class="mb-4 text-2xl font-semibold leading-tight">Invoices</h2>
+	<div class="flex justify-between">
+	<h2 class="mb-4 text-2xl font-semibold leading-tight "> TITULO ASTRO</h2>
+			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer" id="editar">Edit</button>
+			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden" id="terminar">Finish</button>
+
+	</div>
 	<div class="overflow-x-auto">
 		<table class="min-w-full text-xs">
 			<colgroup>
@@ -24,8 +30,8 @@ import "../styles/global.css";
 					<th class="p-3">Status</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr class="border-b border-opacity-20 dark:border-gray-300 dark:bg-gray-50">
+			<tbody class="*:border-b *:border-opacity-20 *:dark:border-gray-300 *:dark:bg-gray-50 *:p-3">
+				<tr class="">
 				</tr>
 				
 			</tbody>
@@ -35,6 +41,10 @@ import "../styles/global.css";
 
 
 <script>
+	    let tbody = document.querySelector('tbody'); 
+	let editar = document.querySelector('#editar')
+	let terminar = document.querySelector('#terminar')
+
   async function readProduct() {
     const response = await fetch("/api/readProduct", {
       method: "POST",
@@ -44,7 +54,6 @@ import "../styles/global.css";
 
 
 
-    let tbody = document.querySelector('tbody');
 
 
     for (let i of resultado.data){
@@ -60,8 +69,38 @@ import "../styles/global.css";
     tbody?.append(nuevoTR)
     
   }
-
+  tbody?.lastElementChild.remove()
   }
+
 readProduct();
+
+
+editar?.addEventListener("click", activarEditar)
+
+function activarEditar(){
+
+	editar.style.display="none"
+	terminar.style.display="block"
+
+	let tr = document.createElement('tr');
+	let numeroTD = tbody.lastElementChild?.childElementCount
+	console.log(numeroTD)
+
+	for (let i = 0; i < numeroTD; i++){
+		let td = document.createElement('td')
+		td.textContent="A"
+		tr.append(td);
+	}
+	tbody?.append(tr)
+
+
+	let todosTD = document.querySelectorAll('td')
+
+	for (let iterable of todosTD){
+	  iterable.setAttribute("contenteditable", "true");
+	}
+}
+
+
 
 </script>
