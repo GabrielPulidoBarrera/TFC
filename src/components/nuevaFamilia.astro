@@ -68,6 +68,15 @@ import "../styles/global.css";
   <input type="button" id="readCollection" name="readCollection" />
 </form>
 
+
+
+<form>
+  <fieldset>Collection column</fieldset>
+
+  <label for="collectionColumn">send</label>
+  <input type="button" id="collectionColumn" name="collectionColumn" />
+</form>
+
 <script>
 
 
@@ -283,5 +292,34 @@ import "../styles/global.css";
 
 
 
+
+// === CREAR COLECCION CON COLUMNA ===
+document.querySelector('#collectionColumn')?.addEventListener("click", newCollectionColumn);
+
+  async function newCollectionColumn() {
+    let collectionName = "coleccion1";
+    let userID = 1;
+    let columnas = JSON.stringify(["nombre", "precio", "fecha"])
+
+    const response = await fetch("/api/newCollection", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: collectionName,
+        userID: userID,
+        columns: columnas
+      }),
+    });
+    console.log(response);
+    const result = await response.json();
+    console.log("Response data:", result);
+    alert("Response: " + result.message);
+  }
+
+
 </script>
+
+
 

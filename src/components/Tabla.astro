@@ -5,35 +5,24 @@ import "../styles/global.css";
 ---
 <div class="container p-2 mx-auto sm:p-4 dark:text-gray-800">
 	<div class="flex justify-between">
-	<h2 class="mb-4 text-2xl font-semibold leading-tight "> TITULO ASTRO</h2>
+	<h2 class="mb-4 text-2xl font-semibold leading-tight" id="collectionTitle"> TITULO ASTRO</h2>
 			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer" id="editar">Edit</button>
 			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden" id="terminar">Finish</button>
 
 	</div>
 	<div class="overflow-x-auto">
-		<table class="min-w-full text-xs">
+		<table class="min-w-full text-xs *:text-center">
 			<colgroup>
-				<col>
-				<col>
-				<col>
-				<col>
-				<col>
-				<col class="w-24">
+
 			</colgroup>
 			<thead class="dark:bg-gray-300">
-				<tr class="text-left">
-					<th class="p-3">Invoice #</th>
-					<th class="p-3">Client</th>
-					<th class="p-3">Issued</th>
-					<th class="p-3">Due</th>
-					<th class="p-3 text-right">Amount</th>
-					<th class="p-3">Status</th>
+				<tr class=" *:p-3">
 				</tr>
 			</thead>
 			<tbody class="*:border-b *:border-opacity-20 *:dark:border-gray-300 *:dark:bg-gray-50 *:p-3">
 				<tr class="">
 				</tr>
-				
+
 			</tbody>
 		</table>
 	</div>
@@ -41,51 +30,76 @@ import "../styles/global.css";
 
 
 <script>
-	    let tbody = document.querySelector('tbody'); 
-	let editar = document.querySelector('#editar')
-	let terminar = document.querySelector('#terminar')
+	    let tbody = document.querySelector<HTMLElement>('tbody');
+	let editar = document.querySelector<HTMLElement>('#editar')
+	let terminar = document.querySelector<HTMLElement>('#terminar')
+	let titulo = document.querySelector<HTMLElement>('#collectionTitle')
+	let thead = document.querySelector<HTMLElement>('thead')
+	let id;
 
-  async function readProduct() {
-    const response = await fetch("/api/readProduct", {
+	async function readProduct() {
+	if (tbody==null){
+		return
+	}
+		if (tbody.lastElementChild==null){
+		return
+	}
+	if (titulo==null){
+		return
+	}
+	if (thead==null){
+		return
+	}
+	if (thead.firstElementChild==null){
+		return
+	}
+
+
+    const response = await fetch("/api/readCollections", {
       method: "POST",
     });
     let resultado = await response.json();
     console.log(resultado.data);
+	let correcto = resultado.data[0];
+	let columnas = JSON.parse(correcto.columns);
+	titulo.textContent=correcto.name
+	console.log(columnas)
+	for (let i of columnas){
+		let th = document.createElement('th')
+		th.textContent = i;
+		thead?.firstElementChild.append(th);
+		tbody.firstElementChild?.append(document.createElement('td'));
+	}
+	id = correcto.id;
 
 
 
 
 
-    for (let i of resultado.data){
-        console.log(i)
-        for (let iterable in i){
-            console.log(iterable)
-    let td = document.createElement("td");
-    td.classList.add("p-3")
-    td.textContent = i[iterable];
-    tbody?.lastElementChild.append(td);
-        }
-    let nuevoTR = document.createElement("tr")
-    tbody?.append(nuevoTR)
-    
-  }
-  tbody?.lastElementChild.remove()
   }
 
-readProduct();
+  function activarEditar(){
 
+	if (editar==null){
+		return
+	}
+	if (terminar==null){
+		return
+	}
+	if (tbody==null){
+		return
+	}
 
-editar?.addEventListener("click", activarEditar)
-
-function activarEditar(){
 
 	editar.style.display="none"
 	terminar.style.display="block"
 
 	let tr = document.createElement('tr');
 	let numeroTD = tbody.lastElementChild?.childElementCount
-	console.log(numeroTD)
 
+		if (numeroTD==null){
+		return
+	}
 	for (let i = 0; i < numeroTD; i++){
 		let td = document.createElement('td')
 		td.textContent="A"
@@ -95,12 +109,19 @@ function activarEditar(){
 
 
 	let todosTD = document.querySelectorAll('td')
+	let todosTH = document.querySelectorAll('th')
 
 	for (let iterable of todosTD){
 	  iterable.setAttribute("contenteditable", "true");
 	}
+	for (let iterable of todosTH){
+	  iterable.setAttribute("contenteditable", "true");
+	}
+	titulo?.setAttribute("contenteditable", "true");
+	console.log(id)
 }
 
-
+  readProduct()
+  editar?.addEventListener("click", activarEditar);
 
 </script>
