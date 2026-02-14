@@ -13,20 +13,17 @@ const adapter = new PrismaMariaDb({
 const prisma = new PrismaClient({ adapter })
 
 export const POST: APIRoute = async function({ request }){
-  try {
-    let {name} = await request.json();
-    console.log(name)
-  
-    const result = await prisma.users.create({
-      data: {name}
-    });
-    
-    console.log("User created:", result);
-    
+      let {id} = await request.json();
+
+  const result = await prisma.collectionProducts.findMany({
+    where: {
+      collectionID: id
+    }
+  })
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: 'User created successfully',
+        message: 'Data read successfully',
         data: result 
       }),
       { 
@@ -34,18 +31,4 @@ export const POST: APIRoute = async function({ request }){
         headers: { 'Content-Type': 'application/json' } 
       }
     );
-  } catch (error: any) {
-    console.error("Error creating User: ", error);
-    
-    return new Response(
-      JSON.stringify({ 
-        error: 'Error creating user',
-        details: error.message 
-      }),
-      { 
-        status: 500, 
-        headers: { 'Content-Type': 'application/json' } 
-      }
-    );
-  }
 }

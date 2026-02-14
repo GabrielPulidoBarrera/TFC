@@ -36,12 +36,43 @@ import "../styles/global.css";
 	let titulo = document.querySelector<HTMLElement>('#collectionTitle')
 	let thead = document.querySelector<HTMLElement>('thead')
 	let id;
+	let tituloOriginal = document.querySelector<HTMLElement>('#collectionTitle')?.textContent;
+	let columnasOriginal;
+
+readCollecionProduct()
+	async function readCollecionProduct() {
+	
+	 const response = await fetch("/api/readCollectionProducts", {
+      method: "POST",
+			body: JSON.stringify({id: 1}),
+    });
+	    let resultado = await response.json();
+	let data = resultado.data
+	
+
+	let arrayProductos = []
+	for (let iterable of data){
+		arrayProductos.push(iterable.productID);
+	}
+
+	console.log(arrayProductos)
+
+	 const responseProducts = await fetch("/api/readProduct", {
+      method: "POST",
+		body: JSON.stringify({ ids: arrayProductos }),
+    });
+	    let resultadoProduct = await responseProducts.json();
+	let dataProduct = resultadoProduct.data
+	console.log(dataProduct)
+
+	}	
+
 
 	async function readProduct() {
 	if (tbody==null){
 		return
 	}
-		if (tbody.lastElementChild==null){
+		if (tbody.lastElementChild==null){ 
 		return
 	}
 	if (titulo==null){
@@ -59,11 +90,10 @@ import "../styles/global.css";
       method: "POST",
     });
     let resultado = await response.json();
-    console.log(resultado.data);
 	let correcto = resultado.data[0];
 	let columnas = JSON.parse(correcto.columns);
+	columnasOriginal = JSON.parse(correcto.columns);
 	titulo.textContent=correcto.name
-	console.log(columnas)
 	for (let i of columnas){
 		let th = document.createElement('th')
 		th.textContent = i;
@@ -118,10 +148,42 @@ import "../styles/global.css";
 	  iterable.setAttribute("contenteditable", "true");
 	}
 	titulo?.setAttribute("contenteditable", "true");
-	console.log(id)
 }
 
+  async function terminarEditar(){
+	let data: any = {id: id};
+	let nuevaColumnas = [];
+	if (thead==null || thead.firstElementChild==null || thead.firstElementChild.childNodes ==null){
+		return
+	}
+	for (let iterable of thead?.firstElementChild?.childNodes){
+		nuevaColumnas.push(iterable.textContent)
+	}
+
+
+	if (JSON.stringify(nuevaColumnas)!=JSON.stringify(columnasOriginal)){
+		data.columns = JSON.stringify(nuevaColumnas)
+	}
+
+	if (titulo?.textContent!=tituloOriginal){
+		data.name = titulo?.textContent
+	}
+		const response = await fetch("/api/editCollection", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		});
+	
+}
+	
   readProduct()
   editar?.addEventListener("click", activarEditar);
+terminar?.addEventListener("click", terminarEditar);
+
+
+
+
 
 </script>

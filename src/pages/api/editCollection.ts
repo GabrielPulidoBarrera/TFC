@@ -14,19 +14,34 @@ const prisma = new PrismaClient({ adapter })
 
 export const POST: APIRoute = async function({ request }){
   try {
-    let {name} = await request.json();
+    let {id, name, columns} = await request.json();
     console.log(name)
-  
-    const result = await prisma.users.create({
-      data: {name}
+    let data: any = {} 
+
+
+      if (name !== undefined) {
+      data.name = name;
+    }
+    
+      if (columns !== undefined) {
+      data.columns = columns;
+    }
+
+
+
+    const result = await prisma.collection.update({
+      where: {
+        id: id,
+      },
+      data
     });
     
-    console.log("User created:", result);
+    console.log("Collection edited:", result);
     
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: 'User created successfully',
+        message: 'Collection editing successfully',
         data: result 
       }),
       { 
@@ -35,11 +50,11 @@ export const POST: APIRoute = async function({ request }){
       }
     );
   } catch (error: any) {
-    console.error("Error creating User: ", error);
+    console.error("Error editing collection: ", error);
     
     return new Response(
       JSON.stringify({ 
-        error: 'Error creating user',
+        error: 'Error editing collection',
         details: error.message 
       }),
       { 

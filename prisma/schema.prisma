@@ -15,16 +15,13 @@ model users {
 
 model product {
   id          Int     @id @default(autoincrement())
-  name        String? @db.VarChar(200)
-  short_name  String?  @unique(map: "short_name") @db.VarChar(50)
-  description String? @db.Text
-  RRP         Decimal? @db.Decimal(10, 2)
+  columns String @db.VarChar(1000)
   collections collectionProducts[]
 
 }
 
 model collectionProducts {
-  productID Int
+  productID Int 
   collectionID Int
   product product @relation(fields: [productID], references: [id])
   collections collection @relation(fields: [collectionID], references: [id])
@@ -36,7 +33,7 @@ model collection {
   id    Int     @id @default(autoincrement())
   name   String  @db.VarChar(100)
   userID Int 
-  columns   String  @db.VarChar(700)
+  columns   String  @db.VarChar(1000)
   usuario users @relation(fields: [userID], references: [id])
   products collectionProducts[]
 }

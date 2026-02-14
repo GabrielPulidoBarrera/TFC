@@ -105,12 +105,7 @@ import "../styles/global.css";
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        name: name,
-        short_name: short_name,
-        description: description,
-        RRP: RRP,
-      }),
+      
     });
     console.log(response);
     const result = await response.json();
