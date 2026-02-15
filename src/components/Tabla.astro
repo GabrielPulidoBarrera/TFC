@@ -30,6 +30,7 @@ import "../styles/global.css";
 
 
 <script>
+	// Selectores
 	    let tbody = document.querySelector<HTMLElement>('tbody');
 	let editar = document.querySelector<HTMLElement>('#editar')
 	let terminar = document.querySelector<HTMLElement>('#terminar')
@@ -41,7 +42,7 @@ import "../styles/global.css";
 
 readCollecionProduct()
 	async function readCollecionProduct() {
-	
+		//Leo todos los productos de la coleccion haciendo una api y mandandole la id de la coleccion
 	 const response = await fetch("/api/readCollectionProducts", {
       method: "POST",
 			body: JSON.stringify({id: 1}),
@@ -49,26 +50,42 @@ readCollecionProduct()
 	    let resultado = await response.json();
 	let data = resultado.data
 	
+	// creo un array para guardar todos los resultados, y recorro los objetos para pillar solo lo que son los id del producto, no el id de la coleccion también
 
 	let arrayProductos = []
 	for (let iterable of data){
 		arrayProductos.push(iterable.productID);
 	}
 
-	console.log(arrayProductos)
 
+	// mando ese array para que me devuelva todos esos prodcutos
 	 const responseProducts = await fetch("/api/readProduct", {
       method: "POST",
 		body: JSON.stringify({ ids: arrayProductos }),
     });
 	    let resultadoProduct = await responseProducts.json();
 	let dataProduct = resultadoProduct.data
-	console.log(dataProduct)
+
+
+	//por cada producto, lo convierto a un objeto ya que es json originalmente, y luego busco si la categoria existe en la tabla, si ese es el caso, se añade en una nueva fila.
+
+	for (let objetoRaw of dataProduct){
+		let objeto = JSON.parse(objetoRaw.columns);
+		for (let iterable in objeto){
+			if(columnasOriginal.includes(iterable)){
+				let posicion = columnasOriginal.indexOf(iterable);
+				console.log(posicion)
+				
+			}
+		}
+
+	}
 
 	}	
 
 
 	async function readProduct() {
+		//Leo las colecciones
 	if (tbody==null){
 		return
 	}
@@ -90,10 +107,16 @@ readCollecionProduct()
       method: "POST",
     });
     let resultado = await response.json();
+
 	let correcto = resultado.data[0];
+
+	//guardo las columnas en dos tablas, una que se va a editar en el futuro y la otra en la que no
+
 	let columnas = JSON.parse(correcto.columns);
 	columnasOriginal = JSON.parse(correcto.columns);
+	//acutalizo el titulio
 	titulo.textContent=correcto.name
+	//creo la cabecera de la tabla
 	for (let i of columnas){
 		let th = document.createElement('th')
 		th.textContent = i;
@@ -110,6 +133,8 @@ readCollecionProduct()
 
   function activarEditar(){
 
+	
+
 	if (editar==null){
 		return
 	}
@@ -121,9 +146,12 @@ readCollecionProduct()
 	}
 
 
+
+	//cuando le doy al boton de editar, esdcondo el boton y mostro el de terminar
 	editar.style.display="none"
 	terminar.style.display="block"
 
+	//creo una nueva fila con tantos td como hay th
 	let tr = document.createElement('tr');
 	let numeroTD = tbody.lastElementChild?.childElementCount
 
@@ -138,6 +166,7 @@ readCollecionProduct()
 	tbody?.append(tr)
 
 
+	//selecciono todas las casillas y las hago editales
 	let todosTD = document.querySelectorAll('td')
 	let todosTH = document.querySelectorAll('th')
 
@@ -151,16 +180,19 @@ readCollecionProduct()
 }
 
   async function terminarEditar(){
+	//al terminar de editar guardo la id en un objeto
 	let data: any = {id: id};
 	let nuevaColumnas = [];
 	if (thead==null || thead.firstElementChild==null || thead.firstElementChild.childNodes ==null){
 		return
 	}
+	//recopilo las columnas que actualmetne tenemos
 	for (let iterable of thead?.firstElementChild?.childNodes){
 		nuevaColumnas.push(iterable.textContent)
 	}
 
 
+	//si son diferentes, se mandan a la API para que se actualice.
 	if (JSON.stringify(nuevaColumnas)!=JSON.stringify(columnasOriginal)){
 		data.columns = JSON.stringify(nuevaColumnas)
 	}
