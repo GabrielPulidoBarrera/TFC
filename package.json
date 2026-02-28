@@ -11,12 +11,12 @@
   "dependencies": {
     "@astrojs/db": "^0.18.3",
     "@prisma/adapter-mariadb": "^7.2.0",
-    "@prisma/client": "^7.2.0",
+    "@prisma/client": "^7.4.1",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.7",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
-    "prisma": "^7.2.0"
+    "prisma": "^7.4.1"
   }
 }

@@ -14,11 +14,10 @@ const prisma = new PrismaClient({ adapter })
 
 export const POST: APIRoute = async function({ request }){
   try {
-    let {name, userID, columns} = await request.json();
-    console.log(name)
+    let {name, userID, columns, visibility} = await request.json();
   
     const result = await prisma.collection.create({
-      data: {name, userID, columns}
+      data: {name, userID, columns, visibility}
     });
     
     console.log("Collection created:", result);

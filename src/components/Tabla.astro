@@ -19,8 +19,8 @@ import "../styles/global.css";
 				<tr class=" *:p-3">
 				</tr>
 			</thead>
-			<tbody class="*:border-b *:border-opacity-20 *:dark:border-gray-300 *:dark:bg-gray-50 *:p-3">
-				<tr class="">
+			<tbody class="*:border-b *:border-opacity-20 *:dark:border-gray-300 *:dark:bg-gray-50">
+				<tr class="*:p-3'">
 				</tr>
 
 			</tbody>
@@ -52,7 +52,7 @@ readCollecionProduct()
 	
 	// creo un array para guardar todos los resultados, y recorro los objetos para pillar solo lo que son los id del producto, no el id de la coleccion también
 
-	let arrayProductos = []
+	let arrayProductos: string[] = []
 	for (let iterable of data){
 		arrayProductos.push(iterable.productID);
 	}
@@ -71,13 +71,16 @@ readCollecionProduct()
 
 	for (let objetoRaw of dataProduct){
 		let objeto = JSON.parse(objetoRaw.columns);
+		console.log (objeto)
 		for (let iterable in objeto){
 			if(columnasOriginal.includes(iterable)){
 				let posicion = columnasOriginal.indexOf(iterable);
-				console.log(posicion)
+				tbody.lastElementChild?.childNodes[posicion].append(objeto[iterable])
+				
 				
 			}
-		}
+ 		}
+		crearTR()
 
 	}
 
@@ -151,19 +154,7 @@ readCollecionProduct()
 	editar.style.display="none"
 	terminar.style.display="block"
 
-	//creo una nueva fila con tantos td como hay th
-	let tr = document.createElement('tr');
-	let numeroTD = tbody.lastElementChild?.childElementCount
-
-		if (numeroTD==null){
-		return
-	}
-	for (let i = 0; i < numeroTD; i++){
-		let td = document.createElement('td')
-		td.textContent="A"
-		tr.append(td);
-	}
-	tbody?.append(tr)
+	crearTR()
 
 
 	//selecciono todas las casillas y las hago editales
@@ -182,7 +173,7 @@ readCollecionProduct()
   async function terminarEditar(){
 	//al terminar de editar guardo la id en un objeto
 	let data: any = {id: id};
-	let nuevaColumnas = [];
+	let nuevaColumnas: string[] = [];
 	if (thead==null || thead.firstElementChild==null || thead.firstElementChild.childNodes ==null){
 		return
 	}
@@ -216,6 +207,29 @@ terminar?.addEventListener("click", terminarEditar);
 
 
 
+
+
+
+function crearTR(){
+		//creo una nueva fila con tantos td como hay th
+
+	if (tbody==null){
+		return
+	}
+	let tr = document.createElement('tr');
+	tr.className = '*:p-3';
+	let numeroTD = tbody.lastElementChild?.childElementCount
+
+		if (numeroTD==null){
+		return
+	}
+	for (let i = 0; i < numeroTD; i++){
+		let td = document.createElement('td')
+		tr.append(td);
+	}
+	tbody?.append(tr)
+
+}
 
 
 </script>

@@ -8,14 +8,8 @@ import "../styles/global.css";
   <label for="name">name</label>
   <input type="text" id="name" name="name" />
 
-  <label for="short_name">short_name</label>
-  <input type="text" id="short_name" name="short_name" />
-
-  <label for="description">description</label>
-  <input type="text" id="description" name="description" />
-
-  <label for="RRP">RRP</label>
-  <input type="number" id="RRP" name="RRP" />
+  <label for="visibility">Visibility</label>
+  <input type="checkbox" id="visibility" name="visibility" />
 
   <label for="send">enviar</label>
   <input type="button" id="send" name="send" />
@@ -90,22 +84,24 @@ import "../styles/global.css";
 
   buttonCreate?.addEventListener("click", newProduct);
   async function newProduct() {
-    alert("funciono!");
     //odio typescript ya que es igual que javascript en el 99% de casos menos en cosas como estas que te quedas flipado
     let name = (document.querySelector("#name") as HTMLInputElement).value;
-    let short_name = (document.querySelector("#short_name") as HTMLInputElement)
-      .value;
-    let description = (
-      document.querySelector("#description") as HTMLInputElement
-    ).value;
-    let RRP = (document.querySelector("#RRP") as HTMLInputElement).value;
+    let visibility = (document.querySelector("#visibility") as HTMLInputElement).checked;
+
+    console.log(name)
+    console.log(visibility)
+    
 
     const response = await fetch("/api/newProduct", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      
+      body: JSON.stringify({
+        name: name,
+        visibility: visibility
+      }),
+
     });
     console.log(response);
     const result = await response.json();
@@ -304,7 +300,8 @@ document.querySelector('#collectionColumn')?.addEventListener("click", newCollec
       body: JSON.stringify({
         name: collectionName,
         userID: userID,
-        columns: columnas
+        columns: columnas,
+        visibility: false
       }),
     });
     console.log(response);

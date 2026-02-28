@@ -12,7 +12,7 @@ const adapter = new PrismaMariaDb({
 })
 const prisma = new PrismaClient({ adapter })
 
-export const POST: APIRoute = async function({ request }){
+export const POST: APIRoute = async function(){
   const result = await prisma.collection.findMany()
     return new Response(
       JSON.stringify({ 

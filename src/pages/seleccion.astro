@@ -1,0 +1,25 @@
+---
+import Layout2 from '../layouts/Layout2.astro';
+import "../styles/global.css";
+import { POST } from "@api/readCollections";
+
+// Create a minimal Request object (you may need to adjust based on your handler)
+const response = await POST();
+let resultado = await response.json();
+console.log(resultado)
+
+---
+
+<Layout2>
+    <div class="grid grid-cols-3 *:aspect-square gap-20 *:m-20">
+        <div class="border border-dashed flex justify-center items-center text-4xl transition-all duration-150 hover:text-7xl  ">+</div>
+        <!-- <div class="border flex justify-center items-center bg-[url(../assets/fondoPlaceholder.png)] transition-all duration-150 grayscale-100 bg-size-[300%] bg-no-repeat hover:bg-size-[400%] hover:grayscale-0">b</div> -->
+        {resultado.data.map((iteracion: any) =>(
+                    <div class="border flex justify-center items-center bg-[url(../assets/fondoPlaceholder.png)] transition-all duration-150 grayscale-100 bg-size-[300%] bg-no-repeat hover:bg-size-[400%] hover:grayscale-0"><div class="bg-black/20 p-2">{iteracion.name}</div></div>
+
+        ))}
+        <div>c</div>
+    </div>
+</Layout2>
+<!--bg-[url(../assets/fondoPlaceholder.png)] -->
+
