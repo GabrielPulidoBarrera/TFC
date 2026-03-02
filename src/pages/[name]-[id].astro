@@ -1,14 +1,19 @@
 ---
 import Layout2 from '@layouts/Layout2.astro';
 import Tablas from '@components/Tabla.astro';
+import { POST } from "../pages/api/readCollections";
 
 export async function getStaticPaths() {
+let listaColecciones = [];
+
 const response = await POST();
 let resultado = await response.json();
 resultado.data.map((iteracion: any) =>{
-
+	listaColecciones.push({params: {name: iteracion.name, id: iteracion.id}});
+	
 	
 })
+return listaColecciones
 }
 
 
