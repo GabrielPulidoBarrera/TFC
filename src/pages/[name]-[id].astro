@@ -1,7 +1,7 @@
 ---
 import Layout2 from '@layouts/Layout2.astro';
-import Tablas from '@components/Tabla.astro';
-import { POST } from "../pages/api/readCollections";
+import Tablas from '@tabla/Tabla.astro';
+import { POST } from "../api/readCollections";
 
 export async function getStaticPaths() {
 let listaColecciones = [];

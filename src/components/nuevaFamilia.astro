@@ -210,7 +210,7 @@ import "../styles/global.css";
     let collectionName =(document.querySelector("#nameCollection") as HTMLInputElement).value;
     let userID =(document.querySelector("#idUser") as HTMLInputElement).valueAsNumber;
 
-    const response = await fetch("/api/newCollection", {
+    const response = await fetch("@api/newCollection", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -236,7 +236,7 @@ import "../styles/global.css";
 
   async function newUser() {
     let username = (document.querySelector("#nameUser") as HTMLInputElement).value;
-    const response = await fetch("/api/newUser", {
+    const response = await fetch("../api/newUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

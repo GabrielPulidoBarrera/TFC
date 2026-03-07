@@ -5,10 +5,17 @@
   "compilerOptions": {
     "paths": {
       "@components/*": ["./src/components/*"],
+      "@crearFamilia/*": ["./src/components/crearFamilia/*"],
+      "@general/*": ["./src/components/general/*"],
+      "@index/*": ["./src/components/index/*"],
+      "@tabla/*": ["./src/components/tabla/*"],
+      
+      
       "@assets/*": ["./src/assets/*"],
       "@layouts/*": ["./src/layouts/*"],
       "@styles/*": ["./src/styles/*"],
       "@api/*": ["./src/api/*"],
+
 
     }
   }

@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import Boton from '@components/Boton.astro';
+import Boton from '@general/Boton.astro';
 
 ---
 <section class="p-6 dark:text-gray-900">
@@ -35,6 +35,34 @@ import Boton from '@components/Boton.astro';
 	</form>
 </section>
 
-<div id="crearColeccion">
+<div id="crearColeccion" class="flex items-center justify-center cursor-pointer">
     <Boton></Boton>
 </div>
+
+<script>
+	let boton = document.querySelector('#crearColeccion');
+
+	 async function newCollection() {
+    let collectionName =(document.querySelector("#name") as HTMLInputElement).value;
+    let userID = 1;
+    let collectionVisibility =(document.querySelector("#visibility") as HTMLInputElement).value;
+
+    const response = await fetch("src/api/newCollection.ts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: collectionName,
+        userID: userID,
+		visibility: collectionVisibility
+      }),
+    });
+    console.log(response);
+    const result = await response.json();
+    console.log("Response data:", result);
+    alert("Response: " + result.message);
+  }
+
+  boton?.addEventListener("click", newCollection);
+</script>
