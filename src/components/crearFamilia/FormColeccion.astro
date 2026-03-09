@@ -1,5 +1,5 @@
 ---
-import "../styles/global.css";
+import "@styles/global.css";
 import Boton from '@general/Boton.astro';
 
 ---
@@ -28,10 +28,22 @@ import Boton from '@general/Boton.astro';
                         <option>Oculto</option>
                     </select>
 				</div>
+		</fieldset>
+
+
+        <div>
+          <fieldset>
+            <legend>Columnas de la tabla</legend>
+            <span id="selectorColumnas">
+              <input type="text" class="columna" id="columna1"> <label for="columna1">Columna 1</label>
+              <input type="text" class="columna" id="columna2"> <label for="columna2">Columna 2</label>
+            </span>
+          </fieldset>
+            <button type="button" id="nuevaColumna">Añadir mas columnas</button>
+
+        </div>
 
 				</div>
-			</div>
-		</fieldset>
 	</form>
 </section>
 
@@ -41,13 +53,37 @@ import Boton from '@general/Boton.astro';
 
 <script>
 	let boton = document.querySelector('#crearColeccion');
+  let nuevaColumna = document.querySelector('#nuevaColumna');
+  let selectorColumnas = document.querySelector('#selectorColumnas');
+  nuevaColumna?.addEventListener("click", newColumn);
+  let contador = 3;
+
+  function newColumn(){
+    let input = document.createElement('input');
+    input.id = "columna"+contador;
+    input.classList.add('columna')
+    let label = document.createElement('label');
+    label.textContent = "Columna "+contador;
+    label.htmlFor = "columna"+contador;
+    contador++
+    selectorColumnas?.append(input);
+    selectorColumnas?.append(label);
+
+  }
 
 	 async function newCollection() {
     let collectionName =(document.querySelector("#name") as HTMLInputElement).value;
     let userID = 1;
     let collectionVisibility =(document.querySelector("#visibility") as HTMLInputElement).value;
+    let columnasRaw = selectorColumnas?.querySelectorAll('.columna')
+    let columnas = [];
+    for (let iterable of columnasRaw){
+      columnas.push(iterable.value);
+    }
+    columnas = JSON.stringify(columnas);
+    console.log(columnas)
 
-    const response = await fetch("src/api/newCollection.ts", {
+    const response = await fetch("/api/newCollection", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +91,8 @@ import Boton from '@general/Boton.astro';
       body: JSON.stringify({
         name: collectionName,
         userID: userID,
-		visibility: collectionVisibility
+		visibility: collectionVisibility,
+    columns: columnas
       }),
     });
     console.log(response);
@@ -66,3 +103,5 @@ import Boton from '@general/Boton.astro';
 
   boton?.addEventListener("click", newCollection);
 </script>
+
+<!-- TODO: Control de errores!!! -->

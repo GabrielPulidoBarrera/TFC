@@ -17,7 +17,7 @@ model product {
   id          Int     @id @default(autoincrement())
   name  String @db.VarChar(100)
   columns String @db.VarChar(1000)
-  visibility Boolean
+  visibility String @db.VarChar(20)
   collections collectionProducts[]
 
 }
@@ -36,7 +36,7 @@ model collection {
   name   String  @db.VarChar(100)
   userID Int 
   columns   String  @db.VarChar(1000)
-  visibility Boolean
+  visibility String @db.VarChar(20)
   usuario users @relation(fields: [userID], references: [id])
   products collectionProducts[]
 }

@@ -1,195 +1,155 @@
 ---
-import "../styles/global.css";
-
+import "@styles/global.css";
+const { idLink } = Astro.props;
+console.log(idLink)
 ---
 <div class="container p-2 mx-auto sm:p-4 dark:text-gray-800">
 	<div class="flex justify-between">
-	<h2 class="mb-4 text-2xl font-semibold leading-tight" id="collectionTitle"> TITULO ASTRO</h2>
-			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer" id="editar">Edit</button>
-			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden" id="terminar">Finish</button>
-
+		<h2 class="mb-4 text-2xl font-semibold leading-tight" id="collectionTitle"> TITULO ASTRO</h2>
+		<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer" id="editar">Edit</button>
+		<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden" id="terminar">Finish</button>
 	</div>
 	<div class="overflow-x-auto">
 		<table class="min-w-full text-xs *:text-center">
-			<colgroup>
-
-			</colgroup>
+			<colgroup></colgroup>
 			<thead class="dark:bg-gray-300">
-				<tr class=" *:p-3">
-				</tr>
+				<tr class=" *:p-3"></tr>
 			</thead>
 			<tbody class="*:border-b *:border-opacity-20 *:dark:border-gray-300 *:dark:bg-gray-50">
-				<tr class="*:p-3'">
-				</tr>
-
+				<tr class="*:p-3'"></tr>
 			</tbody>
 		</table>
 	</div>
 </div>
 
-
-<script>
+<script define:vars={{ idLink }}>
 	// Selectores
-	    let tbody = document.querySelector<HTMLElement>('tbody');
-	let editar = document.querySelector<HTMLElement>('#editar')
-	let terminar = document.querySelector<HTMLElement>('#terminar')
-	let titulo = document.querySelector<HTMLElement>('#collectionTitle')
-	let thead = document.querySelector<HTMLElement>('thead')
+	let tbody = document.querySelector('tbody');
+	let editar = document.querySelector('#editar');
+	let terminar = document.querySelector('#terminar');
+	let titulo = document.querySelector('#collectionTitle');
+	let thead = document.querySelector('thead');
 	let id;
-	let tituloOriginal = document.querySelector<HTMLElement>('#collectionTitle')?.textContent;
+	let tituloOriginal = document.querySelector('#collectionTitle')?.textContent;
 	let columnasOriginal;
 
-readCollecionProduct()
+	readCollecionProduct();
+
 	async function readCollecionProduct() {
-		//Leo todos los productos de la coleccion haciendo una api y mandandole la id de la coleccion
-	 const response = await fetch("/api/readCollectionProducts", {
-      method: "POST",
-			body: JSON.stringify({id: 1}),
-    });
-	    let resultado = await response.json();
-	let data = resultado.data
-	
-	// creo un array para guardar todos los resultados, y recorro los objetos para pillar solo lo que son los id del producto, no el id de la coleccion también
+		// Leo todos los productos de la colección 
 
-	let arrayProductos: string[] = []
-	for (let iterable of data){
-		arrayProductos.push(iterable.productID);
-	}
+		idBien = Number(idLink);
 
+		
+		const response = await fetch("/api/readCollectionProducts", {
+			method: "POST",
+			body: JSON.stringify({ id: idBien }),
+		});
+		let resultado = await response.json();
+		let data = resultado.data;
 
-	// mando ese array para que me devuelva todos esos prodcutos
-	 const responseProducts = await fetch("/api/readProduct", {
-      method: "POST",
-		body: JSON.stringify({ ids: arrayProductos }),
-    });
-	    let resultadoProduct = await responseProducts.json();
-	let dataProduct = resultadoProduct.data
+		// Extraer los IDs de producto
+		let arrayProductos = [];
+		for (let iterable of data) {
+			arrayProductos.push(iterable.productID);
+		}
 
+		// Obtener los productos completos
+		const responseProducts = await fetch("/api/readProduct", {
+			method: "POST",
+			body: JSON.stringify({ ids: arrayProductos }),
+		});
+		let resultadoProduct = await responseProducts.json();
+		let dataProduct = resultadoProduct.data;
 
-	//por cada producto, lo convierto a un objeto ya que es json originalmente, y luego busco si la categoria existe en la tabla, si ese es el caso, se añade en una nueva fila.
+		console.log(resultadoProduct);
 
-	for (let objetoRaw of dataProduct){
-		let objeto = JSON.parse(objetoRaw.columns);
-		console.log (objeto)
-		for (let iterable in objeto){
-			if(columnasOriginal.includes(iterable)){
-				let posicion = columnasOriginal.indexOf(iterable);
-				tbody.lastElementChild?.childNodes[posicion].append(objeto[iterable])
-				
-				
+		// Rellenar la tabla con los datos
+		for (let objetoRaw of dataProduct) {
+			let objeto = JSON.parse(objetoRaw.columns);
+			for (let iterable in objeto) {
+				if (columnasOriginal.includes(iterable)) {
+					let posicion = columnasOriginal.indexOf(iterable);
+					tbody.lastElementChild?.childNodes[posicion].append(objeto[iterable]);
+				}
 			}
- 		}
-		crearTR()
-
+			crearTR();
+		}
 	}
-
-	}	
-
 
 	async function readProduct() {
-		//Leo las colecciones
-	if (tbody==null){
-		return
-	}
-		if (tbody.lastElementChild==null){ 
-		return
-	}
-	if (titulo==null){
-		return
-	}
-	if (thead==null){
-		return
-	}
-	if (thead.firstElementChild==null){
-		return
-	}
+		if (tbody == null) return;
+		if (tbody.lastElementChild == null) return;
+		if (titulo == null) return;
+		if (thead == null) return;
+		if (thead.firstElementChild == null) return;
 
+		const response = await fetch("/api/readCollections", {
+			method: "POST",
+		});
+		let resultado = await response.json();
 
-    const response = await fetch("/api/readCollections", {
-      method: "POST",
-    });
-    let resultado = await response.json();
+		console.log(resultado.data);
 
-	let correcto = resultado.data[0];
+		// Buscar la colección que coincide con idLink
+		let correcto = resultado.data.find((e) => {
+			return e.id == idLink;
+		});
 
-	//guardo las columnas en dos tablas, una que se va a editar en el futuro y la otra en la que no
+		// ⚠️ Posible error: aquí usas resultado.data[0] en lugar del elemento encontrado
 
-	let columnas = JSON.parse(correcto.columns);
-	columnasOriginal = JSON.parse(correcto.columns);
-	//acutalizo el titulio
-	titulo.textContent=correcto.name
-	//creo la cabecera de la tabla
-	for (let i of columnas){
-		let th = document.createElement('th')
-		th.textContent = i;
-		thead?.firstElementChild.append(th);
-		tbody.firstElementChild?.append(document.createElement('td'));
-	}
-	id = correcto.id;
+		let columnas = JSON.parse(correcto.columns);
+		columnasOriginal = JSON.parse(correcto.columns);
+		titulo.textContent = correcto.name;
 
-
-
-
-
-  }
-
-  function activarEditar(){
-
-	
-
-	if (editar==null){
-		return
-	}
-	if (terminar==null){
-		return
-	}
-	if (tbody==null){
-		return
+		for (let i of columnas) {
+			let th = document.createElement('th');
+			th.textContent = i;
+			thead?.firstElementChild.append(th);
+			tbody.firstElementChild?.append(document.createElement('td'));
+		}
+		id = correcto.id;
 	}
 
+	function activarEditar() {
+		if (editar == null) return;
+		if (terminar == null) return;
+		if (tbody == null) return;
 
+		editar.style.display = "none";
+		terminar.style.display = "block";
 
-	//cuando le doy al boton de editar, esdcondo el boton y mostro el de terminar
-	editar.style.display="none"
-	terminar.style.display="block"
+		crearTR();
 
-	crearTR()
+		let todosTD = document.querySelectorAll('td');
+		let todosTH = document.querySelectorAll('th');
 
-
-	//selecciono todas las casillas y las hago editales
-	let todosTD = document.querySelectorAll('td')
-	let todosTH = document.querySelectorAll('th')
-
-	for (let iterable of todosTD){
-	  iterable.setAttribute("contenteditable", "true");
-	}
-	for (let iterable of todosTH){
-	  iterable.setAttribute("contenteditable", "true");
-	}
-	titulo?.setAttribute("contenteditable", "true");
-}
-
-  async function terminarEditar(){
-	//al terminar de editar guardo la id en un objeto
-	let data: any = {id: id};
-	let nuevaColumnas: string[] = [];
-	if (thead==null || thead.firstElementChild==null || thead.firstElementChild.childNodes ==null){
-		return
-	}
-	//recopilo las columnas que actualmetne tenemos
-	for (let iterable of thead?.firstElementChild?.childNodes){
-		nuevaColumnas.push(iterable.textContent)
+		for (let iterable of todosTD) {
+			iterable.setAttribute("contenteditable", "true");
+		}
+		for (let iterable of todosTH) {
+			iterable.setAttribute("contenteditable", "true");
+		}
+		titulo?.setAttribute("contenteditable", "true");
 	}
 
+	async function terminarEditar() {
+		let data = { id: id };
+		let nuevaColumnas = [];
+		if (thead == null || thead.firstElementChild == null || thead.firstElementChild.childNodes == null) return;
 
-	//si son diferentes, se mandan a la API para que se actualice.
-	if (JSON.stringify(nuevaColumnas)!=JSON.stringify(columnasOriginal)){
-		data.columns = JSON.stringify(nuevaColumnas)
-	}
+		for (let iterable of thead.firstElementChild.childNodes) {
+			nuevaColumnas.push(iterable.textContent);
+		}
 
-	if (titulo?.textContent!=tituloOriginal){
-		data.name = titulo?.textContent
-	}
+		if (JSON.stringify(nuevaColumnas) != JSON.stringify(columnasOriginal)) {
+			data.columns = JSON.stringify(nuevaColumnas);
+		}
+
+		if (titulo?.textContent != tituloOriginal) {
+			data.name = titulo?.textContent;
+		}
+
 		const response = await fetch("/api/editCollection", {
 			method: "POST",
 			headers: {
@@ -197,38 +157,22 @@ readCollecionProduct()
 			},
 			body: JSON.stringify(data),
 		});
-	
-}
-	
-  readProduct()
-  editar?.addEventListener("click", activarEditar);
-terminar?.addEventListener("click", terminarEditar);
-
-
-
-
-
-
-function crearTR(){
-		//creo una nueva fila con tantos td como hay th
-
-	if (tbody==null){
-		return
 	}
-	let tr = document.createElement('tr');
-	tr.className = '*:p-3';
-	let numeroTD = tbody.lastElementChild?.childElementCount
 
-		if (numeroTD==null){
-		return
+	readProduct();
+	editar?.addEventListener("click", activarEditar);
+	terminar?.addEventListener("click", terminarEditar);
+
+	function crearTR() {
+		if (tbody == null) return;
+		let tr = document.createElement('tr');
+		tr.className = '*:p-3';
+		let numeroTD = tbody.lastElementChild?.childElementCount;
+		if (numeroTD == null) return;
+		for (let i = 0; i < numeroTD; i++) {
+			let td = document.createElement('td');
+			tr.append(td);
+		}
+		tbody.append(tr);
 	}
-	for (let i = 0; i < numeroTD; i++){
-		let td = document.createElement('td')
-		tr.append(td);
-	}
-	tbody?.append(tr)
-
-}
-
-
 </script>

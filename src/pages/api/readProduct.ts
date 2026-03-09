@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
-import { PrismaClient } from '../generated/prisma/client';
+import { PrismaClient } from '../../generated/prisma/client';
 export const prerender = false;
 
 const adapter = new PrismaMariaDb({

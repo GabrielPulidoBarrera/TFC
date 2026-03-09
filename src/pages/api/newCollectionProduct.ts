@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb'
-import { PrismaClient } from '../generated/prisma/client'
+import { PrismaClient } from '../../generated/prisma/client'
 export const prerender = false
 
 const adapter = new PrismaMariaDb({
@@ -14,34 +14,18 @@ const prisma = new PrismaClient({ adapter })
 
 export const POST: APIRoute = async function({ request }){
   try {
-    let {id, name, columns} = await request.json();
-    console.log(name)
-    let data: any = {} 
-
-
-      if (name !== undefined) {
-      data.name = name;
-    }
-    
-      if (columns !== undefined) {
-      data.columns = columns;
-    }
-
-
-
-    const result = await prisma.collection.update({
-      where: {
-        id: id,
-      },
-      data
+    let {productID, collectionID} = await request.json();
+  
+    const result = await prisma.collectionProducts.create({
+      data: {productID, collectionID}
     });
     
-    console.log("Collection edited:", result);
+    console.log("Product added to collection", result);
     
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: 'Collection editing successfully',
+        message: 'Product added to collection',
         data: result 
       }),
       { 
@@ -50,11 +34,11 @@ export const POST: APIRoute = async function({ request }){
       }
     );
   } catch (error: any) {
-    console.error("Error editing collection: ", error);
+    console.error("Error adding product to collection: ", error);
     
     return new Response(
       JSON.stringify({ 
-        error: 'Error editing collection',
+        error: 'Error adding product to collection',
         details: error.message 
       }),
       { 

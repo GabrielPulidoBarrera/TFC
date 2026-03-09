@@ -1,7 +1,7 @@
 ---
-import Layout2 from '../layouts/Layout2.astro';
-import "../styles/global.css";
-import { POST } from "@api/readCollections";
+import Layout2 from '@layouts/Layout2.astro';
+import "@styles/global.css";
+import { POST } from "./api/readCollections";
 
 // Create a minimal Request object (you may need to adjust based on your handler)
 const response = await POST();

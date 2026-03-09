@@ -9,12 +9,10 @@
       "@general/*": ["./src/components/general/*"],
       "@index/*": ["./src/components/index/*"],
       "@tabla/*": ["./src/components/tabla/*"],
-      
-      
       "@assets/*": ["./src/assets/*"],
       "@layouts/*": ["./src/layouts/*"],
       "@styles/*": ["./src/styles/*"],
-      "@api/*": ["./src/api/*"],
+      "@api/*": ["./src/pages/api/*"],
 
 
     }
