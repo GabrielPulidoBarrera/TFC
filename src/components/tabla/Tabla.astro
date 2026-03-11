@@ -8,6 +8,7 @@ console.log(idLink)
 		<h2 class="mb-4 text-2xl font-semibold leading-tight" id="collectionTitle"> TITULO ASTRO</h2>
 		<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer" id="editar">Edit</button>
 		<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden" id="terminar">Finish</button>
+		<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden" id="nuevaColumna">nueva columna</button>
 	</div>
 	<div class="overflow-x-auto">
 		<table class="min-w-full text-xs *:text-center">
@@ -29,10 +30,11 @@ console.log(idLink)
 	let terminar = document.querySelector('#terminar');
 	let titulo = document.querySelector('#collectionTitle');
 	let thead = document.querySelector('thead');
+	let nuevaColumna = document.querySelector('#nuevaColumna');
 	let id;
 	let tituloOriginal = document.querySelector('#collectionTitle')?.textContent;
 	let columnasOriginal;
-
+	nuevaColumna.addEventListener("click", crearColumna)
 	readCollecionProduct();
 
 	async function readCollecionProduct() {
@@ -96,7 +98,6 @@ console.log(idLink)
 			return e.id == idLink;
 		});
 
-		// ⚠️ Posible error: aquí usas resultado.data[0] en lugar del elemento encontrado
 
 		let columnas = JSON.parse(correcto.columns);
 		columnasOriginal = JSON.parse(correcto.columns);
@@ -117,7 +118,9 @@ console.log(idLink)
 		if (tbody == null) return;
 
 		editar.style.display = "none";
+		nuevaColumna.style.display = "block"
 		terminar.style.display = "block";
+
 
 		crearTR();
 
@@ -174,5 +177,18 @@ console.log(idLink)
 			tr.append(td);
 		}
 		tbody.append(tr);
+	}
+	function crearColumna() {
+		if (tbody == null || thead == null) return;
+		let th = document.createElement('th');
+		th.textContent = "nueva Columna"
+		thead.querySelector('tr').append(th);
+		let lista = tbody.querySelectorAll('tr')
+		for (let iterable of lista){
+			let td = document.createElement('td');
+			console.log(iterable);
+			iterable.append(td)
+		}
+		
 	}
 </script>
