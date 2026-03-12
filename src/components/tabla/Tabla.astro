@@ -11,8 +11,7 @@ console.log(idLink)
 		<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden" id="nuevaColumna">nueva columna</button>
 	</div>
 	<div class="overflow-x-auto">
-		<table class="min-w-full text-xs *:text-center">
-			<colgroup></colgroup>
+		<table class="min-w-full text-xs *:text-center" id="tabla">
 			<thead class="dark:bg-gray-300">
 				<tr class=" *:p-3"></tr>
 			</thead>
@@ -32,6 +31,7 @@ console.log(idLink)
 	let thead = document.querySelector('thead');
 	let nuevaColumna = document.querySelector('#nuevaColumna');
 	let id;
+	let tabla = document.querySelector('#tabla')
 	let tituloOriginal = document.querySelector('#collectionTitle')?.textContent;
 	let columnasOriginal;
 	nuevaColumna.addEventListener("click", crearColumna)
@@ -75,6 +75,7 @@ console.log(idLink)
 					tbody.lastElementChild?.childNodes[posicion].append(objeto[iterable]);
 				}
 			}
+
 			crearTR();
 		}
 	}
@@ -104,10 +105,12 @@ console.log(idLink)
 		titulo.textContent = correcto.name;
 
 		for (let i of columnas) {
+			let colgroup = document.createElement('colgroup')
 			let th = document.createElement('th');
 			th.textContent = i;
 			thead?.firstElementChild.append(th);
 			tbody.firstElementChild?.append(document.createElement('td'));
+			tabla.prepend(colgroup);
 		}
 		id = correcto.id;
 	}
@@ -116,14 +119,22 @@ console.log(idLink)
 		if (editar == null) return;
 		if (terminar == null) return;
 		if (tbody == null) return;
-
+		//muestros los botones correctos
 		editar.style.display = "none";
 		nuevaColumna.style.display = "block"
 		terminar.style.display = "block";
 
 
 		crearTR();
+		crearColumnaEditar()
 
+		//creo el selector para crear una nueva columna
+if (tbody == null) return;
+		let tr = document.createElement('tr');
+		tr.className = '*:p-3 border-dashed border';
+		tr.id = 'nuevaFila'
+
+		//hago que las casillas sean editables
 		let todosTD = document.querySelectorAll('td');
 		let todosTH = document.querySelectorAll('th');
 
@@ -180,6 +191,7 @@ console.log(idLink)
 	}
 	function crearColumna() {
 		if (tbody == null || thead == null) return;
+		let colgroup = document.createElement('colgroup')
 		let th = document.createElement('th');
 		th.textContent = "nueva Columna"
 		thead.querySelector('tr').append(th);
@@ -189,6 +201,30 @@ console.log(idLink)
 			console.log(iterable);
 			iterable.append(td)
 		}
+		tabla.prepend(colgroup)
 		
 	}
+function crearColumnaEditar() {
+	if (tbody == null || thead == null) return;
+
+	// Add a new header cell
+	let th = document.createElement('th');
+	th.textContent = "nueva Columna";
+	th.classList.add('border', 'border-dashed');  // make header dashed
+	thead.querySelector('tr').append(th);
+
+	// Add a new cell to every existing row
+	let lista = tbody.querySelectorAll('tr');
+	for (let iterable of lista) {
+		let td = document.createElement('td');
+		td.classList.add('border', 'border-dashed'); // make data cell dashed
+		iterable.append(td);
+	}
+
+	// (Optional) keep the colgroup if you need it for other styling,
+	// but it's not required for the dashed effect.
+	let colgroup = document.createElement('colgroup');
+	colgroup.classList.add("border", "border-dashed", "bg-red-400");
+	tabla.prepend(colgroup);
+}
 </script>
