@@ -10,8 +10,8 @@ console.log(idLink)
 		<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden" id="terminar">Finish</button>
 		<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden" id="nuevaColumna">nueva columna</button>
 	</div>
-	<div class="overflow-x-auto">
-		<table class="min-w-full text-xs *:text-center" id="tabla">
+	<div class="overflow-x-auto flex">
+		<table class="text-xs *:text-center grow" id="tabla">
 			<thead class="dark:bg-gray-300">
 				<tr class=" *:p-3"></tr>
 			</thead>
@@ -19,6 +19,7 @@ console.log(idLink)
 				<tr class="*:p-3'"></tr>
 			</tbody>
 		</table>
+		<div class="hidden bg-white border-dashed border-black border-3 flex text-center items-center justify-center text-7xl">+</div>
 	</div>
 </div>
 
@@ -205,26 +206,7 @@ if (tbody == null) return;
 		
 	}
 function crearColumnaEditar() {
-	if (tbody == null || thead == null) return;
 
-	// Add a new header cell
-	let th = document.createElement('th');
-	th.textContent = "nueva Columna";
-	th.classList.add('border', 'border-dashed');  // make header dashed
-	thead.querySelector('tr').append(th);
 
-	// Add a new cell to every existing row
-	let lista = tbody.querySelectorAll('tr');
-	for (let iterable of lista) {
-		let td = document.createElement('td');
-		td.classList.add('border', 'border-dashed'); // make data cell dashed
-		iterable.append(td);
-	}
-
-	// (Optional) keep the colgroup if you need it for other styling,
-	// but it's not required for the dashed effect.
-	let colgroup = document.createElement('colgroup');
-	colgroup.classList.add("border", "border-dashed", "bg-red-400");
-	tabla.prepend(colgroup);
 }
 </script>
