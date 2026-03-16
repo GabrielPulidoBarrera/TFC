@@ -8,18 +8,22 @@ console.log(idLink)
 		<h2 class="mb-4 text-2xl font-semibold leading-tight" id="collectionTitle"> TITULO ASTRO</h2>
 		<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer" id="editar">Edit</button>
 		<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden" id="terminar">Finish</button>
-		<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden" id="nuevaColumna">nueva columna</button>
 	</div>
 	<div class="overflow-x-auto flex">
-		<table class="text-xs *:text-center grow" id="tabla">
-			<thead class="dark:bg-gray-300">
-				<tr class=" *:p-3"></tr>
-			</thead>
-			<tbody class="*:border-b *:border-opacity-20 *:dark:border-gray-300 *:dark:bg-gray-50">
-				<tr class="*:p-3'"></tr>
-			</tbody>
-		</table>
-		<div class="hidden bg-white border-dashed border-black border-3 flex text-center items-center justify-center text-7xl">+</div>
+		<div class="grow flex-col" >
+
+			<table class="text-xs *:text-center grow w-full" id="tabla">
+				<thead class="dark:bg-gray-300">
+					<tr class=" *:p-3"></tr>
+				</thead>
+				<tbody class="*:border-b *:border-opacity-20 *:dark:border-gray-300 *:dark:bg-gray-50">
+					<tr class="*:p-3'"></tr>
+				</tbody>
+			</table>
+		<div class="hidden bg-white border-dashed border-black border-3 text-center items-center justify-center text-7xl cursor-pointer" id="nuevaFila">+</div>
+
+		</div>
+		<div class="hidden bg-white border-dashed border-black border-3 text-center items-center justify-center text-7xl cursor-pointer" id="nuevaColumna">+</div>
 	</div>
 </div>
 
@@ -31,6 +35,7 @@ console.log(idLink)
 	let titulo = document.querySelector('#collectionTitle');
 	let thead = document.querySelector('thead');
 	let nuevaColumna = document.querySelector('#nuevaColumna');
+	let nuevaFila = document.querySelector('#nuevaFila');
 	let id;
 	let tabla = document.querySelector('#tabla')
 	let tituloOriginal = document.querySelector('#collectionTitle')?.textContent;
@@ -122,12 +127,11 @@ console.log(idLink)
 		if (tbody == null) return;
 		//muestros los botones correctos
 		editar.style.display = "none";
-		nuevaColumna.style.display = "block"
+		nuevaColumna.style.display = "flex"
+		nuevaFila.style.display = "flex"
 		terminar.style.display = "block";
 
 
-		crearTR();
-		crearColumnaEditar()
 
 		//creo el selector para crear una nueva columna
 if (tbody == null) return;
@@ -205,8 +209,5 @@ if (tbody == null) return;
 		tabla.prepend(colgroup)
 		
 	}
-function crearColumnaEditar() {
 
-
-}
 </script>

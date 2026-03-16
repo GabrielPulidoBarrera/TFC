@@ -1,8 +1,8 @@
 ---
-const { name, id } = Astro.params;
+const { name, id } = Astro.props;
 import Layout2 from '@layouts/Layout2.astro';
 import Tabla from '@tabla/Tabla.astro';
-import { POST } from "./api/readCollections";
+import { POST } from "@api/readProductsAll";
 
 export async function getStaticPaths() {
 let listaColecciones = [];
@@ -11,7 +11,9 @@ const response = await POST();
 let resultado = await response.json();
 console.log
 resultado.data.map((iteracion: any) =>{
-	listaColecciones.push({params: {name: iteracion.name, id: iteracion.id}});
+	listaColecciones.push({
+		params: {slug: iteracion.name+'-'+iteracion.id},
+		props: {name: iteracion.name, id: iteracion.id}});
 	
 	
 })
