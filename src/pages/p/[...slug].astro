@@ -3,6 +3,7 @@ const { name, id } = Astro.props;
 import Layout2 from '@layouts/Layout2.astro';
 import Tabla from '@tabla/Tabla.astro';
 import { POST } from "@api/readProductsAll";
+import Boton from '@components/general/Boton.astro';
 
 export async function getStaticPaths() {
 let listaColecciones = [];
@@ -28,6 +29,15 @@ console.log(id);
 ---
 
 <Layout2>
-	<Tabla idLink={id}/>
+	<div class="flex justify-center">
+		<div class="text-5xl">
+
+			{name}
+		</div>
+
+		<div class="flex">
+			<Boton text="añadir a coleccion"></Boton>
+		</div>
+	</div>
 </Layout2>
 

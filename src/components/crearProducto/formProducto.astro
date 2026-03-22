@@ -8,8 +8,8 @@ import Boton from '@general/Boton.astro';
 		<fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm">
 			<div class="space-y-2 col-span-full lg:col-span-1">
 				<p class="font-medium">Crear colecciones</p>
-				<p class="text-xs">El nombre de la coleccion sera el nombre visible en el selector de colecciones y en los resultados de busqueda.</p>
-				<p class="text-xs">La visibilidad define si la coleccion puede ser encontrado en la busqueda o no.</p>
+				<p class="text-xs">El nombre del produto sera el nombre visible en el selector de colecciones y en los resultados de busqueda.</p>
+				<p class="text-xs">La visibilidad define si el producto puede ser encontrado en la busqueda o no.</p>
 				<p class="text-xs">Las columnas definiran los atributos que se mostraran en la tabla.</p>
                 <p class="text-xs">Todos estos valores pueden ser modificados en cualquier momento.</p>
                 
@@ -83,7 +83,7 @@ import Boton from '@general/Boton.astro';
     columnas = JSON.stringify(columnas);
     console.log(columnas)
 
-    const response = await fetch("/api/newCollection", {
+    const response = await fetch("/api/newProduct", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

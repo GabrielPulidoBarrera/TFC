@@ -1,4 +1,6 @@
 ---
 import "@styles/global.css";
+const { text } = Astro.props;
+
 ---
-<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50">Sign up</button>
+<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50">{text}</button>
