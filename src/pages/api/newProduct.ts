@@ -14,14 +14,17 @@ const prisma = new PrismaClient({ adapter })
 
 export const POST: APIRoute = async function({ request }){
   try {
-      let {name, visibility} = await request.json();
-    let columnas = {columna: "nombre", precio: 20, fecha: "hoy"}
-    let parseado = await JSON.stringify(columnas);
+    let {name, userID, columns, visibility} = await request.json();
+
+
+    //let columnas = {columna: "nombre", precio: 20, fecha: "hoy"}
+    //let parseado = await JSON.stringify(columnas);
 
     const result = await prisma.product.create({
-      data: {columns:  parseado,
+      data: {columns:  columns,
         name: name,
-        visibility: visibility
+        visibility: visibility,
+        userID: userID
       }
     });
     
