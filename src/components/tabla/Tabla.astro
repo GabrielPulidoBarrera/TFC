@@ -1,9 +1,19 @@
 ---
+import Buscar from "@components/buscar/buscar.astro";
 import "@styles/global.css";
 const { idLink } = Astro.props;
 console.log(idLink)
 ---
 <div class="container p-2 mx-auto sm:p-4 dark:text-gray-800">
+
+
+	<div class="bg-black z-40 fixed top-0 right-0 w-full h-full hidden opacity-30" id="oscurecer"></div>
+	<div class="z-40 fixed top-0 right-0 w-full h-full hidden items-center align-middle text-center justify-center" id="panelBuscar">
+		<div class="bg-white w-1/2 h-1/2">
+			<Buscar></Buscar>
+		</div>
+	</div>
+	
 	<div class="flex justify-between">
 		<h2 class="mb-4 text-2xl font-semibold leading-tight" id="collectionTitle"> TITULO ASTRO</h2>
 		<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer" id="editar">Edit</button>
@@ -20,7 +30,7 @@ console.log(idLink)
 					<tr class="*:p-3'"></tr>
 				</tbody>
 			</table>
-		<div class="hidden bg-white border-dashed border-black border-3 text-center items-center justify-center text-7xl cursor-pointer" id="nuevaFila">+</div>
+		<div class="hidden bg-white border-dashed border-black border-3 text-center items-center justify-center text-7xl cursor-pointer" id="crearNuevaFila">+</div>
 
 		</div>
 		<div class="hidden bg-white border-dashed border-black border-3 text-center items-center justify-center text-7xl cursor-pointer" id="nuevaColumna">+</div>
@@ -35,8 +45,10 @@ console.log(idLink)
 	let titulo = document.querySelector('#collectionTitle');
 	let thead = document.querySelector('thead');
 	let nuevaColumna = document.querySelector('#nuevaColumna');
-	let nuevaFila = document.querySelector('#nuevaFila');
+	let crearNuevaFila = document.querySelector('#crearNuevaFila');
 	let id;
+	let panelBuscar = document.querySelector('#panelBuscar');
+	let oscurecer = document.querySelector('#oscurecer');
 	let tabla = document.querySelector('#tabla')
 	let tituloOriginal = document.querySelector('#collectionTitle')?.textContent;
 	let columnasOriginal;
@@ -128,7 +140,7 @@ console.log(idLink)
 		//muestros los botones correctos
 		editar.style.display = "none";
 		nuevaColumna.style.display = "flex"
-		nuevaFila.style.display = "flex"
+		crearNuevaFila.style.display = "flex"
 		terminar.style.display = "block";
 
 
@@ -137,7 +149,7 @@ console.log(idLink)
 if (tbody == null) return;
 		let tr = document.createElement('tr');
 		tr.className = '*:p-3 border-dashed border';
-		tr.id = 'nuevaFila'
+		tr.id = 'nuevaFIla'
 
 		//hago que las casillas sean editables
 		let todosTD = document.querySelectorAll('td');
@@ -208,6 +220,13 @@ if (tbody == null) return;
 		}
 		tabla.prepend(colgroup)
 		
+	}
+	crearNuevaFila.addEventListener("click", activarPanelNuevaFila);
+
+	function activarPanelNuevaFila(){
+		oscurecer.style.display="flex"
+		panelBuscar.style.display="flex"
+	
 	}
 
 </script>
