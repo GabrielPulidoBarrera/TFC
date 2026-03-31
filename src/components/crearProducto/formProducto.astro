@@ -34,9 +34,23 @@ import Boton from '@general/Boton.astro';
         <div>
           <fieldset>
             <legend>Columnas de la tabla</legend>
-            <span id="selectorColumnas">
-              <input type="text" class="columna" id="columna1"> <label for="columna1">Columna 1</label>
-              <input type="text" class="columna" id="columna2"> <label for="columna2">Columna 2</label>
+            <span id="selectorColumnas" class="grid grid-cols-3 gap-10">
+              <fieldset>
+                <div>
+                  <input type="text" class="columna" id="NombreColumna1"> <label for="columna1">Nombre columna 1</label>
+                </div>
+                <div>
+                  <input type="text" class="columna" id="ValorColumna1"> <label for="columna1">Valor columna 1</label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <div>
+                  <input type="text" class="columna" id="NombreColumna2"> <label for="columna2">Nombre columna 2</label>
+                </div>
+                <div>
+                  <input type="text" class="columna" id="ValorColumna2"> <label for="columna2">Valor columna 2</label>
+                </div>
+              </fieldset>
             </span>
           </fieldset>
             <button type="button" id="nuevaColumna">Añadir mas columnas</button>
@@ -52,6 +66,8 @@ import Boton from '@general/Boton.astro';
 </div>
 
 <script>
+
+  //Seleciono lo necesario
 	let boton = document.querySelector('#crearColeccion');
   let nuevaColumna = document.querySelector('#nuevaColumna');
   let selectorColumnas = document.querySelector('#selectorColumnas');
@@ -59,15 +75,43 @@ import Boton from '@general/Boton.astro';
   let contador = 3;
 
   function newColumn(){
-    let input = document.createElement('input');
-    input.id = "columna"+contador;
-    input.classList.add('columna')
-    let label = document.createElement('label');
-    label.textContent = "Columna "+contador;
-    label.htmlFor = "columna"+contador;
+
+    //Creo el fieldset el primer div, cada div contiene un label y un input.
+    let fieldset = document.createElement('fieldset')
+    let div1 = document.createElement('div');
+
+
+    //Div del nombre
+    let nombreInput = document.createElement('input');
+    nombreInput.id = "NombreColumna"+contador;
+    nombreInput.classList.add('columna')
+    let nombreLabel = document.createElement('label');
+    nombreLabel.textContent = "Nombre columna "+contador;
+    nombreLabel.htmlFor = "nombreColumna"+contador;
+
+
+    div1.append(nombreInput, nombreLabel)
+    fieldset.append(div1);
+
+
+    let div2 = document.createElement('div');
+
+
+    //Div del valor
+    let valorInput = document.createElement('input');
+    valorInput.id = "ValorColumna"+contador;
+    valorInput.classList.add('columna')
+    let valorLabel = document.createElement('label');
+    valorLabel.textContent = "Valor columna "+contador;
+    valorLabel.htmlFor = "valorColumna"+contador;
+
+    div2.append(valorInput, valorLabel)
+    fieldset.append(div2)
+
+    selectorColumnas?.append(fieldset)
+    
+
     contador++
-    selectorColumnas?.append(input);
-    selectorColumnas?.append(label);
 
   }
 
@@ -75,13 +119,39 @@ import Boton from '@general/Boton.astro';
     let collectionName =(document.querySelector("#name") as HTMLInputElement).value;
     let userID = 1;
     let collectionVisibility =(document.querySelector("#visibility") as HTMLInputElement).value;
-    let columnasRaw = selectorColumnas?.querySelectorAll('.columna')
-    let columnas = [];
-    for (let iterable of columnasRaw){
-      columnas.push(iterable.value);
+
+    let columnas = {}
+
+    let selectorColumnas = document.querySelector('#selectorColumnas');
+    let selectorColumnasElementos = selectorColumnas?.querySelectorAll('fieldset')
+
+    if (selectorColumnasElementos==null){
+      return
     }
-    columnas = JSON.stringify(columnas);
+
+    for (let contador = 1; contador<selectorColumnasElementos?.length+1; contador++){
+      let atributoNombre = document.querySelector('#NombreColumna'+contador)
+      let atributoValor = document.querySelector('#ValorColumna'+contador)
+
+
+      if (atributoNombre==null || atributoValor==null){
+        return
+      }
+
+      let nombre = (atributoNombre as HTMLInputElement).value;
+      let valor = (atributoValor  as HTMLInputElement).value;
+
+      console.log('#NombreColumna'+contador);
+      console.log(nombre)
+      console.log(valor)
+
+      if(nombre!=null && valor!=null){
+        columnas[nombre] = valor;
+      }
+    }
+
     console.log(columnas)
+    columnas = JSON.stringify(columnas)
 
     const response = await fetch("/api/newProduct", {
       method: "POST",

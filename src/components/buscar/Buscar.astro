@@ -1,129 +1,175 @@
 ---
-const { idUsuario=1 } = Astro.props;
-
+const { idUsuario = 1, idColeccion } = Astro.props;
 ---
 
+<div class="flex flex-col justify-center content-center items-center">
+  <div class="text-5xl flex justify-center">Categoria</div>
+  <div class="flex w-full justify-around">
+    <div id="selectorProducto">Producto</div>
+    <div id="selectorColeccion">Colecion</div>
+  </div>
 
-<div class="flex flex-col justify-center content-center items-center" > 
+  <div class="text-5xl flex justify-center">Buscar:</div>
 
-        <div class="text-5xl flex justify-center">
-            Buscar:
-        </div>
+  <input id="buscar" type="text" class="w-1/2" />
 
-        <input id="buscar" type="text" class="w-1/2">
+  <div class="text-5xl flex justify-center">Resultados</div>
 
-<div class="text-5xl flex justify-center">
-            Resultados
-        </div>
+  <div
+    id="contenedorTarjetas"
+    class="*:border *:border-solid *:border-red-900 grid grid-cols-1 w-1/2 gap-2"
+  >
+  </div>
+</div>
 
+<script define:vars={{ idColeccion }}>
+  let tipo = "producto";
+  let selectorProducto = document.querySelector("#selectorProducto");
+  let selectorColeccion = document.querySelector("#selectorColeccion");
 
-        <div id="contenedorTarjetas" class="*:border *:border-solid *:border-red-900 grid grid-cols-1 w-1/2 gap-2 ">
-            <a class=" w-full">aaaaaaaaaaaaaaa</a>
-            <a><div>test2</div></a>
-        </div>
+  selectorProducto.addEventListener("click", seleccionarProducto);
+  selectorColeccion.addEventListener("click", seleccionarColeccion);
 
-    </div>
+  function seleccionarProducto() {
+    tipo = "producto";
+  }
+  function seleccionarColeccion() {
+    tipo = "coleccion";
+  }
 
-    
-<script>
+  let contenedor = document.querySelector("#contenedorTarjetas");
+  let buscar = document.querySelector("#buscar");
+  buscar?.addEventListener("change", buscarElementos);
+  function buscarElementos() {
+    readProduct();
+  }
 
-    let contenedor = document.querySelector('#contenedorTarjetas')
-    let buscar = document.querySelector('#buscar');
+  async function readProduct() {
     let textoBuscado = buscar.value;
-    buscar?.addEventListener("change", buscarElementos);
-    function buscarElementos(){
-        console.log(textoBuscado)
-        readProduct(textoBuscado)
+    let resultado;
+
+    console.log("HOLAAAAAAAAAAAA "+textoBuscado);
+
+    if (textoBuscado.length<=0) {
+      return;
     }
 
+    if (tipo == "producto") {
+      const response = await fetch("/api/readProductSearch", {
+        method: "POST",
+        body: JSON.stringify({
+          text: textoBuscado,
+        }),
+      });
+      resultado = await response.json();
+      console.log(resultado.data);
+    } else if (tipo == "coleccion") {
+      const response = await fetch("/api/readCollectionSearch", {
+        method: "POST",
+        body: JSON.stringify({
+          text: textoBuscado,
+        }),
+      });
+      resultado = await response.json();
+      console.log("estas coleccionando!!!!!!!!");
+      console.log(resultado.data);
+    }
 
+    //borro los resultados antiguos
 
-async function readProduct(textoBuscado: any) {
-    const response = await fetch("/api/readProductSearch", {
-      method: "POST",
-      body: JSON.stringify({
-        text: textoBuscado,
+    while (contenedor.firstChild) {
+      contenedor.removeChild(contenedor.firstChild);
+    }
+    resultado.data.map((e) => {
+      console.log(e);
+      //creo el enlace
+      let a = document.createElement("a");
 
-      }),
+      if (tipo == "producto") {
+        a.href = "/p/" + e.name + "-" + e.id;
+      } else if (tipo == "coleccion") {
+        a.href = "/s/" + e.name + "-" + e.id;
+      }
+
+      //busco donde esta la ocurriencia del texto buscado
+      let posicion = e.name.search(textoBuscado);
+
+      //creo un span y le pongo el texto encontrado dentro del span con otro color de texto.
+      let span = document.createElement("span");
+      span.classList.add("text-red-300");
+      span.textContent = textoBuscado;
+
+      let nuevoTexto = e.name.slice(posicion, posicion + textoBuscado.length);
+      let parte1 = e.name.slice(0, posicion);
+      let parte2 = e.name.slice(posicion + nuevoTexto.length);
+
+      console.log("parte1 " + parte1);
+      console.log("parte2 " + parte2);
+
+      console.log("nombre! " + e.name);
+      console.log(posicion);
+      console.log("textoBuscado! " + textoBuscado);
+
+      console.log(nuevoTexto);
+
+      //creo varios div con el nombre, con la parte encontrada en rojo
+      let entradilla = document.createElement("span");
+      let span1 = document.createElement("span");
+      let span2 = document.createElement("span");
+      let span3 = document.createElement("span");
+
+      entradilla.textContent = "Nombre: ";
+      span1.textContent = parte1;
+      span2.textContent = nuevoTexto;
+      span3.textContent = parte2;
+
+      span2.classList.add("text-red-400");
+
+      let texto = document.createElement("div");
+      texto.append(entradilla, span1, span2, span3);
+
+      a.append(texto);
+      a.style.display = "flex";
+      a.style.justifyContent = "space-around";
+      a.id = e.id;
+
+      let button = document.createElement("button");
+      button.type = "button";
+      button.textContent = "hola";
+      button.id = "meterColeccion";
+      a.append(button);
+      contenedor?.append(a);
     });
-    let resultado = await response.json();
-    console.log(resultado.data);
+  }
 
-    resultado.data.map((e: any) => {
-
-        console.log(e);
-        //creo el enlace
-        let a = document.createElement('a')
-        a.href = '/p/'+e.name+'-'+e.id;
-
-
-
-        //busco donde esta la ocurriencia del texto buscado
-        let posicion = e.name.search(textoBuscado);
-
-        //creo un span y le pongo el texto encontrado dentro del span con otro color de texto.
-        let span = document.createElement('span');
-        span.classList.add('text-red-300');
-        span.textContent = textoBuscado;
-
-        let nuevoTexto = e.name.slice(posicion, posicion+textoBuscado.length);
-        let parte1 = e.name.slice(0, posicion);
-        let parte2 = e.name.slice(posicion+1);
-
-        console.log ('parte1 '+parte1);
-        console.log('parte2 '+parte2)
-
-        console.log ("nombre! "+e.name)
-        console.log(posicion)
-        console.log('textoBuscado! ' + textoBuscado)
-
-        console.log(nuevoTexto);
-
-                //creo varios div con el nombre, con la parte encontrada en rojo
-        let entradilla = document.createElement('span');
-        let span1 = document.createElement('span')
-        let span2 = document.createElement('span')
-        let span3 = document.createElement('span')
-
-        entradilla.textContent = 'Nombre: '
-        span1.textContent = parte1
-        span2.textContent= nuevoTexto;
-        span3.textContent = parte2;
-
-        span2.classList.add('text-red-400')
-        
-        let texto = document.createElement('div');
-        texto.append(entradilla, span1, span2, span3)
-
-        a.append(texto)
-        a.style.display = "flex";
-        a.style.justifyContent = "space-around"
-        a.id = e.id;
-
-        let button = document.createElement('button')
-        button.type = 'button';
-        button.textContent ="hola";
-        button.id="meterColeccion"
-        a.append(button);
-        contenedor?.append(a);
-    })
-
-}
-
-    async function eventoDelegado(e: Event){
-        console.log(e.target.id)
-        if (e.target.id!="meterColeccion"){
-            return
-        }
-        alert("ME")
-        e.preventDefault()
-        e.stopPropagation()
-        let id = e.target.closest("a").id
+  async function eventoDelegado(e) {
+    if (e.target == null) {
+      return;
     }
+    console.log(e.target.id);
+    if (e.target.id != "meterColeccion") {
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    let id = e.target.closest("a").id;
+    if (idColeccion) {
+      const response = await fetch("/api/newCollectionProduct", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productID: Number(id),
+          collectionID: Number(idColeccion),
+        }),
+      });
+      console.log(response);
+      const result = await response.json();
+      console.log("Response data:", result);
+      alert("Response: " + result.message);
+    }
+  }
 
-    document.addEventListener("click", eventoDelegado);
-
-
-
-
+  document.addEventListener("click", eventoDelegado);
 </script>

@@ -22,7 +22,8 @@ export const POST: APIRoute = async function({ request }) {
       where: {
         name: {
           contains: text   
-        }
+        },
+        visibility: "publico",
       }
     });
 

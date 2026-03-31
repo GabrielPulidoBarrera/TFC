@@ -1,8 +1,8 @@
 ---
-import Buscar from "@components/buscar/buscar.astro";
+import Buscar from "@components/buscar/Buscar.astro";
 import "@styles/global.css";
 const { idLink } = Astro.props;
-console.log(idLink)
+//console.log(idLink)
 ---
 <div class="container p-2 mx-auto sm:p-4 dark:text-gray-800">
 
@@ -10,7 +10,7 @@ console.log(idLink)
 	<div class="bg-black z-40 fixed top-0 right-0 w-full h-full hidden opacity-30" id="oscurecer"></div>
 	<div class="z-40 fixed top-0 right-0 w-full h-full hidden items-center align-middle text-center justify-center" id="panelBuscar">
 		<div class="bg-white w-1/2 h-1/2">
-			<Buscar></Buscar>
+			<Buscar idColeccion={idLink}></Buscar>
 		</div>
 	</div>
 	
@@ -27,7 +27,6 @@ console.log(idLink)
 					<tr class=" *:p-3"></tr>
 				</thead>
 				<tbody class="*:border-b *:border-opacity-20 *:dark:border-gray-300 *:dark:bg-gray-50">
-					<tr class="*:p-3'"></tr>
 				</tbody>
 			</table>
 		<div class="hidden bg-white border-dashed border-black border-3 text-center items-center justify-center text-7xl cursor-pointer" id="crearNuevaFila">+</div>
@@ -52,8 +51,57 @@ console.log(idLink)
 	let tabla = document.querySelector('#tabla')
 	let tituloOriginal = document.querySelector('#collectionTitle')?.textContent;
 	let columnasOriginal;
+	let columnas;
+	let resultado;
 	nuevaColumna.addEventListener("click", crearColumna)
+	
+	readProduct();
 	readCollecionProduct();
+	editar?.addEventListener("click", activarEditar);
+	terminar?.addEventListener("click", terminarEditar);
+
+	crearNuevaFila.addEventListener("click", activarPanelNuevaFila);
+
+
+
+
+async function readProduct() {
+		if (tbody == null) return;
+		if (titulo == null) return;
+		if (thead == null) return;
+		if (thead.firstElementChild == null) return;
+
+
+		const response = await fetch("/api/readCollections", {
+			method: "POST",
+		});
+		resultado = await response.json();
+
+		//console.log(resultado.data);
+
+		// Buscar la colección que coincide con idLink
+		let correcto = resultado.data.find((e) => {
+			return e.id == idLink;
+		});
+
+
+		columnas = JSON.parse(correcto.columns);
+		columnasOriginal = JSON.parse(correcto.columns);
+		//console.log(columnasOriginal)
+		titulo.textContent = correcto.name;
+
+		for (let i of columnas) {
+			let colgroup = document.createElement('colgroup')
+			let th = document.createElement('th');
+			th.textContent = i;
+			thead?.firstElementChild.append(th);
+			tbody.firstElementChild?.append(document.createElement('td'));
+			tabla.prepend(colgroup);
+		}
+		id = correcto.id;
+	}
+
+
 
 	async function readCollecionProduct() {
 		// Leo todos los productos de la colección 
@@ -82,56 +130,28 @@ console.log(idLink)
 		let resultadoProduct = await responseProducts.json();
 		let dataProduct = resultadoProduct.data;
 
-		console.log(resultadoProduct);
+		//console.log(resultadoProduct);
 
 		// Rellenar la tabla con los datos
 		for (let objetoRaw of dataProduct) {
+
+			console.log(dataProduct);
+
+			//console.log("Me ejcuto!!")
+			console.log(columnas)
+			crearTR();
 			let objeto = JSON.parse(objetoRaw.columns);
 			for (let iterable in objeto) {
-				if (columnasOriginal.includes(iterable)) {
-					let posicion = columnasOriginal.indexOf(iterable);
+				if (columnas.includes(iterable)) {
+					let posicion = columnas.indexOf(iterable);
 					tbody.lastElementChild?.childNodes[posicion].append(objeto[iterable]);
 				}
 			}
 
-			crearTR();
 		}
 	}
 
-	async function readProduct() {
-		if (tbody == null) return;
-		if (tbody.lastElementChild == null) return;
-		if (titulo == null) return;
-		if (thead == null) return;
-		if (thead.firstElementChild == null) return;
-
-		const response = await fetch("/api/readCollections", {
-			method: "POST",
-		});
-		let resultado = await response.json();
-
-		console.log(resultado.data);
-
-		// Buscar la colección que coincide con idLink
-		let correcto = resultado.data.find((e) => {
-			return e.id == idLink;
-		});
-
-
-		let columnas = JSON.parse(correcto.columns);
-		columnasOriginal = JSON.parse(correcto.columns);
-		titulo.textContent = correcto.name;
-
-		for (let i of columnas) {
-			let colgroup = document.createElement('colgroup')
-			let th = document.createElement('th');
-			th.textContent = i;
-			thead?.firstElementChild.append(th);
-			tbody.firstElementChild?.append(document.createElement('td'));
-			tabla.prepend(colgroup);
-		}
-		id = correcto.id;
-	}
+	
 
 	function activarEditar() {
 		if (editar == null) return;
@@ -165,6 +185,11 @@ if (tbody == null) return;
 	}
 
 	async function terminarEditar() {
+
+		if (editar == null) return;
+		if (terminar == null) return;
+		if (tbody == null) return;
+
 		let data = { id: id };
 		let nuevaColumnas = [];
 		if (thead == null || thead.firstElementChild == null || thead.firstElementChild.childNodes == null) return;
@@ -188,23 +213,53 @@ if (tbody == null) return;
 			},
 			body: JSON.stringify(data),
 		});
+
+		columnas = nuevaColumnas;
+		console.log("EDITADO!");
+		console.log(columnas)
+
+		//muestros los botones correctos
+		editar.style.display = "flex";
+		nuevaColumna.style.display = "none"
+		crearNuevaFila.style.display = "none"
+		terminar.style.display = "none";
+
+
+
+
+		//Borro los datos anteriores
+		    while (tbody.firstChild) {
+      tbody.removeChild(tbody.firstChild);
+    }
+
+
+
+readCollecionProduct()
+
+
+
+
+
+
+
+
 	}
 
-	readProduct();
-	editar?.addEventListener("click", activarEditar);
-	terminar?.addEventListener("click", terminarEditar);
-
 	function crearTR() {
+
 		if (tbody == null) return;
 		let tr = document.createElement('tr');
 		tr.className = '*:p-3';
-		let numeroTD = tbody.lastElementChild?.childElementCount;
+
+		let numeroTD = thead.lastElementChild?.childElementCount;
+		console.log(numeroTD)
 		if (numeroTD == null) return;
 		for (let i = 0; i < numeroTD; i++) {
 			let td = document.createElement('td');
 			tr.append(td);
 		}
-		tbody.append(tr);
+				tbody.append(tr);
+
 	}
 	function crearColumna() {
 		if (tbody == null || thead == null) return;
@@ -215,18 +270,19 @@ if (tbody == null) return;
 		let lista = tbody.querySelectorAll('tr')
 		for (let iterable of lista){
 			let td = document.createElement('td');
-			console.log(iterable);
+			//console.log(iterable);
 			iterable.append(td)
 		}
 		tabla.prepend(colgroup)
 		
 	}
-	crearNuevaFila.addEventListener("click", activarPanelNuevaFila);
 
-	function activarPanelNuevaFila(){
+		function activarPanelNuevaFila(){
 		oscurecer.style.display="flex"
 		panelBuscar.style.display="flex"
 	
 	}
+	
+
 
 </script>

@@ -1,0 +1,43 @@
+---
+const {id} = Astro.params
+import Layout2 from '@layouts/Layout2.astro';
+import Tabla from '@tabla/Tabla.astro';
+import { POST } from "@api/readProductsAll";
+import Boton from '@components/general/Boton.astro';
+
+// export async function getStaticPaths() {
+// let listaColecciones = [];
+
+// const response = await POST();
+// let resultado = await response.json();
+// console.log
+// resultado.data.map((iteracion: any) =>{
+// 	listaColecciones.push({
+// 		params: {slug: iteracion.name+'-'+iteracion.id},
+// 		props: {name: iteracion.name, id: iteracion.id}});
+	
+	
+// })
+// return listaColecciones
+// }
+
+console.log(id);
+
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<Layout2>
+	<div class="flex justify-center">
+		<div class="text-5xl">
+
+			{name}
+		</div>
+
+		<div class="flex">
+			<Boton text="añadir a coleccion"></Boton>
+		</div>
+	</div>
+</Layout2>
+

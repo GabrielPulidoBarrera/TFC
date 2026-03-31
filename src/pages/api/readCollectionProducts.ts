@@ -15,6 +15,8 @@ const prisma = new PrismaClient({ adapter })
 export const POST: APIRoute = async function({ request }){
       let {id} = await request.json();
 
+  console.log(id);
+
   const result = await prisma.collectionProducts.findMany({
     where: {
       collectionID: id

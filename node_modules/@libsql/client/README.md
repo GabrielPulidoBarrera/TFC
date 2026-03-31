@@ -47,6 +47,8 @@
   </a>
 </p>
 
+> **Looking for the Turso serverless package?** Check out [`@tursodatabase/serverless`](https://www.npmjs.com/package/@tursodatabase/serverless) — the lightest option with zero native dependencies, and will be the driver to later support concurrent writes. Use `@libsql/client` if you need a battle-tested driver today with ORM integration.
+
 ## Features
 
 -   🔌 Works offline with [Embedded Replicas](https://docs.turso.tech/features/embedded-replicas/introduction)

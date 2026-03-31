@@ -71,6 +71,19 @@ import "@styles/global.css";
   <input type="button" id="collectionColumn" name="collectionColumn" />
 </form>
 
+
+
+<form>
+  <fieldset>Crear cookie sesion</fieldset>
+
+  <label for="crearCookie">send</label>
+  <input type="button" id="crearCookie" name="crearCookie" />
+</form>
+
+
+
+
+
 <script>
 
 
@@ -279,6 +292,8 @@ import "@styles/global.css";
   }
 
 
+
+
   // ===== READ PRODUCT =====
 
 
@@ -309,6 +324,18 @@ document.querySelector('#collectionColumn')?.addEventListener("click", newCollec
     console.log("Response data:", result);
     alert("Response: " + result.message);
   }
+
+
+let cookie = document.querySelector('#crearCookie');
+cookie?.addEventListener("click", funcionCrearCookie);
+
+async function funcionCrearCookie(){
+    const response = await fetch("/api/cosoLogin", {
+      method: "POST",
+    });
+    let resultado = await response.json();
+    console.log(resultado.data);
+}
 
 
 </script>
