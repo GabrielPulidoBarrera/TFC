@@ -14,11 +14,11 @@ const prisma = new PrismaClient({ adapter })
 
 export const POST: APIRoute = async function({ request }){
   try {
-    let {name} = await request.json();
+    let {name, password, email} = await request.json();
     console.log(name)
   
     const result = await prisma.users.create({
-      data: {name}
+      data: {name, password, email}
     });
     
     console.log("User created:", result);

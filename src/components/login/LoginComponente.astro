@@ -1,0 +1,63 @@
+---
+import "@styles/global.css";
+
+//if (!user) return Astro.redirect('/login')
+---
+
+
+<section class="p-6 dark:text-gray-900">
+	<form novalidate="" action="" class="container flex flex-col mx-auto space-y-12">
+		<fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm">
+			<div>
+                <label for="nombre" class="text-sm">nombre</label>
+				<input id="nombre" type="text" placeholder="nombre" class="w-full rounded-md focus:ring focus:ring-opacity-75">
+            </div>
+			<div>
+                <label for="password" class="text-sm">Contraseña</label>
+				<input id="password" type="password" placeholder="contraseña" class="w-full rounded-md focus:ring focus:ring-opacity-75">
+            </div>
+		</fieldset>
+        <button type="button" id="crearUsuario">Crear usuario</button>    
+    </form>
+
+</section>
+
+
+<script>
+import { getSHA256Hash } from "boring-webcrypto-sha256";
+
+    let botonUsuario = document.querySelector('#crearUsuario');
+    botonUsuario?.addEventListener("click", nuevoUsuario)
+
+
+    async function nuevoUsuario(){
+
+        if (document.querySelector('#nombre')==null){
+            return
+        }
+        if (document.querySelector('#password')==null){
+            return
+        }
+        let username = (document.querySelector('#nombre') as HTMLInputElement).value
+        let password = (document.querySelector('#password') as HTMLInputElement).value
+        password = await getSHA256Hash(password);
+         const response = await fetch("../api/verifyLogin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: username,
+        password: password,
+
+      }),
+    });
+
+    if (response.ok){
+        console.log("Valido!")
+    }
+    else{
+        console.log("Invalido")
+    }
+    }
+</script>

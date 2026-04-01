@@ -4,6 +4,7 @@ import Layout2 from '@layouts/Layout2.astro';
 import Tabla from '@tabla/Tabla.astro';
 import { POST } from "@api/readProductsAll";
 import Boton from '@components/general/Boton.astro';
+import { obtenerCookie } from '../../libs/auth/controlCookies';
 
 // export async function getStaticPaths() {
 // let listaColecciones = [];
@@ -20,6 +21,9 @@ import Boton from '@components/general/Boton.astro';
 // })
 // return listaColecciones
 // }
+
+let cookie = await obtenerCookie(Astro.cookies?.get('sesion'));
+
 
 console.log(id);
 

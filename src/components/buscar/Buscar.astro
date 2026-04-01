@@ -86,9 +86,9 @@ const { idUsuario = 1, idColeccion } = Astro.props;
       let a = document.createElement("a");
 
       if (tipo == "producto") {
-        a.href = "/p/" + e.name + "-" + e.id;
+        a.href = "/p/" + e.name + "-" + e.id + "-" + e.visibility;
       } else if (tipo == "coleccion") {
-        a.href = "/s/" + e.name + "-" + e.id;
+        a.href = "/s/" + e.name + "-" + e.id+ "-" + e.visibility;
       }
 
       //busco donde esta la ocurriencia del texto buscado

@@ -2,6 +2,7 @@
 import Layout2 from '@layouts/Layout2.astro';
 import Tabla from '@tabla/Tabla.astro';
 import { POST } from "@api/readCollections";
+import { obtenerCookie } from '../../libs/auth/controlCookies';
 
 const {id} = Astro.params
 
@@ -20,6 +21,9 @@ const {id} = Astro.params
 // })
 // return listaColecciones
 // }
+
+let cookie = await obtenerCookie(Astro.cookies?.get('sesion'));
+
 
 console.log(id);
 

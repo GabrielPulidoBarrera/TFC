@@ -2,9 +2,12 @@
 import Layout2 from '@layouts/Layout2.astro';
 import "@styles/global.css";
 import { POST } from "./api/readCollections";
+import { obtenerCookie } from '../libs/auth/controlCookies';
 
-// Create a minimal Request object (you may need to adjust based on your handler)
-const response = await POST();
+let cookie = await obtenerCookie(Astro.cookies?.get('sesion'));
+
+
+const response = await POST(cookie);
 let resultado = await response.json();
 console.log(resultado)
 
@@ -15,7 +18,7 @@ console.log(resultado)
         <a href="/crearColeccion" class="border border-dashed flex justify-center items-center text-4xl transition-all duration-150 hover:text-7xl  ">+</a>
         <!-- <div class="border flex justify-center items-center bg-[url(../assets/fondoPlaceholder.png)] transition-all duration-150 grayscale-100 bg-size-[300%] bg-no-repeat hover:bg-size-[400%] hover:grayscale-0">b</div> -->
         {resultado.data.map((iteracion: any) =>(
-                    <a href={'/s/'+iteracion.name+"-"+iteracion.id}<div class="border flex justify-center items-center bg-[url(../assets/fondoPlaceholder.png)] transition-all duration-150 grayscale-100 bg-size-[300%] bg-no-repeat hover:bg-size-[400%] hover:grayscale-0"><div class="bg-black/20 p-2">{iteracion.name}</div></div></a>
+                    <a href={'/s/'+iteracion.name+"-"+iteracion.id+"-"+iteracion.visibility}<div class="border flex justify-center items-center bg-[url(../assets/fondoPlaceholder.png)] transition-all duration-150 grayscale-100 bg-size-[300%] bg-no-repeat hover:bg-size-[400%] hover:grayscale-0"><div class="bg-black/20 p-2">{iteracion.name}</div></div></a>
 
         ))}
 

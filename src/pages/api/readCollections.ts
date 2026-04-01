@@ -12,8 +12,15 @@ const adapter = new PrismaMariaDb({
 })
 const prisma = new PrismaClient({ adapter })
 
-export const POST: APIRoute = async function(){
-  const result = await prisma.collection.findMany()
+export const POST: APIRoute = async function({ request }) {
+  
+  const { idUsuario } = await request.json();
+  const result = await prisma.collection.findMany({
+     where: {
+        id: idUsuario
+
+      }
+  })
     return new Response(
       JSON.stringify({ 
         success: true, 
