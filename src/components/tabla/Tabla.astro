@@ -1,7 +1,6 @@
 ---
 import Buscar from "@components/buscar/Buscar.astro";
 import "@styles/global.css";
-import { verifyCookie } from "../../libs/auth/jwt";
 import { obtenerCookie } from "../../libs/auth/controlCookies";
 const { idLink } = Astro.props;
 //console.log(idLink)
@@ -44,7 +43,8 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 	</div>
 </div>
 
-<script define:vars={{ idLink }}>
+<script define:vars={{ idLink, cookie }}>
+	console.log(idLink)
 	// Selectores
 	let tbody = document.querySelector('tbody');
 	let editar = document.querySelector('#editar');
@@ -82,6 +82,7 @@ async function readProduct() {
 
 		const response = await fetch("/api/readCollections", {
 			method: "POST",
+			body: JSON.stringify({ idUsuario: Number(cookie) }),
 		});
 		resultado = await response.json();
 
@@ -124,6 +125,7 @@ async function readProduct() {
 		let resultado = await response.json();
 		let data = resultado.data;
 
+		console.log(data)
 		// Extraer los IDs de producto
 		let arrayProductos = [];
 		for (let iterable of data) {
@@ -138,7 +140,7 @@ async function readProduct() {
 		let resultadoProduct = await responseProducts.json();
 		let dataProduct = resultadoProduct.data;
 
-		//console.log(resultadoProduct);
+		console.log(resultadoProduct);
 
 		// Rellenar la tabla con los datos
 		for (let objetoRaw of dataProduct) {

@@ -1,6 +1,10 @@
 ---
 import "@styles/global.css";
 import Boton from '@general/Boton.astro';
+import { obtenerCookie } from "../../libs/auth/controlCookies";
+
+        let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
+
 
 ---
 <section class="p-6 dark:text-gray-900">
@@ -51,7 +55,7 @@ import Boton from '@general/Boton.astro';
     <Boton text="añadir"></Boton>
 </div>
 
-<script>
+<script define:vars={{ cookie }}>
 	let boton = document.querySelector('#crearColeccion');
   let nuevaColumna = document.querySelector('#nuevaColumna');
   let selectorColumnas = document.querySelector('#selectorColumnas');
@@ -72,9 +76,9 @@ import Boton from '@general/Boton.astro';
   }
 
 	 async function newCollection() {
-    let collectionName =(document.querySelector("#name") as HTMLInputElement).value;
-    let userID = 1;
-    let collectionVisibility =(document.querySelector("#visibility") as HTMLInputElement).value;
+    let collectionName =(document.querySelector("#name")).value;
+    let userID = Number(cookie);
+    let collectionVisibility =(document.querySelector("#visibility")).value;
     let columnasRaw = selectorColumnas?.querySelectorAll('.columna')
     let columnas = [];
     for (let iterable of columnasRaw){

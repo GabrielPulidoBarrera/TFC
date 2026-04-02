@@ -1,14 +1,24 @@
 ---
 import Layout2 from '@layouts/Layout2.astro';
 import "@styles/global.css";
-import { POST } from "./api/readCollections";
 import { obtenerCookie } from '../libs/auth/controlCookies';
 
 let cookie = await obtenerCookie(Astro.cookies?.get('sesion'));
 
+console.log(cookie)
+const url = new URL('/api/readCollections', Astro.url);
 
-const response = await POST(cookie);
-let resultado = await response.json();
+ const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        idUsuario: Number(cookie) 
+    }),
+    })
+
+      let resultado = await response.json();
 console.log(resultado)
 
 ---

@@ -15,9 +15,12 @@ const prisma = new PrismaClient({ adapter })
 export const POST: APIRoute = async function({ request }) {
   
   const { idUsuario } = await request.json();
+
+    console.log("SEVIDOR"+idUsuario)
+
   const result = await prisma.collection.findMany({
      where: {
-        id: idUsuario
+        userID: idUsuario
 
       }
   })
