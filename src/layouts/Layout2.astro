@@ -2,6 +2,9 @@
 import "@styles/global.css";
 import NavBonito from "@general/NavBonito.astro";
 import FooterBonito from "@general/FooterBonito.astro"
+import { obtenerCookie } from "../libs/auth/controlCookies";
+
+        let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 ---
 <!doctype html>
 <html lang="en">
@@ -17,7 +20,7 @@ import FooterBonito from "@general/FooterBonito.astro"
         <NavBonito>
 
         </NavBonito>
-        <main>
+        <main data-cookie={cookie}>
             <slot />
         </main>
         <FooterBonito>

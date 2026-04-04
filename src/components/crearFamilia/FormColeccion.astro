@@ -3,7 +3,6 @@ import "@styles/global.css";
 import Boton from '@general/Boton.astro';
 import { obtenerCookie } from "../../libs/auth/controlCookies";
 
-        let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 
 
 ---
@@ -55,7 +54,11 @@ import { obtenerCookie } from "../../libs/auth/controlCookies";
     <Boton text="añadir"></Boton>
 </div>
 
-<script define:vars={{ cookie }}>
+<script>
+import { crearDialog } from "../../libs/dialog/crearDialog";
+
+    
+
 	let boton = document.querySelector('#crearColeccion');
   let nuevaColumna = document.querySelector('#nuevaColumna');
   let selectorColumnas = document.querySelector('#selectorColumnas');
@@ -76,12 +79,24 @@ import { obtenerCookie } from "../../libs/auth/controlCookies";
   }
 
 	 async function newCollection() {
-    let collectionName =(document.querySelector("#name")).value;
+    let collectionName =(document.querySelector("#name") as HTMLInputElement).value;
+    let main = document.querySelector('main');
+    if(main==null){
+      return
+    }
+    if (main.dataset==null){
+      return
+    }
+    if (main.dataset.cookie==null){
+      return
+    }
+    let cookie = main.dataset.cookie
+
     let userID = Number(cookie);
-    let collectionVisibility =(document.querySelector("#visibility")).value;
+    let collectionVisibility =(document.querySelector("#visibility") as HTMLInputElement).value;
     let columnasRaw = selectorColumnas?.querySelectorAll('.columna')
     let columnas = [];
-    for (let iterable of columnasRaw){
+    for (let iterable of columnasRaw as any){
       columnas.push(iterable.value);
     }
     columnas = JSON.stringify(columnas);
@@ -102,7 +117,10 @@ import { obtenerCookie } from "../../libs/auth/controlCookies";
     console.log(response);
     const result = await response.json();
     console.log("Response data:", result);
-    alert("Response: " + result.message);
+    if(response.ok){
+      crearDialog("Coleccion creada con exito!")
+    }
+ 
   }
 
   boton?.addEventListener("click", newCollection);

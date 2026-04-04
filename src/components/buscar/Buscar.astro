@@ -2,7 +2,11 @@
 const { idUsuario = 1, idColeccion } = Astro.props;
 ---
 
-<div class="flex flex-col justify-center content-center items-center">
+<div
+  class="flex flex-col justify-center content-center items-center"
+  data-idcoleccion={idColeccion}
+  id="contenedorBuscar"
+>
   <div class="text-5xl flex justify-center">Categoria</div>
   <div class="flex w-full justify-around">
     <div id="selectorProducto">Producto</div>
@@ -22,13 +26,21 @@ const { idUsuario = 1, idColeccion } = Astro.props;
   </div>
 </div>
 
-<script define:vars={{ idColeccion }}>
+<script>
+  import type { any } from "astro:schema";
+  import { crearDialog } from "../../libs/dialog/crearDialog";
+import type Login from "../../pages/login.astro";
+
   let tipo = "producto";
   let selectorProducto = document.querySelector("#selectorProducto");
   let selectorColeccion = document.querySelector("#selectorColeccion");
 
-  selectorProducto.addEventListener("click", seleccionarProducto);
-  selectorColeccion.addEventListener("click", seleccionarColeccion);
+  if (selectorProducto != null) {
+    selectorProducto.addEventListener("click", seleccionarProducto);
+  }
+  if (selectorColeccion != null) {
+    selectorColeccion.addEventListener("click", seleccionarColeccion);
+  }
 
   function seleccionarProducto() {
     tipo = "producto";
@@ -38,19 +50,25 @@ const { idUsuario = 1, idColeccion } = Astro.props;
   }
 
   let contenedor = document.querySelector("#contenedorTarjetas");
-  let buscar = document.querySelector("#buscar");
+  let buscar = document.querySelector("#buscar") as HTMLInputElement;
   buscar?.addEventListener("change", buscarElementos);
   function buscarElementos() {
     readProduct();
   }
 
   async function readProduct() {
+    if (buscar == null) {
+      return;
+    }
+    if (buscar.value == null) {
+      return;
+    }
     let textoBuscado = buscar.value;
     let resultado;
 
-    console.log("HOLAAAAAAAAAAAA "+textoBuscado);
+    console.log("HOLAAAAAAAAAAAA " + textoBuscado);
 
-    if (textoBuscado.length<=0) {
+    if (textoBuscado.length <= 0) {
       return;
     }
 
@@ -77,19 +95,23 @@ const { idUsuario = 1, idColeccion } = Astro.props;
 
     //borro los resultados antiguos
 
+    if (contenedor == null) {
+      return;
+    }
+
     while (contenedor.firstChild) {
       contenedor.removeChild(contenedor.firstChild);
     }
-    resultado.data.map((e) => {
+    resultado.data.map((e: any) => {
       console.log(e);
       //creo el enlace
       let a = document.createElement("a");
 
-      if (tipo == "producto") {
-        a.href = "/p/" + e.name + "-" + e.id + "-" + e.visibility;
-      } else if (tipo == "coleccion") {
-        a.href = "/s/" + e.name + "-" + e.id+ "-" + e.visibility;
-      }
+      // if (tipo == "producto") {
+      //   a.href = "/p/" + e.name + "-" + e.id + "-" + e.visibility;
+      // } else if (tipo == "coleccion") {
+      //   a.href = "/s/" + e.name + "-" + e.id + "-" + e.visibility;
+      // }
 
       //busco donde esta la ocurriencia del texto buscado
       let posicion = e.name.search(textoBuscado);
@@ -137,19 +159,47 @@ const { idUsuario = 1, idColeccion } = Astro.props;
       button.type = "button";
       button.textContent = "hola";
       button.id = "meterColeccion";
+      button.classList.add("self-center", "px-8", "py-3", "font-semibold", "rounded", "dark:bg-violet-600", "dark:text-gray-50")
+
       a.append(button);
       contenedor?.append(a);
     });
   }
 
-  async function eventoDelegado(e) {
+  async function eventoDelegado(e: any) {
     if (e.target == null) {
+      console.log("regreso en e.target")
       return;
     }
     console.log(e.target.id);
     if (e.target.id != "meterColeccion") {
+      console.log("regreso en meterColeccion")
+
       return;
     }
+    let contenedorBuscar = document.querySelector(
+      "#contenedorBuscar",
+    ) as HTMLInputElement;
+    if (contenedorBuscar == null) {
+        console.log("regreso en contenedorBuscar")
+
+      return;
+    }
+    if (contenedorBuscar.dataset == null) {
+        console.log("regreso en contenedorBuscar dataset")
+
+      return;
+    }
+    if (contenedorBuscar.dataset.idcoleccion == null) {
+        console.log("regreso en contenedorBuscar dataset idcoleccion")
+
+      return;
+    }
+
+    let idColeccion = contenedorBuscar.dataset.idcoleccion;
+
+    console.log("idcoleccion = "+idColeccion)
+
     e.preventDefault();
     e.stopPropagation();
     let id = e.target.closest("a").id;
@@ -167,7 +217,9 @@ const { idUsuario = 1, idColeccion } = Astro.props;
       console.log(response);
       const result = await response.json();
       console.log("Response data:", result);
-      alert("Response: " + result.message);
+      if (response.ok) {
+        crearDialog("Producto añadido a la coleccion exitosamente");
+      }
     }
   }
 
