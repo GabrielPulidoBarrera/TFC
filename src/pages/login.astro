@@ -2,9 +2,15 @@
 
 import Layout2 from "@layouts/Layout2.astro";
 import LoginFormulario from "@components/login/LoginFormulario.astro";
-
+import { obtenerCookie } from "../libs/auth/controlCookies";
+let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 ---
 
 <Layout2>
-    <LoginFormulario></LoginFormulario>
+    {!cookie &&
+        <LoginFormulario></LoginFormulario>
+    }
+    {cookie &&
+        <div class="text-center">Cierra sesion antes de volver a iniciar sesion.</div>
+    }
 </Layout2>

@@ -14,8 +14,11 @@ const prisma = new PrismaClient({ adapter })
 
 export const POST: APIRoute = async function({ request }){
   try {
-    let {id, name, columns} = await request.json();
+    let {id, name, columns, cookie} = await request.json();
     console.log(name)
+
+    console.log("COOKIE!!!"+ id)
+
     let data: any = {} 
 
 
@@ -32,6 +35,7 @@ export const POST: APIRoute = async function({ request }){
     const result = await prisma.collection.update({
       where: {
         id: id,
+        userID: cookie,
       },
       data
     });

@@ -107,11 +107,11 @@ import type Login from "../../pages/login.astro";
       //creo el enlace
       let a = document.createElement("a");
 
-      // if (tipo == "producto") {
-      //   a.href = "/p/" + e.name + "-" + e.id + "-" + e.visibility;
-      // } else if (tipo == "coleccion") {
-      //   a.href = "/s/" + e.name + "-" + e.id + "-" + e.visibility;
-      // }
+      if (tipo == "producto") {
+        a.href = "/p/" + e.name + "-" + e.id + "-" + e.visibility;
+      } else if (tipo == "coleccion") {
+        a.href = "/s/" + e.name + "-" + e.id + "-" + e.visibility;
+      }
 
       //busco donde esta la ocurriencia del texto buscado
       let posicion = e.name.search(textoBuscado);
@@ -221,6 +221,16 @@ import type Login from "../../pages/login.astro";
         crearDialog("Producto añadido a la coleccion exitosamente");
       }
     }
+    	let panelBuscar = (document.querySelector('#panelBuscar') as HTMLElement);
+	let oscurecer = (document.querySelector('#oscurecer') as HTMLElement);
+  if (oscurecer==null){
+    return
+  }
+  if (panelBuscar==null){
+    return
+  }
+  		oscurecer.style.display="none"
+		panelBuscar.style.display="none"
   }
 
   document.addEventListener("click", eventoDelegado);

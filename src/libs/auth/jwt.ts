@@ -18,3 +18,4 @@ export const descifrarCookie = (galletita: string) => {
 export const verifyCookie = (galletita: string) => {
     return jwt.verify(galletita, JWT_TOKEN)
 }
+

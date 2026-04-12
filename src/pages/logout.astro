@@ -1,0 +1,25 @@
+---
+
+import HeroBonito from '@index/HeroBonito.astro';
+import Layout2 from '@layouts/Layout2.astro';
+
+
+---
+
+<Layout2>
+
+</Layout2>
+
+<script>
+
+
+
+		try {
+			const response = await fetch('/api/borrarCookie', {method:'POST'})
+			if (response.ok) window.location.href = '/login';
+			
+		} catch (error) {
+			console.log(error);
+		}
+
+</script>

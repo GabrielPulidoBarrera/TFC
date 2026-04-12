@@ -23,8 +23,11 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 	
 	<div class="flex justify-between">
 		<h2 class="mb-4 text-2xl font-semibold leading-tight" id="collectionTitle"> TITULO ASTRO</h2>
-		<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer" id="editar">Edit</button>
-		<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden" id="terminar">Finish</button>
+		{ cookie &&
+
+			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer" id="editar">Edit</button>
+			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden" id="terminar">Finish</button>
+		}
 	</div>
 	<div class="overflow-x-auto flex">
 		<div class="grow flex-col" >
@@ -44,6 +47,7 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 </div>
 
 <script define:vars={{ idLink, cookie }}>
+
 	console.log(idLink)
 	// Selectores
 	let tbody = document.querySelector('tbody');
@@ -80,19 +84,14 @@ async function readProduct() {
 		if (thead.firstElementChild == null) return;
 
 
-		const response = await fetch("/api/readCollections", {
+		const response = await fetch("/api/readSpecificCollection", {
 			method: "POST",
-			body: JSON.stringify({ idUsuario: Number(cookie) }),
+			body: JSON.stringify({ idLink: Number(idLink) }),
 		});
 		resultado = await response.json();
-
-		//console.log(resultado.data);
-
-		// Buscar la colección que coincide con idLink
-		let correcto = resultado.data.find((e) => {
-			return e.id == idLink;
-		});
-
+		let correcto = resultado.data
+		console.log("RESULTADO!!")
+		console.log(resultado.data);
 
 		columnas = JSON.parse(correcto.columns);
 		columnasOriginal = JSON.parse(correcto.columns);
@@ -200,7 +199,7 @@ if (tbody == null) return;
 		if (terminar == null) return;
 		if (tbody == null) return;
 
-		let data = { id: id };
+		let data = { id: Number(idLink) };
 		let nuevaColumnas = [];
 		if (thead == null || thead.firstElementChild == null || thead.firstElementChild.childNodes == null) return;
 
@@ -216,13 +215,19 @@ if (tbody == null) return;
 			data.name = titulo?.textContent;
 		}
 
-		const response = await fetch("/api/editCollection", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(data),
-		});
+		//mirar si el usuario esta loggeado
+		if (cookie){
+			data.cookie = Number(cookie);
+
+
+			const response = await fetch("/api/editCollection", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			});
+		}
 
 		columnas = nuevaColumnas;
 		console.log("EDITADO!");
@@ -292,7 +297,23 @@ readCollecionProduct()
 		panelBuscar.style.display="flex"
 	
 	}
+
+	async function eventoDelegado(e) {
+    if (e.target == null) {
+      console.log("regreso en e.target")
+      return;
+    }
+    console.log(e.target.id);
+    if (e.target.id != "cerrarDialog") {
+      console.log("regreso en meterColeccion")
+
+      return;
+    }
+	readCollecionProduct();
+	
+}
 	
 
+document.addEventListener("click", eventoDelegado)
 
 </script>

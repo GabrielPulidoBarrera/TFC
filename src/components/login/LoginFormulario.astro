@@ -25,6 +25,7 @@ import "@styles/global.css";
 
 <script>
 import { getSHA256Hash } from "boring-webcrypto-sha256";
+import { crearDialog } from "../../libs/dialog/crearDialog";
 
     let botonUsuario = document.querySelector('#crearUsuario');
     botonUsuario?.addEventListener("click", nuevoUsuario)
@@ -54,10 +55,14 @@ import { getSHA256Hash } from "boring-webcrypto-sha256";
     });
 
     if (response.ok){
-        console.log("Valido!")
+        crearDialog("Has inciado sesion correctamente")
+
+
+        
+
     }
     else{
-        console.log("Invalido")
+        crearDialog("El nombre u la contraseña son incorrectas.")
     }
     }
 </script>

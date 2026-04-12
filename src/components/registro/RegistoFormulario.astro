@@ -29,6 +29,7 @@ import "@styles/global.css";
 
 <script>
 import { getSHA256Hash } from "boring-webcrypto-sha256";
+import { crearDialog } from "../../libs/dialog/crearDialog";
 
     let botonUsuario = document.querySelector('#crearUsuario');
     botonUsuario?.addEventListener("click", nuevoUsuario)
@@ -60,5 +61,23 @@ import { getSHA256Hash } from "boring-webcrypto-sha256";
 
       }),
     });
+    if (response.ok){
+        const response = await fetch("../api/verifyLogin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: username,
+        password: password,
+
+      }),
+    })
+        crearDialog("La cuenta se ha creado correctamente")
+
+    }
+    else{
+        crearDialog("El registro ha fallado")
+    }
     }
 </script>

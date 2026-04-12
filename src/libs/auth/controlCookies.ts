@@ -1,4 +1,5 @@
 import { verifyCookie, descifrarCookie } from "./jwt";
+import type { APIRoute } from "astro";
 
 
 export function obtenerCookie(sesion: any){

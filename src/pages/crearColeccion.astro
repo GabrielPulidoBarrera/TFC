@@ -1,13 +1,21 @@
 ---
-import FormColeccion from '@crearFamilia/FormColeccion.astro';
-import Layout2 from '@layouts/Layout2.astro';
+import FormColeccion from "@crearFamilia/FormColeccion.astro";
+import Layout2 from "@layouts/Layout2.astro";
+import { obtenerCookie } from "../libs/auth/controlCookies";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 ---
 
 <Layout2>
-
-    <FormColeccion></FormColeccion>
-    
+  {cookie && <FormColeccion />}
+  {
+    !cookie && (
+      <div class="text-center">
+        {" "}
+        Debes de estar registrado para poder ver esta pagina.
+      </div>
+    )
+  }
 </Layout2>
