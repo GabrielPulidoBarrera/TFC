@@ -1,45 +1,26 @@
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import { PrismaClient } from '../../generated/prisma/client';
 
-
-
 export const prerender = false;
-export async function conectar(){
-
-
-let HOST = process.env.HOST;
-if (!HOST) {
-    HOST = import.meta.env.HOST;
-}
-let PORT = process.env.PORT;
-if (!PORT) {
-    PORT = import.meta.env.PORT;
-}
-
-let USER = process.env.USER;
-if (!USER) {
-    USER = import.meta.env.USER;
-}
-let PASSWORD = process.env.PASSWORD;
-if (!PASSWORD) {
-    PASSWORD = import.meta.env.PASSWORD;
-}
-let DATABASE = process.env.DATABASE;
-if (!DATABASE) {
-    DATABASE = import.meta.env.DATABASE;
-}
-
-
+export async function conectar() {
+    // Parse DATABASE_URL instead of individual variables
+    const databaseUrl = process.env.DATABASE_URL || import.meta.env.DATABASE_URL;
+    
+    if (!databaseUrl) {
+        throw new Error('DATABASE_URL is not set');
+    }
+    
+    // Parse the MySQL URL
+    // mysql://mysql:password@host:3306/database
+    const url = new URL(databaseUrl);
+    
     const adapter = new PrismaMariaDb({
-      host: HOST,
-      port: Number(PORT),
-      user: USER,      
-      password: PASSWORD,  
-      database: DATABASE,  
-    })
+        host: url.hostname,
+        port: Number(url.port),
+        user: url.username,
+        password: url.password,
+        database: url.pathname.substring(1), // Remove leading slash
+    });
     
-    return new PrismaClient({ adapter })
-    
-    
-
+    return new PrismaClient({ adapter });
 }
