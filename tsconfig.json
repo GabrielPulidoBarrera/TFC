@@ -13,7 +13,7 @@
       "@layouts/*": ["./src/layouts/*"],
       "@styles/*": ["./src/styles/*"],
       "@api/*": ["./src/pages/api/*"],
-
+      "@libs/*": ["./src/libs/*"]
 
     }
   }

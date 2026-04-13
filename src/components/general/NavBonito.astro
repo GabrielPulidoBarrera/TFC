@@ -1,6 +1,6 @@
 ---
 import "@styles/global.css";
-import { obtenerCookie } from "../../libs/auth/controlCookies";
+import { obtenerCookie } from "@libs/auth/controlCookies";
 let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 ---
 <header class="p-4 dark:bg-gray-100 dark:text-gray-800">

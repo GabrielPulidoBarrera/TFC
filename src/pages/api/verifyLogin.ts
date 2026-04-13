@@ -2,17 +2,12 @@ import type { APIRoute } from 'astro';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb'
 import { PrismaClient } from '../../generated/prisma/client'
 import { firmarCookie } from '../../libs/auth/jwt';
+import { conectar } from '@libs/database/adapter';
 export const prerender = false
 const isDEV = import.meta.env.DEV
 
-const adapter = new PrismaMariaDb({
-  host: "localhost",
-  port: 3306,
-  user: "dwes",      
-  password: "dwes",  
-  database: "dwes",  
-})
-const prisma = new PrismaClient({ adapter })
+const prisma = await conectar()
+
 
 export const POST: APIRoute = async function({ cookies, request }){
       let {name, password} = await request.json();
