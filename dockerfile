@@ -15,18 +15,20 @@ FROM build-deps AS build
 COPY . .
 # Fix permissions for all binary files in node_modules
 RUN find node_modules/.bin -type f -exec chmod +x {} \;
-# Generate Prisma Client
+# Generate Prisma Client (outputs to ./src/generated/prisma)
 RUN npx prisma generate
 # Run the build
 RUN ./node_modules/.bin/astro build
 
 FROM base AS runtime
-# Copy Prisma client generated files as well
+# Copy production dependencies
 COPY --from=prod-deps /app/node_modules ./node_modules
+# Copy built application
 COPY --from=build /app/dist ./dist
-# Also copy Prisma schema and generated client if needed at runtime
+# Copy Prisma schema (if needed for migrations at runtime)
 COPY --from=build /app/prisma ./prisma
-COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
+# Copy the generated Prisma client from src
+COPY --from=build /app/src/generated ./src/generated
 
 ENV HOST=0.0.0.0
 ENV PORT=4321
