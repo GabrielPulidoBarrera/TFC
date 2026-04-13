@@ -1,7 +1,5 @@
-import type { APIRoute } from 'astro';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import { PrismaClient } from '../../generated/prisma/client';
-import { firmarCookie } from '@libs/auth/jwt';
 
 
 

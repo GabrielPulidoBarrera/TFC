@@ -3,8 +3,11 @@ import dotenv from 'dotenv';
 
 dotenv.config()
 
-const JWT_TOKEN = import.meta.env.JWT_TOKEN
-if (!JWT_TOKEN) throw new Error('No se encuentra el ENV JWT_TOKEN')
+
+let JWT_TOKEN = process.env.JWT_TOKEN;
+if (!JWT_TOKEN) {
+    JWT_TOKEN = import.meta.env.JWT_TOKEN;
+}
 
 export const firmarCookie = (galletita: string) => {
     return jwt.sign(galletita, JWT_TOKEN)
