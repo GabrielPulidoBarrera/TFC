@@ -6,6 +6,7 @@ services:
     ports:
       - "4321:4321"
     environment:
+      # Use 'db' as the hostname (matches the service name below)
       - DATABASE_URL=mysql://mysql:Bkpnv08upeuQhwaDFZJVbYi3wZnEH4kUDw1ZO1GrL63FhaIf72CV2xSMBzdSjWOq@db:3306/default
       - HOST=0.0.0.0
       - PORT=4321
@@ -19,9 +20,11 @@ services:
     image: mysql:8.4
     environment:
       - MYSQL_USER=mysql
-      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_PASSWORD=Bkpnv08upeuQhwaDFZJVbYi3wZnEH4kUDw1ZO1GrL63FhaIf72CV2xSMBzdSjWOq
       - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
       - MYSQL_DATABASE=default
+    ports:
+      - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
