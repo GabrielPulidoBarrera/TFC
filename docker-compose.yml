@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "4321:4321"
+    environment:
+      - DATABASE_URL=mysql://mysql:Bkpnv08upeuQhwaDFZJVbYi3wZnEH4kUDw1ZO1GrL63FhaIf72CV2xSMBzdSjWOq@db:3306/default
+      - HOST=0.0.0.0
+      - PORT=4321
+      - JWT_TOKEN=${JWT_TOKEN}
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.4
+    environment:
+      - MYSQL_USER=mysql
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=default
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
