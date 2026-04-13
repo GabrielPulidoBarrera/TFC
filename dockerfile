@@ -13,7 +13,10 @@ RUN npm install
 
 FROM build-deps AS build
 COPY . .
-RUN npx astro build
+# Fix permissions for all binary files in node_modules
+RUN find node_modules/.bin -type f -exec chmod +x {} \;
+# Run the build using the local binary directly
+RUN ./node_modules/.bin/astro build
 
 FROM base AS runtime
 COPY --from=prod-deps /app/node_modules ./node_modules
