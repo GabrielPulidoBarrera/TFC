@@ -8,6 +8,11 @@ const prisma = await conectar()
 
 
 export const POST: APIRoute = async function({ request }){
+
+
+  console.log('DATABASE_URL full:', process.env.DATABASE_URL);
+  console.log('URL length:', process.env.DATABASE_URL?.length);
+
   try {
     let {name, password, email} = await request.json();
     console.log(name)
