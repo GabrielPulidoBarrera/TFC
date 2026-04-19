@@ -1,5 +1,6 @@
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import { PrismaClient } from '../../generated/prisma/client';
+import fs from 'fs';
 
 export const prerender = false;
 export async function conectar() {
@@ -20,7 +21,9 @@ export async function conectar() {
         user: url.username,
         password: url.password,
         database: url.pathname.substring(1), // Remove leading slash
-        ssl: {}
+        ssl: {
+            rejectUnauthorized: false
+        }
     });
     
     return new PrismaClient({ adapter });
