@@ -3,6 +3,9 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
+console.log("prisma.config.ts - DATABASE_URL exists:", !!process.env.DATABASE_URL);
+console.log("prisma.config.ts - DATABASE_URL (first 50):", process.env.DATABASE_URL?.substring(0, 50));
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
