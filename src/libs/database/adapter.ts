@@ -20,6 +20,7 @@ export async function conectar() {
         user: url.username,
         password: url.password,
         database: url.pathname.substring(1), // Remove leading slash
+        ssl: {}
     });
     
     return new PrismaClient({ adapter });
