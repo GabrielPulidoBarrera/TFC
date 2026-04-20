@@ -9,8 +9,18 @@ const { idUsuario = 1, idColeccion } = Astro.props;
 >
   <div class="text-5xl flex justify-center">Categoria</div>
   <div class="flex w-full justify-around">
-    <div id="selectorProducto">Producto</div>
-    <div id="selectorColeccion">Colecion</div>
+    <div
+      id="selectorProducto"
+      class="self-center px-8 py-3 rounded font-semibold dark:bg-violet-600 dark:text-gray-50"
+    >
+      Producto
+    </div>
+    <div
+      id="selectorColeccion"
+      class="self-center px-8 py-3 rounded bg-gray-300"
+    >
+      Colecion
+    </div>
   </div>
 
   <div class="text-5xl flex justify-center">Buscar:</div>
@@ -18,6 +28,26 @@ const { idUsuario = 1, idColeccion } = Astro.props;
   <input id="buscar" type="text" class="w-1/2" />
 
   <div class="text-5xl flex justify-center">Resultados</div>
+
+  <div class="cargar hidden">
+    <svg
+      aria-hidden="true"
+      class="w-8 h-8 text-neutral-tertiary animate-spin fill-black"
+      viewBox="0 0 100 101"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+        fill="currentColor"></path>
+      <path
+        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+        fill="currentFill"></path>
+    </svg>
+    <span class="sr-only">Loading...</span>
+  </div>
+
+  <div id="mensajeError"></div>
 
   <div
     id="contenedorTarjetas"
@@ -27,10 +57,11 @@ const { idUsuario = 1, idColeccion } = Astro.props;
 </div>
 
 <script>
-  import type { any } from "astro:schema";
   import { crearDialog } from "@libs/dialog/crearDialog";
-import type Login from "../../pages/login.astro";
 
+  let cargar = document.querySelector(".cargar") as HTMLElement;
+
+  let mensajeError = document.querySelector('#mensajeError') as HTMLElement
   let tipo = "producto";
   let selectorProducto = document.querySelector("#selectorProducto");
   let selectorColeccion = document.querySelector("#selectorColeccion");
@@ -44,9 +75,36 @@ import type Login from "../../pages/login.astro";
 
   function seleccionarProducto() {
     tipo = "producto";
+    selectorProducto?.classList.add(
+      "font-semibold",
+      "dark:bg-violet-600",
+      "dark:text-gray-50",
+    );
+    selectorColeccion?.classList.remove(
+      "font-semibold",
+      "dark:bg-violet-600",
+      "dark:text-gray-50",
+    );
+    selectorColeccion?.classList.remove(
+      "font-semibold",
+      "dark:bg-violet-600",
+      "dark:text-gray-50",
+    );
+    selectorColeccion?.classList.add("bg-gray-300");
   }
   function seleccionarColeccion() {
     tipo = "coleccion";
+    selectorColeccion?.classList.add(
+      "font-semibold",
+      "dark:bg-violet-600",
+      "dark:text-gray-50",
+    );
+    selectorProducto?.classList.remove(
+      "font-semibold",
+      "dark:bg-violet-600",
+      "dark:text-gray-50",
+    );
+    selectorProducto?.classList.add("bg-gray-300");
   }
 
   let contenedor = document.querySelector("#contenedorTarjetas");
@@ -57,6 +115,7 @@ import type Login from "../../pages/login.astro";
   }
 
   async function readProduct() {
+    
     if (buscar == null) {
       return;
     }
@@ -72,6 +131,11 @@ import type Login from "../../pages/login.astro";
       return;
     }
 
+    if (contenedor == null) {
+      return;
+    }
+  mensajeError.textContent = "";
+    cargar.style.display = "block";
     if (tipo == "producto") {
       const response = await fetch("/api/readProductSearch", {
         method: "POST",
@@ -91,13 +155,17 @@ import type Login from "../../pages/login.astro";
       resultado = await response.json();
       console.log("estas coleccionando!!!!!!!!");
       console.log(resultado.data);
+
+
     }
+
+          console.log("LENGTH " +resultado.data.length)
+      if ((resultado.data.length == 0)) {
+        console.log("RESULTADO ES 0")
+        mensajeError.textContent = "No se ha encontrado ningun elemento que coincida con el termino buscado.";
+      }
 
     //borro los resultados antiguos
-
-    if (contenedor == null) {
-      return;
-    }
 
     while (contenedor.firstChild) {
       contenedor.removeChild(contenedor.firstChild);
@@ -159,21 +227,31 @@ import type Login from "../../pages/login.astro";
       button.type = "button";
       button.textContent = "hola";
       button.id = "meterColeccion";
-      button.classList.add("self-center", "px-8", "py-3", "font-semibold", "rounded", "dark:bg-violet-600", "dark:text-gray-50")
+      button.classList.add(
+        "self-center",
+        "px-8",
+        "py-3",
+        "font-semibold",
+        "rounded",
+        "dark:bg-violet-600",
+        "dark:text-gray-50",
+      );
 
       a.append(button);
       contenedor?.append(a);
     });
+    //Oculto el spinner
+    cargar.style.display = "none";
   }
 
   async function eventoDelegado(e: any) {
     if (e.target == null) {
-      console.log("regreso en e.target")
+      console.log("regreso en e.target");
       return;
     }
     console.log(e.target.id);
     if (e.target.id != "meterColeccion") {
-      console.log("regreso en meterColeccion")
+      console.log("regreso en meterColeccion");
 
       return;
     }
@@ -181,24 +259,24 @@ import type Login from "../../pages/login.astro";
       "#contenedorBuscar",
     ) as HTMLInputElement;
     if (contenedorBuscar == null) {
-        console.log("regreso en contenedorBuscar")
+      console.log("regreso en contenedorBuscar");
 
       return;
     }
     if (contenedorBuscar.dataset == null) {
-        console.log("regreso en contenedorBuscar dataset")
+      console.log("regreso en contenedorBuscar dataset");
 
       return;
     }
     if (contenedorBuscar.dataset.idcoleccion == null) {
-        console.log("regreso en contenedorBuscar dataset idcoleccion")
+      console.log("regreso en contenedorBuscar dataset idcoleccion");
 
       return;
     }
 
     let idColeccion = contenedorBuscar.dataset.idcoleccion;
 
-    console.log("idcoleccion = "+idColeccion)
+    console.log("idcoleccion = " + idColeccion);
 
     e.preventDefault();
     e.stopPropagation();
@@ -221,16 +299,16 @@ import type Login from "../../pages/login.astro";
         crearDialog("Producto añadido a la coleccion exitosamente");
       }
     }
-    	let panelBuscar = (document.querySelector('#panelBuscar') as HTMLElement);
-	let oscurecer = (document.querySelector('#oscurecer') as HTMLElement);
-  if (oscurecer==null){
-    return
-  }
-  if (panelBuscar==null){
-    return
-  }
-  		oscurecer.style.display="none"
-		panelBuscar.style.display="none"
+    let panelBuscar = document.querySelector("#panelBuscar") as HTMLElement;
+    let oscurecer = document.querySelector("#oscurecer") as HTMLElement;
+    if (oscurecer == null) {
+      return;
+    }
+    if (panelBuscar == null) {
+      return;
+    }
+    oscurecer.style.display = "none";
+    panelBuscar.style.display = "none";
   }
 
   document.addEventListener("click", eventoDelegado);
