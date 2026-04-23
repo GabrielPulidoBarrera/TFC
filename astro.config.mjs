@@ -12,10 +12,16 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
   },
-    security: {
-    checkOrigin: false
+  security: {
+
+    allowedDomains: [
+      {
+        hostname: '**.gabrielpulido.xyz',
+        protocol: 'https'
+      },
+    ]
   },
-  
+    
   output: "server",
   adapter: node({
     mode: 'standalone',
