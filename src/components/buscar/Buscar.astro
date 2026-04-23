@@ -159,11 +159,11 @@ const { idUsuario = 1, idColeccion } = Astro.props;
 
     }
 
-          console.log("LENGTH " +resultado.data.length)
-      if ((resultado.data.length == 0)) {
-        console.log("RESULTADO ES 0")
-        mensajeError.textContent = "No se ha encontrado ningun elemento que coincida con el termino buscado.";
-      }
+    if ((resultado.data.length == 0)) {
+      console.log("RESULTADO ES 0")
+      mensajeError.textContent = "No se ha encontrado ningun elemento que coincida con el termino buscado.";
+    }
+    console.log("LENGTH " +resultado.data.length)
 
     //borro los resultados antiguos
 
