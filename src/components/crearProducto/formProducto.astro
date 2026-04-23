@@ -185,8 +185,6 @@ let main = document.querySelector('main');
     console.log(response);
     const result = await response.json();
     console.log("Response data:", result);
-    alert("Response: " + result.message);
-
     if(response.ok){
 
       crearDialog("Producto creado correctamente")

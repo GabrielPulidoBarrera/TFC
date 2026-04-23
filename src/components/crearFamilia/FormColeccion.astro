@@ -51,7 +51,7 @@ import { obtenerCookie } from "@libs/auth/controlCookies";
 </section>
 
 <div id="crearColeccion" class="flex items-center justify-center cursor-pointer">
-    <Boton text="añadir"></Boton>
+    <Boton text="Añadir"></Boton>
 </div>
 
 <script>
@@ -118,7 +118,7 @@ import { crearDialog } from "@libs/dialog/crearDialog";
     const result = await response.json();
     console.log("Response data:", result);
     if(response.ok){
-      crearDialog("Coleccion creada con exito!")
+      window.location.href = "/s/"+collectionName+"-"+result.data.id+"-"+collectionVisibility;
     }
  
   }
