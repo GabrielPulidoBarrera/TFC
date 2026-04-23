@@ -84,7 +84,7 @@ async function readProduct() {
 		if (thead.firstElementChild == null) return;
 
 
-		const response = await fetch("/api/readSpecificCollection", {
+		const response = await fetch("@api/readSpecificCollection", {
 			method: "POST",
 			body: JSON.stringify({ idLink: Number(idLink) }),
 		});
@@ -117,7 +117,7 @@ async function readProduct() {
 		idBien = Number(idLink);
 
 		
-		const response = await fetch("/api/readCollectionProducts", {
+		const response = await fetch("@api/readCollectionProducts", {
 			method: "POST",
 			body: JSON.stringify({ id: idBien }),
 		});
@@ -132,7 +132,7 @@ async function readProduct() {
 		}
 
 		// Obtener los productos completos
-		const responseProducts = await fetch("/api/readProduct", {
+		const responseProducts = await fetch("@api/readProduct", {
 			method: "POST",
 			body: JSON.stringify({ ids: arrayProductos }),
 		});
@@ -220,7 +220,7 @@ if (tbody == null) return;
 			data.cookie = Number(cookie);
 
 
-			const response = await fetch("/api/editCollection", {
+			const response = await fetch("@api/editCollection", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

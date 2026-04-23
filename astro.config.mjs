@@ -24,10 +24,6 @@ export default defineConfig({
         protocol: 'https'
       },
       {
-        hostname: 'n8n.gabrielpulido.xyz',
-        protocol: 'https'
-      },
-      {
         hostname: 'gabrielpulido.xyz',
         protocol: 'https'
       },

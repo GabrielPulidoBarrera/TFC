@@ -105,7 +105,7 @@ import "@styles/global.css";
     console.log(visibility)
     
 
-    const response = await fetch("/api/newProduct", {
+    const response = await fetch("@api/newProduct", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -126,7 +126,7 @@ import "@styles/global.css";
 
   buttonRead?.addEventListener("click", readProduct);
   async function readProduct() {
-    const response = await fetch("/api/readProduct", {
+    const response = await fetch("@api/readProduct", {
       method: "POST",
     });
     let resultado = await response.json();
@@ -249,7 +249,7 @@ import "@styles/global.css";
 
   async function newUser() {
     let username = (document.querySelector("#nameUser") as HTMLInputElement).value;
-    const response = await fetch("../api/newUser", {
+    const response = await fetch("..@api/newUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -275,7 +275,7 @@ import "@styles/global.css";
   async function newProductCollection() {
     let productID = (document.querySelector("#productID") as HTMLInputElement).valueAsNumber;
     let collectionID = (document.querySelector("#collectionID") as HTMLInputElement).valueAsNumber;
-    const response = await fetch("/api/newCollectionProduct", {
+    const response = await fetch("@api/newCollectionProduct", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -307,7 +307,7 @@ document.querySelector('#collectionColumn')?.addEventListener("click", newCollec
     let userID = 1;
     let columnas = JSON.stringify(["nombre", "precio", "fecha"])
 
-    const response = await fetch("/api/newCollection", {
+    const response = await fetch("@api/newCollection", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -330,7 +330,7 @@ let cookie = document.querySelector('#crearCookie');
 cookie?.addEventListener("click", funcionCrearCookie);
 
 async function funcionCrearCookie(){
-    const response = await fetch("/api/cosoLogin", {
+    const response = await fetch("@api/cosoLogin", {
       method: "POST",
     });
     let resultado = await response.json();

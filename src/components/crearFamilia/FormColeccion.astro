@@ -102,7 +102,7 @@ import { crearDialog } from "@libs/dialog/crearDialog";
     let columnasJSON = JSON.stringify(columnas);
     console.log(columnasJSON)
 
-    const response = await fetch("/api/newCollection", {
+    const response = await fetch("@api/newCollection", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

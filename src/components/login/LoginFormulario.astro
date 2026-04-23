@@ -85,7 +85,7 @@ import "@styles/global.css";
     let password = (document.querySelector("#password") as HTMLInputElement)
       .value;
     password = await getSHA256Hash(password);
-    const response = await fetch("../api/verifyLogin", {
+    const response = await fetch("..@api/verifyLogin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
