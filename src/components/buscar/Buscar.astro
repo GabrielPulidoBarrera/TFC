@@ -142,7 +142,7 @@ const { idUsuario = 1, idColeccion } = Astro.props;
     mensajeError.textContent = "";
     cargar.style.display = "block";
     if (tipo == "producto") {
-      const response = await fetch("@api/readProductSearch", {
+      const response = await fetch("/api/readProductSearch", {
         method: "POST",
         body: JSON.stringify({
           text: textoBuscado,
@@ -151,7 +151,7 @@ const { idUsuario = 1, idColeccion } = Astro.props;
       resultado = await response.json();
       console.log(resultado.data);
     } else if (tipo == "coleccion") {
-      const response = await fetch("@api/readCollectionSearch", {
+      const response = await fetch("/api/readCollectionSearch", {
         method: "POST",
         body: JSON.stringify({
           text: textoBuscado,
@@ -297,7 +297,7 @@ const { idUsuario = 1, idColeccion } = Astro.props;
 
     let id = a.id;
     if (idColeccion) {
-      const response = await fetch("@api/newCollectionProduct", {
+      const response = await fetch("/api/newCollectionProduct", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

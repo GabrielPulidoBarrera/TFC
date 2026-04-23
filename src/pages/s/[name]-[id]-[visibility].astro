@@ -23,7 +23,7 @@ const {name, id, visibility} = Astro.params
 
 let mostrar = true
 let cookie = await obtenerCookie(Astro.cookies?.get('sesion'));
-const url = new URL('@api/readCollectionVisibility', Astro.url);
+const url = new URL('/api/readCollectionVisibility', Astro.url);
 
     const response = await fetch(url, {
       method: "POST",

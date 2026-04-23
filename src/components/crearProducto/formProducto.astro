@@ -170,7 +170,7 @@ let main = document.querySelector('main');
     console.log(columnas)
     let columnasJSON = JSON.stringify(columnas)
 
-    const response = await fetch("@api/newProduct", {
+    const response = await fetch("/api/newProduct", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
