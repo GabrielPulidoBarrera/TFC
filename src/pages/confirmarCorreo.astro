@@ -1,8 +1,26 @@
 ---
+import Layout2 from "@layouts/Layout2.astro";
+
+
+---
+
+<Layout2>
+  <button id="enviar"> enviar</button>
+</Layout2>
+
+<script>
+
+  let boton = document.querySelector('#enviar');
+  boton?.addEventListener("click", mandarCorreo);
+
+async function mandarCorreo(){
+
   let responseEmail = await fetch("https://n8n.gabrielpulido.xyz/webhook-test/bf8ea997-b6a2-4a20-9166-511843e8599b", { 
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email: "gabrielpulidobarrera@gmail.com" }),
   });
+  console.log(responseEmail);
+}
 
----
+</script>
