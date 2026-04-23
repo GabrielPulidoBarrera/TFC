@@ -9,7 +9,7 @@ const prisma = await conectar()
 
 export const POST: APIRoute = async function({ request }){
   try {
-    //let {name, userID, columns, visibility} = await request.json();
+    let {email} = await request.json();
 
 
     //let columnas = {columna: "nombre", precio: 20, fecha: "hoy"}
@@ -18,7 +18,7 @@ export const POST: APIRoute = async function({ request }){
     let responseEmail = await fetch("https://n8n.gabrielpulido.xyz/webhook-test/bf8ea997-b6a2-4a20-9166-511843e8599b", { 
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: "gabrielpulidobarrera@gmail.com" }),
+    body: JSON.stringify({ email: email }),
   });
   console.log(responseEmail);
     

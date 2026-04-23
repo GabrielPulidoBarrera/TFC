@@ -18,8 +18,8 @@ async function mandarCorreo(){
   let responseEmail = await fetch("/api/sendEmail", { 
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    //body: JSON.stringify({ email: "gabrielpulidobarrera@gmail.com" }),
-  });
+    body: JSON.stringify({ email: "gabrielpulidobarrera@gmail.com" }),
+  });∫
   console.log(responseEmail);
 }
 
