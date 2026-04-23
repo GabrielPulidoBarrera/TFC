@@ -20,6 +20,10 @@ export default defineConfig({
         protocol: 'https'
       },
       {
+        hostname: '*.gabrielpulido.xyz',
+        protocol: 'https'
+      },
+      {
         hostname: 'gabrielpulido.xyz',
         protocol: 'https'
       },
