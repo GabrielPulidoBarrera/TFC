@@ -96,6 +96,10 @@ import "@styles/global.css";
       .value;
     let password = (document.querySelector("#password") as HTMLInputElement)
       .value;
+
+
+
+
     password = await getSHA256Hash(password);
     const response = await fetch("../api/newUser", {
       method: "POST",
@@ -108,8 +112,25 @@ import "@styles/global.css";
         password: password,
       }),
     });
+    console.log(response)
     if (response.ok) {
-      const response = await fetch("../api/verifyLogin", {
+
+      let id = response.data.id
+
+    const responseCorreo = await fetch("../api/sendEmail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: emailUsuario,
+        id: id,
+      }),
+    });
+
+
+
+      const responseLogin = await fetch("../api/verifyLogin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -120,7 +141,7 @@ import "@styles/global.css";
         }),
       });
       //crearDialog("La cuenta se ha creado correctamente")
-      if (response.ok) window.location.href = "/seleccion";
+      if (responseLogin.ok) window.location.href = "/seleccion";
     } else {
       crearDialog("El registro ha fallado");
       //Oculto el spinner
