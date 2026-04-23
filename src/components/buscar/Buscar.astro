@@ -59,9 +59,15 @@ const { idUsuario = 1, idColeccion } = Astro.props;
 <script>
   import { crearDialog } from "@libs/dialog/crearDialog";
 
+  interface interfazBusqueda {
+    name: string;
+    id: string;
+    visibility: string;
+  }
+
   let cargar = document.querySelector(".cargar") as HTMLElement;
 
-  let mensajeError = document.querySelector('#mensajeError') as HTMLElement
+  let mensajeError = document.querySelector("#mensajeError") as HTMLElement;
   let tipo = "producto";
   let selectorProducto = document.querySelector("#selectorProducto");
   let selectorColeccion = document.querySelector("#selectorColeccion");
@@ -115,7 +121,6 @@ const { idUsuario = 1, idColeccion } = Astro.props;
   }
 
   async function readProduct() {
-    
     if (buscar == null) {
       return;
     }
@@ -134,7 +139,7 @@ const { idUsuario = 1, idColeccion } = Astro.props;
     if (contenedor == null) {
       return;
     }
-  mensajeError.textContent = "";
+    mensajeError.textContent = "";
     cargar.style.display = "block";
     if (tipo == "producto") {
       const response = await fetch("/api/readProductSearch", {
@@ -155,22 +160,21 @@ const { idUsuario = 1, idColeccion } = Astro.props;
       resultado = await response.json();
       console.log("estas coleccionando!!!!!!!!");
       console.log(resultado.data);
-
-
     }
 
-    if ((resultado.data.length == 0)) {
-      console.log("RESULTADO ES 0")
-      mensajeError.textContent = "No se ha encontrado ningun elemento que coincida con el termino buscado.";
+    if (resultado.data.length == 0) {
+      console.log("RESULTADO ES 0");
+      mensajeError.textContent =
+        "No se ha encontrado ningun elemento que coincida con el termino buscado.";
     }
-    console.log("LENGTH " +resultado.data.length)
+    console.log("LENGTH " + resultado.data.length);
 
     //borro los resultados antiguos
 
     while (contenedor.firstChild) {
       contenedor.removeChild(contenedor.firstChild);
     }
-    resultado.data.map((e: any) => {
+    resultado.data.map((e: interfazBusqueda) => {
       console.log(e);
       //creo el enlace
       let a = document.createElement("a");
@@ -244,13 +248,16 @@ const { idUsuario = 1, idColeccion } = Astro.props;
     cargar.style.display = "none";
   }
 
-  async function eventoDelegado(e: any) {
-    if (e.target == null) {
+  async function eventoDelegado(e: Event) {
+    let elementoBuscado: HTMLElement = (e.target as HTMLElement);
+    if (elementoBuscado == null) {
       console.log("regreso en e.target");
       return;
+
+
     }
-    console.log(e.target.id);
-    if (e.target.id != "meterColeccion") {
+    console.log(elementoBuscado.id);
+    if (elementoBuscado.id != "meterColeccion") {
       console.log("regreso en meterColeccion");
 
       return;
@@ -280,7 +287,15 @@ const { idUsuario = 1, idColeccion } = Astro.props;
 
     e.preventDefault();
     e.stopPropagation();
-    let id = e.target.closest("a").id;
+
+
+    let a = elementoBuscado.closest("a");
+    if (a==null){
+      return
+    }
+
+
+    let id = a.id;
     if (idColeccion) {
       const response = await fetch("/api/newCollectionProduct", {
         method: "POST",

@@ -137,7 +137,7 @@ let main = document.querySelector('main');
     let userID = Number(cookie);
     let collectionVisibility =(document.querySelector("#visibility") as HTMLInputElement).value;
 
-    let columnas = {}
+    let columnas: { [key: string]: string } = {}
 
     let selectorColumnas = document.querySelector('#selectorColumnas');
     let selectorColumnasElementos = selectorColumnas?.querySelectorAll('fieldset')
@@ -168,7 +168,7 @@ let main = document.querySelector('main');
     }
 
     console.log(columnas)
-    columnas = JSON.stringify(columnas)
+    let columnasJSON = JSON.stringify(columnas)
 
     const response = await fetch("/api/newProduct", {
       method: "POST",
@@ -179,12 +179,13 @@ let main = document.querySelector('main');
         name: collectionName,
         userID: userID,
 		visibility: collectionVisibility,
-    columns: columnas
+    columns: columnasJSON
       }),
     });
     console.log(response);
     const result = await response.json();
     console.log("Response data:", result);
+
     if(response.ok){
 
       crearDialog("Producto creado correctamente")

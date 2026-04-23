@@ -95,12 +95,12 @@ import { crearDialog } from "@libs/dialog/crearDialog";
     let userID = Number(cookie);
     let collectionVisibility =(document.querySelector("#visibility") as HTMLInputElement).value;
     let columnasRaw = selectorColumnas?.querySelectorAll('.columna')
-    let columnas = [];
-    for (let iterable of columnasRaw as any){
+    let columnas = [] as String[];
+    for (let iterable of columnasRaw as NodeListOf<HTMLInputElement>){
       columnas.push(iterable.value);
     }
-    columnas = JSON.stringify(columnas);
-    console.log(columnas)
+    let columnasJSON = JSON.stringify(columnas);
+    console.log(columnasJSON)
 
     const response = await fetch("/api/newCollection", {
       method: "POST",
@@ -111,7 +111,7 @@ import { crearDialog } from "@libs/dialog/crearDialog";
         name: collectionName,
         userID: userID,
 		visibility: collectionVisibility,
-    columns: columnas
+    columns: columnasJSON
       }),
     });
     console.log(response);

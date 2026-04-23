@@ -2,6 +2,7 @@
 import Layout2 from '@layouts/Layout2.astro';
 import "@styles/global.css";
 import { obtenerCookie } from '../libs/auth/controlCookies';
+import { string } from 'astro:schema';
 
 let cookie = await obtenerCookie(Astro.cookies?.get('sesion'));
 
@@ -23,6 +24,13 @@ console.log(resultado)
 
 
 
+interface interfazColeccion{
+  name: string
+  id: string
+  visibility: string
+}
+
+
 ---
 
 <Layout2>
@@ -30,7 +38,7 @@ console.log(resultado)
     <div class="grid grid-cols-1 md:grid-cols-3 *:aspect-square gap-20 *:m-20">
         <a href="/crearColeccion" class="border border-dashed flex justify-center items-center text-4xl transition-all duration-150 hover:text-7xl  ">+</a>
         <!-- <div class="border flex justify-center items-center bg-[url(../assets/fondoPlaceholder.png)] transition-all duration-150 grayscale-100 bg-size-[300%] bg-no-repeat hover:bg-size-[400%] hover:grayscale-0">b</div> -->
-        {resultado.data.map((iteracion: any) =>(
+        {resultado.data.map((iteracion: interfazColeccion) =>(
           <a href={'/s/'+iteracion.name+"-"+iteracion.id+"-"+iteracion.visibility}<div class="border flex justify-center items-center bg-[url(../assets/fondoPlaceholder.png)] transition-all duration-150 grayscale-100 bg-size-[300%] bg-no-repeat hover:bg-size-[400%] hover:grayscale-0"><div class="bg-black/20 p-2">{iteracion.name}</div></div></a>
           
         ))}
