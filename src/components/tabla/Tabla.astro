@@ -145,11 +145,11 @@ async function readProduct() {
 		// Rellenar la tabla con los datos
 		for (let objetoRaw of dataProduct) {
 
-			console.log(dataProduct);
+			console.info(dataProduct);
 
 			//console.log("Me ejcuto!!")
 			console.log(columnas)
-			crearTR();
+			crearTR("hola");
 			let objeto = JSON.parse(objetoRaw.columns);
 			for (let iterable in objeto) {
 				if (columnas.includes(iterable)) {
@@ -180,7 +180,7 @@ async function readProduct() {
 if (tbody == null) return;
 		let tr = document.createElement('tr');
 		tr.className = '*:p-3 border-dashed border';
-		tr.id = 'nuevaFIla'
+		tr.id = 'nuevaFila'
 
 		//hago que las casillas sean editables
 		let todosTD = document.querySelectorAll('td');
@@ -314,11 +314,12 @@ readCollecionProduct()
 
 	}
 
-	function crearTR() {
+	function crearTR(id) {
 
 		if (tbody == null) return;
 		let tr = document.createElement('tr');
 		tr.className = '*:p-3';
+		tr.id = id
 
 		let numeroTD = thead.lastElementChild?.childElementCount;
 		console.log(numeroTD)
