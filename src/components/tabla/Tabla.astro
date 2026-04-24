@@ -113,6 +113,11 @@ async function readProduct() {
 
 
 	async function readCollecionProduct() {
+
+		//Borro los datos anteriores de la tabla si existen.
+		while (tbody.firstChild) {
+    	  	tbody.removeChild(tbody.firstChild);
+	    }
 		// Leo todos los productos de la colección 
 
 		idBien = Number(idLink);
@@ -212,12 +217,32 @@ if (tbody == null) return;
 
 	}
 
+	// Esta parte del codigo contiene todas las funciones necesarias para permitir la capacidad de borrar elementos.
+
 	function seleccionBorrar(){
 		if (!editando){
 			return
 		}
-		
+		if (!e.altKey){
+			console.log("No es alt!")
+			console.log(e.key)
+			return
+		}
+
+		let todosTR = document.querySelectorAll('tr');
+		for (let iterable of todosTR){
+			iterable.classList.add("hover:bg-red-500")
+		}
 	}
+
+	
+	function deshacerSeleccionBorrar(){
+		let todosTR = document.querySelectorAll('tr');
+		for (let iterable of todosTR){
+			iterable.classList.remove("hover:bg-red-500")
+		}
+	}
+
 
 	async function borrarElemento(e){
 		if (!editando){
@@ -248,8 +273,9 @@ if (tbody == null) return;
 			console.log(response);
 		readCollecionProduct()
 	}
-	document.addEventListener("click", borrarElemento)
-
+	document.addEventListener("click", borrarElemento) //TODO: HAZ ESTO RESPONSIVE
+	document.addEventListener("keydown", seleccionBorrar)
+	document.addEventListener("keyup", deshacerSeleccionBorrar)
 
 
 
@@ -304,10 +330,7 @@ if (tbody == null) return;
 
 
 
-		//Borro los datos anteriores
-		    while (tbody.firstChild) {
-      tbody.removeChild(tbody.firstChild);
-    }
+
 
 //Releo el contenido de la coleccion y lo regenero.
 

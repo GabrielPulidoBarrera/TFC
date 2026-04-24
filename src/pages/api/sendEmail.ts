@@ -20,7 +20,7 @@ export const POST: APIRoute = async function({ request }){
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email: email }),
   });
-  console.log(responseEmail);
+  console.info(responseEmail);
     
     
     return new Response(

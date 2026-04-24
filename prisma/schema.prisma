@@ -13,6 +13,7 @@ model users {
   name     String    @db.VarChar(200)
   password     String    @db.Char(64)
   email     String    @db.VarChar(200)
+  enabled   Boolean   @default(false)
   collections collection[]
   products product[]
 }

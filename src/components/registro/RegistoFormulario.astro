@@ -97,9 +97,6 @@ import "@styles/global.css";
     let password = (document.querySelector("#password") as HTMLInputElement)
       .value;
 
-
-
-
     password = await getSHA256Hash(password);
     const response = await fetch("../api/newUser", {
       method: "POST",
@@ -112,41 +109,56 @@ import "@styles/global.css";
         password: password,
       }),
     });
-    console.log(response)
+    console.log(response);
     if (response.ok) {
-
       let id = 2;
 
-    const responseCorreo = await fetch("../api/sendEmail", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: emailUsuario,
-        id: id,
-      }),
-    });
+      //Envio el email de confirmacion usuario.
 
-
-
-      const responseLogin = await fetch("../api/verifyLogin", {
+      const responseCorreo = await fetch("../api/sendEmail", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: username,
-          password: password,
+          email: emailUsuario,
+          id: id,
         }),
       });
-      //crearDialog("La cuenta se ha creado correctamente")
-      if (responseLogin.ok) window.location.href = "/seleccion";
-    } else {
-      crearDialog("El registro ha fallado");
+      console.info(responseCorreo)
+
+
+
+
+      // const responseLogin = await fetch("../api/verifyLogin", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     name: username,
+      //     password: password,
+      //   }),
+      // });
+      
+      
+      
+      
+      // //crearDialog("La cuenta se ha creado correctamente")
+      
+      
+      
+    //   if (responseLogin.ok) {
+    //     window.location.href = "/seleccion";
+    //   }
+    // } else {
+    //   crearDialog("El registro ha fallado");
+
+
+    
       //Oculto el spinner
-      cargar.style.display = "none";
-      textoBoton.style.display = "block";
+      // cargar.style.display = "none";
+      // textoBoton.style.display = "block";
     }
   }
 </script>
