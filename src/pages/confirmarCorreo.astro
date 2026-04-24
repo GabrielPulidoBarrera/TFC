@@ -10,7 +10,7 @@ const url = new URL('/api/validateUser', Astro.url);
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: id,
+          id: Number(id),
         }),
       });
       console.info(responseCorreo)
