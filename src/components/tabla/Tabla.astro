@@ -222,7 +222,8 @@ if (tbody == null) return;
 	}
 
 	function borrarElemento(e){
-		if (e.target.tagname!="tr"){
+		if (!e.target.closest("tr")){
+			console.log("no es tr!")
 			return
 		}
 		if (e.key != altkey){
