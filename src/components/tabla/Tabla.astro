@@ -34,7 +34,7 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 
 			<table class="text-xs *:text-center grow w-full" id="tabla">
 				<thead class="dark:bg-gray-300">
-					<tr class=" *:p-3"></tr>
+					<tr class=" *:p-3" id="trDeThead"></tr>
 				</thead>
 				<tbody class="*:border-b *:border-opacity-20 *:dark:border-gray-300 *:dark:bg-gray-50">
 				</tbody>
@@ -229,7 +229,7 @@ if (tbody == null) return;
 			return
 		}
 
-		let todosTR = document.querySelectorAll('tr');
+		let todosTR = document.querySelectorAll('tbody tr');
 		for (let iterable of todosTR){
 			iterable.classList.add("hover:bg-red-500")
 		}
@@ -237,9 +237,9 @@ if (tbody == null) return;
 
 	
 	function deshacerSeleccionBorrar(){
-		let todosTR = document.querySelectorAll('tr');
+		let todosTR = document.querySelectorAll('tbody tr');
 		for (let iterable of todosTR){
-			iterable.classList.remove("hover:bg-red-500")
+			iterable.classList.remove("hover:bg-red-800")
 		}
 	}
 
@@ -253,6 +253,9 @@ if (tbody == null) return;
 			console.log("no es tr!")
 			return
 		}
+		if (e.target.closest("tr").id=="trDeThead"){
+			return
+		} 
 		if (!e.altKey){
 			console.log("No es alt!")
 			console.log(e.key)
@@ -260,6 +263,8 @@ if (tbody == null) return;
 		}
 
 		let id = e.target.closest('tr').id
+
+		
 
 		alert("Todo chachipiruli!")
 		let objetoAPI = {collectionID: Number(idLink), productID: Number(id)};

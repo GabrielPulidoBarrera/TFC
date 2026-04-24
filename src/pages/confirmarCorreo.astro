@@ -1,6 +1,18 @@
 ---
 import Layout from "@layouts/Layout.astro";
+const id = Astro.url.searchParams.get("id");
 
+
+      const responseCorreo = await fetch("../api/validateUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+        }),
+      });
+      console.info(responseCorreo)
 
 ---
 

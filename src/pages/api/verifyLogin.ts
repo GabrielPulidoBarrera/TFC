@@ -15,7 +15,8 @@ export const POST: APIRoute = async function({ cookies, request }){
   const result = await prisma.users.findFirst({
     where: {
       name: name,
-      password: password
+      password: password,
+      enabled: true
     }
   })
 
