@@ -15,8 +15,12 @@ FROM build-deps AS build
 COPY . .
 # Fix permissions for all binary files in node_modules
 RUN find node_modules/.bin -type f -exec chmod +x {} \;
+
+
 # Generate Prisma Client (outputs to ./src/generated/prisma)
 RUN npx prisma generate
+RUN npx prisma migrate deploy
+
 # Run the build
 RUN ./node_modules/.bin/astro build
 
