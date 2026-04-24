@@ -145,11 +145,9 @@ async function readProduct() {
 		// Rellenar la tabla con los datos
 		for (let objetoRaw of dataProduct) {
 
-			console.info(dataProduct);
-
 			//console.log("Me ejcuto!!")
 			console.log(columnas)
-			crearTR("hola");
+			crearTR(objetoRaw.id);
 			let objeto = JSON.parse(objetoRaw.columns);
 			for (let iterable in objeto) {
 				if (columnas.includes(iterable)) {
@@ -221,7 +219,7 @@ if (tbody == null) return;
 		
 	}
 
-	function borrarElemento(e){
+	async function borrarElemento(e){
 		if (!editando){
 			console.log("No es editando")
 			return
@@ -235,8 +233,20 @@ if (tbody == null) return;
 			console.log(e.key)
 			return
 		}
-		alert("Todo chachipiruli!")
 
+		let id = e.target.closest('tr').id
+
+		alert("Todo chachipiruli!")
+		let objetoAPI = {collectionID: idLink, productID: id};
+		const response = await fetch("/api/editCollection", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(objetoAPI),
+			});
+			console.log(response);
+		readCollecionProduct()
 	}
 	document.addEventListener("click", borrarElemento)
 
