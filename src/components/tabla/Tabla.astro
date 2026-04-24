@@ -230,8 +230,8 @@ if (tbody == null) return;
 			console.log("no es tr!")
 			return
 		}
-		if (e.key != "altKey"){
-			alert("No es alt!")
+		if (!e.altKey){
+			console.log("No es alt!")
 			console.log(e.key)
 			return
 		}
