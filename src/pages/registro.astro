@@ -1,17 +1,17 @@
 ---
 
 import RegistoFormulario from "@components/registro/RegistoFormulario.astro";
-import Layout2 from "@layouts/Layout2.astro";
+import Layout from "@layouts/Layout.astro";
 import { obtenerCookie } from "../libs/auth/controlCookies";
 let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 
 ---
 
-<Layout2>
+<Layout>
     {!cookie &&
     <RegistoFormulario></RegistoFormulario>
     }
     {cookie &&
         <div class="text-center">Cierra sesion antes de volver a registrarte.</div>
     }
-</Layout2>
+</Layout>

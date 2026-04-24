@@ -1,6 +1,6 @@
 ---
-import HeroBonito from '@index/HeroBonito.astro';
-import Layout2 from '@layouts/Layout2.astro';
+import IndexHero from '@index/IndexHero.astro';
+import Layout from '@layouts/Layout.astro';
 import { obtenerCookie } from '../libs/auth/controlCookies';
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
@@ -10,7 +10,7 @@ let cookie = await obtenerCookie(Astro.cookies?.get('sesion'));
 
 ---
 
-<Layout2>
-	<HeroBonito/>
-</Layout2>
+<Layout>
+	<IndexHero/>
+</Layout>
 

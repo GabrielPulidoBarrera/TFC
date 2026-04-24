@@ -1,6 +1,6 @@
 ---
 import FormColeccion from "@crearFamilia/FormColeccion.astro";
-import Layout2 from "@layouts/Layout2.astro";
+import Layout from "@layouts/Layout.astro";
 import { obtenerCookie } from "../libs/auth/controlCookies";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
@@ -8,7 +8,7 @@ import { obtenerCookie } from "../libs/auth/controlCookies";
 let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 ---
 
-<Layout2>
+<Layout>
   {cookie && <FormColeccion />}
   {
     !cookie && (
@@ -18,4 +18,4 @@ let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
       </div>
     )
   }
-</Layout2>
+</Layout>

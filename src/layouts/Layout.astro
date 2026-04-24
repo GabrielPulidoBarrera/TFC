@@ -1,7 +1,7 @@
 ---
 import "@styles/global.css";
-import NavBonito from "@general/NavBonito.astro";
-import FooterBonito from "@general/FooterBonito.astro"
+import GeneralNav from "@general/GeneralNav.astro";
+import FooterBonito from "@general/GeneralFooter.astro"
 import { obtenerCookie } from "../libs/auth/controlCookies";
 
         let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
@@ -17,9 +17,9 @@ import { obtenerCookie } from "../libs/auth/controlCookies";
     <script is:inline src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 	</head>
 	<body>
-        <NavBonito>
+        <GeneralNav>
 
-        </NavBonito>
+        </GeneralNav>
         <main data-cookie={cookie}>
             <slot />
         </main>
