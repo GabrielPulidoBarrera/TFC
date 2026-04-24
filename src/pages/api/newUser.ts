@@ -27,7 +27,7 @@ export const POST: APIRoute = async function({ request }){
       JSON.stringify({ 
         success: true, 
         message: 'User created successfully',
-        data: result 
+        data: result
       }),
       { 
         status: 200, 

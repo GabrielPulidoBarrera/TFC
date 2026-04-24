@@ -112,10 +112,14 @@ import "@styles/global.css";
         password: password,
       }),
     });
-    console.log("RESPONSE!! "+response)
+    console.log(response)
     if (response.ok) {
 
-//      let id = response.id
+<<<<<<< HEAD
+      let id = response.
+=======
+      let id = response.data.id
+>>>>>>> parent of f129a94 (console.log testing)
 
     const responseCorreo = await fetch("../api/sendEmail", {
       method: "POST",
@@ -124,7 +128,7 @@ import "@styles/global.css";
       },
       body: JSON.stringify({
         email: emailUsuario,
-        id: 1,
+        id: id,
       }),
     });
 
