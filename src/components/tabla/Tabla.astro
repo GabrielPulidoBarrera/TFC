@@ -237,7 +237,7 @@ if (tbody == null) return;
 		let id = e.target.closest('tr').id
 
 		alert("Todo chachipiruli!")
-		let objetoAPI = {collectionID: idLink, productID: id};
+		let objetoAPI = {collectionID: Number(idLink), productID: Number(id)};
 		const response = await fetch("/api/deleteCollectionProduct", {
 			method: "POST",
 			headers: {
