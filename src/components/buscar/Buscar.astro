@@ -7,21 +7,26 @@ const { idUsuario = 1, idColeccion } = Astro.props;
   data-idcoleccion={idColeccion}
   id="contenedorBuscar"
 >
+
+<!-- Condicional para evitar que salga la opcion entreseleccionar un producto o una coleccion en caso de que este componente sea cargado desde la funcion de busqueda de producto de la coleccion. No tendria mucho sentido poder buscar colecciones dentro de una coleccion. -->
+{ idColeccion==null &&
+
   <div class="text-5xl flex justify-center">Categoria</div>
   <div class="flex w-full justify-around">
     <div
       id="selectorProducto"
       class="self-center px-8 py-3 rounded font-semibold dark:bg-violet-600 dark:text-gray-50"
-    >
+      >
       Producto
     </div>
     <div
       id="selectorColeccion"
       class="self-center px-8 py-3 rounded bg-gray-300"
-    >
+      >
       Coleccion
     </div>
   </div>
+    }
 
   <div class="text-5xl flex justify-center">Buscar:</div>
 
@@ -139,8 +144,13 @@ const { idUsuario = 1, idColeccion } = Astro.props;
     if (contenedor == null) {
       return;
     }
+
+    //Pinto el spinner
     mensajeError.textContent = "";
     cargar.style.display = "block";
+
+    //Dependiendo de que este seleccionado, elijo que buscar, Por defecto tipo = producto, 
+
     if (tipo == "producto") {
       const response = await fetch("/api/readProductSearch", {
         method: "POST",
@@ -227,41 +237,38 @@ const { idUsuario = 1, idColeccion } = Astro.props;
       a.style.justifyContent = "space-around";
       a.id = e.id;
 
-      let button = document.createElement("button");
-      button.type = "button";
-      button.textContent = "hola";
-      button.id = "meterColeccion";
-      button.classList.add(
-        "self-center",
-        "px-8",
-        "py-3",
-        "font-semibold",
-        "rounded",
-        "dark:bg-violet-600",
-        "dark:text-gray-50",
-      );
+      let idColeccion = conseguirIDColeccion()
 
-      a.append(button);
+      // Condicional para mostrar el boton de añadir solo si estas dentro de una coleccion y no desde la funcion de busqueda global de la pagina.
+
+      if(idColeccion != null){
+
+        
+        let button = document.createElement("button");
+        button.type = "button";
+        button.textContent = "Añadir";
+        button.id = "meterColeccion";
+        button.classList.add(
+          "self-center",
+          "px-8",
+          "py-3",
+          "font-semibold",
+          "rounded",
+          "dark:bg-violet-600",
+          "dark:text-gray-50",
+        );
+        
+        a.append(button);
+      }
       contenedor?.append(a);
     });
     //Oculto el spinner
     cargar.style.display = "none";
   }
 
-  async function eventoDelegado(e: Event) {
-    let elementoBuscado: HTMLElement = (e.target as HTMLElement);
-    if (elementoBuscado == null) {
-      console.log("regreso en e.target");
-      return;
+//Funcion para recuperar el ID de coleccion, prefiero tenerlo en una funcion separada para tener menos lio con el typescript.
+function conseguirIDColeccion(){
 
-
-    }
-    console.log(elementoBuscado.id);
-    if (elementoBuscado.id != "meterColeccion") {
-      console.log("regreso en meterColeccion");
-
-      return;
-    }
     let contenedorBuscar = document.querySelector(
       "#contenedorBuscar",
     ) as HTMLInputElement;
@@ -282,6 +289,28 @@ const { idUsuario = 1, idColeccion } = Astro.props;
     }
 
     let idColeccion = contenedorBuscar.dataset.idcoleccion;
+    return idColeccion
+}
+
+
+// Esta funcion se encarga de añadir el producto seleccionado a la coleccion en caso de que este componente sea llamado desde la tabla.
+  async function eventoDelegado(e: Event) {
+    let elementoBuscado: HTMLElement = (e.target as HTMLElement);
+    
+  if (elementoBuscado == null) {
+      console.log("regreso en e.target");
+      return;
+
+
+    }
+    console.log(elementoBuscado.id);
+    if (elementoBuscado.id != "meterColeccion") {
+      console.log("regreso en meterColeccion");
+
+      return;
+    }
+
+    let idColeccion = conseguirIDColeccion();
 
     console.log("idcoleccion = " + idColeccion);
 
@@ -326,5 +355,7 @@ const { idUsuario = 1, idColeccion } = Astro.props;
     panelBuscar.style.display = "none";
   }
 
+
+  //eventlistener para el evento delegado
   document.addEventListener("click", eventoDelegado);
 </script>
