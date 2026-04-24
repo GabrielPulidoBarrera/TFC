@@ -238,7 +238,7 @@ if (tbody == null) return;
 
 		alert("Todo chachipiruli!")
 		let objetoAPI = {collectionID: idLink, productID: id};
-		const response = await fetch("/api/editCollection", {
+		const response = await fetch("/api/deleteCollectionProduct", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
