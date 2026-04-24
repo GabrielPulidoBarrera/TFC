@@ -16,12 +16,15 @@ COPY . .
 # Fix permissions for all binary files in node_modules
 RUN find node_modules/.bin -type f -exec chmod +x {} \;
 
-ARG DATABASE_URL
-
 # Generate Prisma Client (outputs to ./src/generated/prisma)
 RUN npx prisma generate
-COPY prisma.config.ts ./prisma.config.ts
-RUN npx prisma db push
+
+
+#Para aplicar un cambio en la schema de la base de datos de coolify, primero, desactiva por completo el SSL de la base de datos, segundo, quita el comentario de los siguientes 3 atributos, tercero, haz deploy, y finalmente, con los cambios aplicados, deshaz todos estos cambios.
+
+#ARG DATABASE_URL
+# COPY prisma.config.ts ./prisma.config.ts
+# RUN npx prisma db push
 
 # Run the build
 RUN ./node_modules/.bin/astro build
