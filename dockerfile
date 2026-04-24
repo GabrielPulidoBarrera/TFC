@@ -19,6 +19,7 @@ RUN find node_modules/.bin -type f -exec chmod +x {} \;
 
 # Generate Prisma Client (outputs to ./src/generated/prisma)
 RUN npx prisma generate
+COPY prisma.config.ts ./prisma.config.ts
 RUN npx prisma migrate deploy
 
 # Run the build
