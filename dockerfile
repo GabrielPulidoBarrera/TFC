@@ -21,7 +21,7 @@ ARG DATABASE_URL
 # Generate Prisma Client (outputs to ./src/generated/prisma)
 RUN npx prisma generate
 COPY prisma.config.ts ./prisma.config.ts
-RUN npx prisma migrate deploy
+RUN npx prisma db push
 
 # Run the build
 RUN ./node_modules/.bin/astro build
