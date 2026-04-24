@@ -65,6 +65,7 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 	let columnasOriginal;
 	let columnas;
 	let resultado;
+	let editando = false;
 	nuevaColumna.addEventListener("click", crearColumna)
 	
 	readProduct();
@@ -167,6 +168,7 @@ async function readProduct() {
 		if (terminar == null) return;
 		if (tbody == null) return;
 		//muestros los botones correctos
+		editando = true;
 		editar.style.display = "none";
 		nuevaColumna.style.display = "flex"
 		crearNuevaFila.style.display = "flex"
@@ -198,6 +200,8 @@ if (tbody == null) return;
 		if (editar == null) return;
 		if (terminar == null) return;
 		if (tbody == null) return;
+
+		editando = false;
 
 		let data = { id: Number(idLink) };
 		let nuevaColumnas = [];
@@ -272,8 +276,11 @@ readCollecionProduct()
 		for (let i = 0; i < numeroTD; i++) {
 			let td = document.createElement('td');
 			tr.append(td);
+			if (editando){
+				td.setAttribute("contenteditable", "true");
+			}
 		}
-				tbody.append(tr);
+			tbody.append(tr);
 
 	}
 	function crearColumna() {
