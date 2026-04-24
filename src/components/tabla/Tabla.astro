@@ -222,11 +222,15 @@ if (tbody == null) return;
 	}
 
 	function borrarElemento(e){
+		if (!editando){
+			console.log("No es editando")
+			return
+		}
 		if (!e.target.closest("tr")){
 			console.log("no es tr!")
 			return
 		}
-		if (e.key != altkey){
+		if (e.key != "altKey"){
 			alert("No es alt!")
 			return
 		}
