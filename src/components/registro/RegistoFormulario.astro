@@ -111,7 +111,8 @@ import "@styles/global.css";
     });
     console.log(response);
     if (response.ok) {
-      let id = response.data.id;
+      const responseData = await response.json();
+      let id = responseData.data.id;
 
       //Envio el email de confirmacion usuario.
 
