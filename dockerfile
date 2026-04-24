@@ -16,6 +16,7 @@ COPY . .
 # Fix permissions for all binary files in node_modules
 RUN find node_modules/.bin -type f -exec chmod +x {} \;
 
+ARG DATABASE_URL
 
 # Generate Prisma Client (outputs to ./src/generated/prisma)
 RUN npx prisma generate
