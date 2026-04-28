@@ -413,10 +413,12 @@ readCollecionProduct()
 }
 	
 
+thead.addEventListener("focus", headerActualizado)
 thead.addEventListener("blur", headerActualizado)
 
-function headerActualizado(){
+function headerActualizado(e){
 	console.log("Hola!")
+	console.log(e.target.textContent)
 }
 
 document.addEventListener("click", eventoDelegado)
