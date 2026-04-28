@@ -26,6 +26,8 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 		{ cookie &&
 
 			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer" id="editar">Editar</button>
+			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-red-600 dark:text-gray-50 cursor-pointer" id="borrar">Borrar</button>
+			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-red-600 dark:text-gray-50 cursor-pointer" id="dejarBorrar">Dejar de borrar</button>
 			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden" id="terminar">Finish</button>
 		}
 	</div>
@@ -67,6 +69,8 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 	let columnas;
 	let resultado;
 	let editando = false;
+	let borrar = document.querySelector('#borrar')
+	let dejarBorrar = document.querySelector('#dejarBorrar')
 	nuevaColumna.addEventListener("click", crearColumna)
 	
 	readProduct();
@@ -177,7 +181,7 @@ async function readProduct() {
 		nuevaColumna.style.display = "flex"
 		crearNuevaFila.style.display = "flex"
 		terminar.style.display = "block";
-
+		borrar.style.display = "block";
 
 
 		//creo el selector para crear una nueva columna
@@ -220,6 +224,21 @@ if (tbody == null) return;
 
 	// Esta parte del codigo contiene todas las funciones necesarias para permitir la capacidad de borrar elementos.
 
+	let modoBorrar=false
+
+	function marcarRojo(){
+		let todosTR = document.querySelectorAll('tbody tr');
+		for (let iterable of todosTR){
+			iterable.classList.add("hover:bg-red-500")
+		}
+	}
+	function desmarcarRojo(){
+		let todosTR = document.querySelectorAll('tbody tr');
+		for (let iterable of todosTR){
+			iterable.classList.remove("hover:bg-red-800")
+		}
+	}
+
 	function seleccionBorrar(e){
 		if (!editando){
 			return
@@ -231,18 +250,15 @@ if (tbody == null) return;
 		}
 
 		e.preventDefault()
-		let todosTR = document.querySelectorAll('tbody tr');
-		for (let iterable of todosTR){
-			iterable.classList.add("hover:bg-red-500")
-		}
+		marcarRojo()	
 	}
 
 	
 	function deshacerSeleccionBorrar(){
-		let todosTR = document.querySelectorAll('tbody tr');
-		for (let iterable of todosTR){
-			iterable.classList.remove("hover:bg-red-800")
+		if(modoBorrar){
+			return
 		}
+		desmarcarRojo();
 	}
 
 
@@ -251,6 +267,7 @@ if (tbody == null) return;
 			console.log("No es editando")
 			return
 		}
+
 		if (!e.target.closest("tr")){
 			console.log("no es tr!")
 			return
@@ -258,10 +275,12 @@ if (tbody == null) return;
 		if (e.target.closest("tr").id=="trDeThead"){
 			return
 		} 
-		if (!e.altKey){
-			console.log("No es alt!")
-			console.log(e.key)
-			return
+		if (!modoBorrar){
+			if (!e.altKey){
+				console.log("No es alt!")
+				console.log(e.key)
+				return
+			}
 		}
 
 		let id = e.target.closest('tr').id
@@ -280,9 +299,27 @@ if (tbody == null) return;
 			console.log(response);
 		readCollecionProduct()
 	}
+
+	function activarBorrar(){
+		modoBorrar = true
+		marcarRojo()
+		dejarBorrar.style.display="block";
+		borrar.style.display="none"
+	}
+	function desactivarBorrar(){
+		modoBorrar = false
+		desmarcarRojo()
+		dejarBorrar.style.display="none";
+		borrar.style.display="block"
+	}
+
 	document.addEventListener("click", borrarElemento) //TODO: HAZ ESTO RESPONSIVE
 	document.addEventListener("keydown", seleccionBorrar)
 	document.addEventListener("keyup", deshacerSeleccionBorrar)
+
+	borrar.addEventListener("click", activarBorrar)
+	dejarBorrar.addEventListener("click", desactivarBorrar)
+
 
 
 
@@ -435,5 +472,7 @@ function headerActualizado(e){
 }
 
 document.addEventListener("click", eventoDelegado)
+
+
 
 </script>
