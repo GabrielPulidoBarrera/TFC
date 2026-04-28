@@ -52,7 +52,7 @@ import GeneralBoton from "@general/GeneralBoton.astro";
 
       <div class="col-span-full">
           <legend>Columnas de la tabla</legend>
-          <span id="selectorColumnas" class="grid grid-cols-3 gap-10">
+          <span id="selectorColumnas" class="grid grid grid-cols-2 lg:grid-cols-3 gap-10">
               <div>
                 <input type="text" class="columna max-w-full" id="NombreColumna1" />
                 <label for="columna1">Nombre columna 1</label>
@@ -101,7 +101,7 @@ import GeneralBoton from "@general/GeneralBoton.astro";
 
   function newColumn() {
     //Creo el fieldset el primer div, cada div contiene un label y un input.
-    let fieldset = document.createElement("fieldset");
+    let divContenedor = document.createElement("fieldset");
     let div1 = document.createElement("div");
 
     //Div del nombre
@@ -113,7 +113,7 @@ import GeneralBoton from "@general/GeneralBoton.astro";
     nombreLabel.htmlFor = "nombreColumna" + contador;
 
     div1.append(nombreInput, nombreLabel);
-    fieldset.append(div1);
+    divContenedor.append(div1);
 
     let div2 = document.createElement("div");
 
@@ -126,9 +126,9 @@ import GeneralBoton from "@general/GeneralBoton.astro";
     valorLabel.htmlFor = "valorColumna" + contador;
 
     div2.append(valorInput, valorLabel);
-    fieldset.append(div2);
+    divContenedor.append(div2);
 
-    selectorColumnas?.append(fieldset);
+    selectorColumnas?.append(divContenedor);
 
     contador++;
   }
