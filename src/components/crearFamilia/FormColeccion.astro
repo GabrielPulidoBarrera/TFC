@@ -55,11 +55,11 @@ import { obtenerCookie } from "@libs/auth/controlCookies";
         <legend>Columnas de la tabla</legend>
         <span id="selectorColumnas" class="grid grid-cols-3 gap-10">
           <fieldset>
-            <input type="text" class="columna" id="columna1" />
+            <input type="text" class="columna max-w-full" id="columna1" />
             <label for="columna1">Columna 1</label>
           </fieldset>
           <fieldset>
-            <input type="text" class="columna" id="columna2" />
+            <input type="text" class="columna max-w-full" id="columna2" />
             <label for="columna2">Columna 2</label>
           </fieldset>
         </span>
@@ -97,8 +97,9 @@ import { obtenerCookie } from "@libs/auth/controlCookies";
     label.textContent = "Columna " + contador;
     label.htmlFor = "columna" + contador;
     contador++;
-    selectorColumnas?.append(input);
-    selectorColumnas?.append(label);
+    let fieldset = document.createElement('fieldset');
+    fieldset.append(input, label)
+    selectorColumnas?.append(fieldset);
   }
 
   async function newCollection() {
