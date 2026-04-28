@@ -92,7 +92,7 @@ import { obtenerCookie } from "@libs/auth/controlCookies";
   function newColumn() {
     let input = document.createElement("input");
     input.id = "columna" + contador;
-    input.classList.add("columna");
+    input.classList.add("columna, max-w-full");
     let label = document.createElement("label");
     label.textContent = "Columna " + contador;
     label.htmlFor = "columna" + contador;

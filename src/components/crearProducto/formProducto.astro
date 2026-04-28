@@ -52,12 +52,10 @@ import GeneralBoton from "@general/GeneralBoton.astro";
 
       <div class="col-span-full">
           <legend>Columnas de la tabla</legend>
-          <span id="selectorColumnas" class="grid grid grid-cols-2 lg:grid-cols-3 gap-10">
+          <span id="selectorColumnas" class=" grid grid-cols-2 lg:grid-cols-3 gap-10">
               <div>
                 <input type="text" class="columna max-w-full" id="NombreColumna1" />
                 <label for="columna1">Nombre columna 1</label>
-              </div>
-              <div>
                 <input type="text" class="columna max-w-full" id="ValorColumna1" />
                 <label for="columna1">Valor columna 1</label>
               </div>
@@ -65,8 +63,6 @@ import GeneralBoton from "@general/GeneralBoton.astro";
               <div>
                 <input type="text" class="columna max-w-full" id="NombreColumna2" />
                 <label for="columna2">Nombre columna 2</label>
-              </div>
-              <div>
                 <input type="text" class="columna max-w-full" id="ValorColumna2" />
                 <label for="columna2">Valor columna 2</label>
               </div>
@@ -107,7 +103,7 @@ import GeneralBoton from "@general/GeneralBoton.astro";
     //Div del nombre
     let nombreInput = document.createElement("input");
     nombreInput.id = "NombreColumna" + contador;
-    nombreInput.classList.add("columna");
+    nombreInput.classList.add("columna, max-w-full");
     let nombreLabel = document.createElement("label");
     nombreLabel.textContent = "Nombre columna " + contador;
     nombreLabel.htmlFor = "nombreColumna" + contador;
