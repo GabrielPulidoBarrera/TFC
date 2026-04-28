@@ -97,7 +97,8 @@ import { obtenerCookie } from "@libs/auth/controlCookies";
     label.textContent = "Columna " + contador;
     label.htmlFor = "columna" + contador;
     contador++;
-    let divContenedor = document.createElement('fieldset');
+    let divContenedor = document.createElement('div');
+    divContenedor.classList.add("max-w-full", "overflow-hidden")
     divContenedor.append(input, label)
     selectorColumnas?.append(divContenedor);
   }

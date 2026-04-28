@@ -97,7 +97,8 @@ import GeneralBoton from "@general/GeneralBoton.astro";
 
   function newColumn() {
     //Creo el fieldset el primer div, cada div contiene un label y un input.
-    let divContenedor = document.createElement("fieldset");
+    let divContenedor = document.createElement("div");
+    divContenedor.classList.add("max-w-full", "overflow-hidden")
     let div1 = document.createElement("div");
 
     //Div del nombre
