@@ -230,6 +230,7 @@ if (tbody == null) return;
 			return
 		}
 
+		e.preventDefault()
 		let todosTR = document.querySelectorAll('tbody tr');
 		for (let iterable of todosTR){
 			iterable.classList.add("hover:bg-red-500")
@@ -422,7 +423,14 @@ function headerActualizado(e){
 		console.log(e.target)
 		console.log(Array.from(thead.children[0].children))
 		console.log(Array.from(thead.children[0].children).indexOf(e.target))
-		//e.target.remove()
+		let posicion = Array.from(thead.children[0].children).indexOf(e.target)
+		e.target.remove()
+
+
+		let todosTR = tbody.querySelectorAll('tr');
+		todosTR.map(e => {
+			e.children[posicion].remove()
+		})
 	}
 }
 
