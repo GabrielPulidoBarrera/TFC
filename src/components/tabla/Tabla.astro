@@ -427,7 +427,7 @@ function headerActualizado(e){
 		e.target.remove()
 
 
-		let todosTR = tbody.querySelectorAll('tr');
+		let todosTR = Array.from(tbody.querySelectorAll('tr'));
 		todosTR.map(e => {
 			e.children[posicion].remove()
 		})
