@@ -1,5 +1,6 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import { crearDialog } from "@libs/dialog/crearDialog";
 const id = Astro.url.searchParams.get("id");
 const url = new URL('/api/validateUser', Astro.url);
 
@@ -14,13 +15,16 @@ const url = new URL('/api/validateUser', Astro.url);
         }),
       });
       console.info(responseCorreo)
+      if (responseCorreo.ok){
+        crearDialog("El registro a funcionado. Por favor, inicie sesion para acceder a la pagina")
+        window.location.href = "/login";
+      }
 
 ---
 
 <Layout>
-  <button id="enviar"> enviar</button>
 </Layout>
-
+<!-- 
 <script>
 
   let boton = document.querySelector('#enviar');
@@ -36,4 +40,4 @@ async function mandarCorreo(){
   console.log(responseEmail);
 }
 
-</script>
+</script> -->
