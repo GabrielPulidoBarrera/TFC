@@ -15,7 +15,7 @@ export const POST: APIRoute = async function({ request }){
     //let columnas = {columna: "nombre", precio: 20, fecha: "hoy"}
     //let parseado = await JSON.stringify(columnas);
 
-    let responseEmail = await fetch("https://n8n.gabrielpulido.xyz/webhook-test/bf8ea997-b6a2-4a20-9166-511843e8599b", { 
+    let responseEmail = await fetch("https://n8n.gabrielpulido.xyz/webhook/bf8ea997-b6a2-4a20-9166-511843e8599b", { 
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email: email, id: id }),
