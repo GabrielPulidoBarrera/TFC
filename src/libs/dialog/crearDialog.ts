@@ -6,6 +6,7 @@ export function crearDialog(texto: string) {
   let button = document.createElement('button')
   button.textContent="cerrar";
   p.textContent = texto;
+  p.style.whiteSpace = 'pre-line';
   dialog.append(p);
   dialog.append(button);
   document.querySelector('body')?.append(dialog);
