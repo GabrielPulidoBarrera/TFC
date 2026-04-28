@@ -76,14 +76,16 @@ import "@styles/global.css";
   botonUsuario?.addEventListener("click", nuevoUsuario);
 
   async function nuevoUsuario() {
+    let valido = true;
+
     if (document.querySelector("#correo") == null) {
-      return;
+      valido = false;
     }
     if (document.querySelector("#nombre") == null) {
-      return;
+      valido = false;
     }
     if (document.querySelector("#password") == null) {
-      return;
+      valido = false;
     }
 
     //Muestro el spinner
@@ -97,106 +99,86 @@ import "@styles/global.css";
     let password = (document.querySelector("#password") as HTMLInputElement)
       .value;
 
-      //He copiado y pegado este regex de google.
-    let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    if (emailRegex.test(emailUsuario)==false){
-      crearDialog("Tu email es invalido")
-      return
+    //He copiado y pegado este regex de google.
+    let emailRegex =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (emailRegex.test(emailUsuario) == false) {
+      crearDialog("Tu email es invalido");
+      valido = false;
     }
     //Este regex se asegura de que no tenga carateres especiales.
-    let usuarioRegex = /^[A-Za-z0-9]*$/
-    if (usuarioRegex.test(username)==false){
-      crearDialog("Tu usuario no puede contener caracteres especiales")
-      return
+    let usuarioRegex = /^[A-Za-z0-9]*$/;
+    if (usuarioRegex.test(username) == false) {
+      crearDialog("Tu usuario no puede contener caracteres especiales");
+      valido = false;
     }
 
-    let mayusculaRegex = /[A-Z]/
-    let minusculaRegex = /[a-z]/
-    let numeroRegex = /[0-9]/
-
-    if (password.length<8){
-      crearDialog("Tu contraseña es muy corta")
-      return
+    if (username.length<8){
+      crearDialog("Tu usuario es demasiado corto")
+      valido = false;
     }
 
-    if (mayusculaRegex.test(password)==false){
-      crearDialog("Tu contraseña debe de contener al menos una mayuscula.")
-      return
-    }
-    
-    if (minusculaRegex.test(password)==false){
-      crearDialog("Tu contraseña debe de contener al menos una minuscula.")
-      return
-    }
-    if (numeroRegex.test(password)==false){
-      crearDialog("Tu contraseña debe de contener al menos un numero.")
-      return
+    let mayusculaRegex = /[A-Z]/;
+    let minusculaRegex = /[a-z]/;
+    let numeroRegex = /[0-9]/;
+
+    if (password.length < 8) {
+      crearDialog("Tu contraseña es muy corta");
+      valido = false;
     }
 
+    if (mayusculaRegex.test(password) == false) {
+      crearDialog("Tu contraseña debe de contener al menos una mayuscula.");
+      valido = false;
+    }
 
-    password = await getSHA256Hash(password);
-    const response = await fetch("../api/newUser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: username,
-        email: emailUsuario,
-        password: password,
-      }),
-    });
-    console.log(response);
-    if (response.ok) {
-      const responseData = await response.json();
-      let id = responseData.data.id;
+    if (minusculaRegex.test(password) == false) {
+      crearDialog("Tu contraseña debe de contener al menos una minuscula.");
+      valido = false;
+    }
+    if (numeroRegex.test(password) == false) {
+      crearDialog("Tu contraseña debe de contener al menos un numero.");
+      valido = false;
+    }
 
-      //Envio el email de confirmacion usuario.
-
-      const responseCorreo = await fetch("../api/sendEmail", {
+    if (valido == true) {
+      password = await getSHA256Hash(password);
+      const response = await fetch("../api/newUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          name: username,
           email: emailUsuario,
-          id: id,
+          password: password,
         }),
       });
-      console.info(responseCorreo)
+      console.log(response);
+      if (response.ok) {
+        const responseData = await response.json();
+        let id = responseData.data.id;
 
+        //Envio el email de confirmacion usuario.
 
-
-
-      // const responseLogin = await fetch("../api/verifyLogin", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     name: username,
-      //     password: password,
-      //   }),
-      // });
-      
-      
-      
-      
-      // //crearDialog("La cuenta se ha creado correctamente")
-      
-      
-      
-    //   if (responseLogin.ok) {
-    //     window.location.href = "/seleccion";
-    //   }
-    // } else {
-    //   crearDialog("El registro ha fallado");
-
-
-    
-      //Oculto el spinner
-      // cargar.style.display = "none";
-      // textoBoton.style.display = "block";
+        const responseCorreo = await fetch("../api/sendEmail", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: emailUsuario,
+            id: id,
+          }),
+        });
+        console.info(responseCorreo);
+      }
+      cargar.style.display = "none";
+      textoBoton.style.display = "block";
+    } else {
+      cargar.style.display = "none";
+      textoBoton.style.display = "block";
+      return
     }
   }
 </script>
