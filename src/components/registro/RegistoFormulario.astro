@@ -36,6 +36,11 @@ import "@styles/global.css";
           class="w-full rounded-md focus:ring focus:ring-opacity-75"
         />
       </div>
+      <div>
+        <p>Reglas para el registro:</p>
+        <p>El usuario no debe de contener caracteres especiales y debe de tener al menos 8 caracteres</p>
+        <p>La contraseña debe de tener al menos una mayuscula, una minuscula, un numero, y 8 caracteres de longitud.</p>
+      </div>
     </fieldset>
     <button
       type="button"
@@ -76,6 +81,7 @@ import "@styles/global.css";
   botonUsuario?.addEventListener("click", nuevoUsuario);
 
   async function nuevoUsuario() {
+    let error = "";
     let valido = true;
 
     if (document.querySelector("#correo") == null) {
@@ -103,18 +109,18 @@ import "@styles/global.css";
     let emailRegex =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (emailRegex.test(emailUsuario) == false) {
-      crearDialog("Tu email es invalido");
+      error+="\n Tu email es invalido";
       valido = false;
     }
     //Este regex se asegura de que no tenga carateres especiales.
     let usuarioRegex = /^[A-Za-z0-9]*$/;
     if (usuarioRegex.test(username) == false) {
-      crearDialog("Tu usuario no puede contener caracteres especiales");
+      error+="\n Tu usuario no puede contener caracteres especiales";
       valido = false;
     }
 
     if (username.length<8){
-      crearDialog("Tu usuario es demasiado corto")
+      error+="\n Tu usuario es demasiado corto"
       valido = false;
     }
 
@@ -123,21 +129,21 @@ import "@styles/global.css";
     let numeroRegex = /[0-9]/;
 
     if (password.length < 8) {
-      crearDialog("Tu contraseña es muy corta");
+      error+="\n Tu contraseña es muy corta";
       valido = false;
     }
 
     if (mayusculaRegex.test(password) == false) {
-      crearDialog("Tu contraseña debe de contener al menos una mayuscula.");
+      error+="\n Tu contraseña debe de contener al menos una mayuscula.";
       valido = false;
     }
 
     if (minusculaRegex.test(password) == false) {
-      crearDialog("Tu contraseña debe de contener al menos una minuscula.");
+      error+="\n Tu contraseña debe de contener al menos una minuscula.";
       valido = false;
     }
     if (numeroRegex.test(password) == false) {
-      crearDialog("Tu contraseña debe de contener al menos un numero.");
+      error+="\n Tu contraseña debe de contener al menos un numero.";
       valido = false;
     }
 
@@ -176,6 +182,7 @@ import "@styles/global.css";
       cargar.style.display = "none";
       textoBoton.style.display = "block";
     } else {
+      crearDialog(error)
       cargar.style.display = "none";
       textoBoton.style.display = "block";
       return
