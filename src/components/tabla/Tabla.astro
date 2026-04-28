@@ -420,8 +420,8 @@ function headerActualizado(e){
 		console.log("Hola!")
 		console.log(e.target.textContent)
 		console.log(e.target)
-		console.log(Array.from(thead.children.children))
-		console.log(Array.from(thead.children.children).indexOf(e.target))
+		console.log(Array.from(thead.children[0].children))
+		console.log(Array.from(thead.children[0].children).indexOf(e.target))
 		//e.target.remove()
 	}
 }
