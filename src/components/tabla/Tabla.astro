@@ -419,8 +419,10 @@ function headerActualizado(e){
 	if (e.target.textContent.trim()==""){
 		console.log("Hola!")
 		console.log(e.target.textContent)
+		console.log(e.target)
+		console.log(Array.from(thead.children))
 		console.log(Array.from(thead.children).indexOf(e.target))
-		e.target.remove()
+		//e.target.remove()
 	}
 }
 
