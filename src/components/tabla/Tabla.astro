@@ -413,12 +413,14 @@ readCollecionProduct()
 }
 	
 
-thead.addEventListener("focusin", headerActualizado)
 thead.addEventListener("focusout", headerActualizado)
 
 function headerActualizado(e){
-	console.log("Hola!")
-	console.log(e.target.textContent)
+	if (e.target.textContent.trim()==""){
+		console.log("Hola!")
+		console.log(e.target.textContent)
+		e.remove()
+	}
 }
 
 document.addEventListener("click", eventoDelegado)
