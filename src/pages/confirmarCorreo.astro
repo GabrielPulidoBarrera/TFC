@@ -15,16 +15,19 @@ const url = new URL('/api/validateUser', Astro.url);
         }),
       });
       console.info(responseCorreo)
-      if (responseCorreo.ok){
-        crearDialog("El registro a funcionado. Por favor, inicie sesion para acceder a la pagina")
-        window.location.href = "/login";
-      }
+
 
 ---
 
 <Layout>
+  { responseCorreo.ok &&
+    <p>El registro ha funcionado. Por favor, inicie sesion para acceder a la pagina</p>
+  }
+  { !responseCorreo.ok &&
+    <p>El registo ha fallado</p>
+  }
 </Layout>
-<!-- 
+ 
 <script>
 
   let boton = document.querySelector('#enviar');
@@ -40,4 +43,4 @@ async function mandarCorreo(){
   console.log(responseEmail);
 }
 
-</script> -->
+</script>
