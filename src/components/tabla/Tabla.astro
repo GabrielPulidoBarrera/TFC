@@ -413,8 +413,8 @@ readCollecionProduct()
 }
 	
 
-thead.addEventListener("focus", headerActualizado)
-thead.addEventListener("blur", headerActualizado)
+thead.addEventListener("focusin", headerActualizado)
+thead.addEventListener("focusout", headerActualizado)
 
 function headerActualizado(e){
 	console.log("Hola!")
