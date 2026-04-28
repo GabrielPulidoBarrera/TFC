@@ -178,10 +178,13 @@ import "@styles/global.css";
           }),
         });
         console.info(responseCorreo);
+        crearDialog("El registro ha funcionado. Revisa tu correo electronico para verificar el email.")
+      }
+      else{
+        crearDialog("El registro ha fallado.")
       }
       cargar.style.display = "none";
       textoBoton.style.display = "block";
-      crearDialog("El registro ha funcionado. Revisa tu correo electronico para verificar el email.")
     } else {
       crearDialog(error)
       cargar.style.display = "none";

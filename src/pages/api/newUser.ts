@@ -16,6 +16,10 @@ export const POST: APIRoute = async function({ request }){
   try {
     let {name, password, email} = await request.json();
 
+    console.log("Nombre: "+name)
+    console.log("password: "+password)
+    console.log("email: "+email)
+
 
     let emailRegex =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -34,26 +38,6 @@ export const POST: APIRoute = async function({ request }){
 
     }
 
-    let mayusculaRegex = /[A-Z]/;
-    let minusculaRegex = /[a-z]/;
-    let numeroRegex = /[0-9]/;
-
-    if (password.length < 8) {
-    throw new Error('Invalid password length')
-    }
-
-    if (mayusculaRegex.test(password) == false) {
-    throw new Error('No uppercase letter found in password')
-
-    }
-
-    if (minusculaRegex.test(password) == false) {
-    throw new Error('No lowercase letter found in password')
-    }
-    if (numeroRegex.test(password) == false) {
-    throw new Error('No number letter found in password')
-
-    }
 
     console.log(name)
   
