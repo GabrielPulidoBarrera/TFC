@@ -97,6 +97,43 @@ import "@styles/global.css";
     let password = (document.querySelector("#password") as HTMLInputElement)
       .value;
 
+      //He copiado y pegado este regex de google.
+    let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    if (emailRegex.test(emailUsuario)==false){
+      crearDialog("Tu email es invalido")
+      return
+    }
+    //Este regex se asegura de que no tenga carateres especiales.
+    let usuarioRegex = /^[A-Za-z0-9]*$/
+    if (usuarioRegex.test(username)==false){
+      crearDialog("Tu usuario no puede contener caracteres especiales")
+      return
+    }
+
+    let mayusculaRegex = /[A-Z]/
+    let minusculaRegex = /[a-z]/
+    let numeroRegex = /[0-9]/
+
+    if (password.length<8){
+      crearDialog("Tu contraseña es muy corta")
+      return
+    }
+
+    if (mayusculaRegex.test(password)==false){
+      crearDialog("Tu contraseña debe de contener al menos una mayuscula.")
+      return
+    }
+    
+    if (minusculaRegex.test(password)==false){
+      crearDialog("Tu contraseña debe de contener al menos una minuscula.")
+      return
+    }
+    if (numeroRegex.test(password)==false){
+      crearDialog("Tu contraseña debe de contener al menos un numero.")
+      return
+    }
+
+
     password = await getSHA256Hash(password);
     const response = await fetch("../api/newUser", {
       method: "POST",
