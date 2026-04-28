@@ -11,7 +11,7 @@ const { idUsuario = 1, idColeccion } = Astro.props;
 <!-- Condicional para evitar que salga la opcion entreseleccionar un producto o una coleccion en caso de que este componente sea cargado desde la funcion de busqueda de producto de la coleccion. No tendria mucho sentido poder buscar colecciones dentro de una coleccion. -->
 { idColeccion==null &&
 
-  <div class="text-5xl flex justify-center">Categoria</div>
+  // <div class="text-5xl flex justify-center">Categoria</div>
   <div class="flex w-full justify-around">
     <div
       id="selectorProducto"
@@ -28,11 +28,11 @@ const { idUsuario = 1, idColeccion } = Astro.props;
   </div>
     }
 
-  <div class="text-5xl flex justify-center">Buscar:</div>
+  <!-- <div class="text-5xl flex justify-center">Buscar:</div> -->
 
   <input id="buscar" type="text" class="w-1/2" />
 
-  <div class="text-5xl flex justify-center">Resultados</div>
+  <!-- <div class="text-5xl flex justify-center">Resultados</div> -->
 
   <div class="cargar hidden">
     <svg

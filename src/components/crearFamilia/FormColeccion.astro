@@ -1,106 +1,130 @@
 ---
 import "@styles/global.css";
-import GeneralBoton from '@general/GeneralBoton.astro';
+import GeneralBoton from "@general/GeneralBoton.astro";
 import { obtenerCookie } from "@libs/auth/controlCookies";
-
-
-
 ---
+
 <section class="p-6 dark:text-gray-900">
-	<form novalidate="" action="" class="container flex flex-col mx-auto space-y-12">
-		<fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm">
-			<div class="space-y-2 col-span-full lg:col-span-1">
-				<p class="font-medium">Crear colecciones</p>
-				<p class="text-xs">El nombre de la coleccion sera el nombre visible en el selector de colecciones y en los resultados de busqueda.</p>
-				<p class="text-xs">La visibilidad define si la coleccion puede ser encontrado en la busqueda o no.</p>
-				<p class="text-xs">Las columnas definiran los atributos que se mostraran en la tabla.</p>
-                <p class="text-xs">Todos estos valores pueden ser modificados en cualquier momento.</p>
-                
-			</div>
-			<div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-				<div class="col-span-full sm:col-span-3">
-					<label for="name" class="text-sm">Name</label>
-					<input id="name" type="text" placeholder="Name" class="w-full rounded-md focus:ring focus:ring-opacity-75">
-				</div>
-				<div class="col-span-full sm:col-span-3">
-					<label for="visibility" class="text-sm">Visibility</label>
-                    <select id="visibility" class="w-full rounded-md focus:ring focus:ring-opacity-75">
-        
-                        <option>Publico</option>
-                        <option>Privado</option>
-                        <option>Oculto</option>
-                    </select>
-				</div>
-		</fieldset>
-
-
-        <div>
-          <fieldset>
-            <legend>Columnas de la tabla</legend>
-            <span id="selectorColumnas">
-              <input type="text" class="columna" id="columna1"> <label for="columna1">Columna 1</label>
-              <input type="text" class="columna" id="columna2"> <label for="columna2">Columna 2</label>
-            </span>
-          </fieldset>
-            <button type="button" id="nuevaColumna">Añadir mas columnas</button>
-
+  <form
+    novalidate=""
+    action=""
+    class="container flex flex-col mx-auto space-y-12"
+  >
+    <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm">
+      <div class="space-y-2 col-span-full lg:col-span-1">
+        <p class="font-medium">Crear colecciones</p>
+        <p class="text-xs">
+          El nombre de la coleccion sera el nombre visible en el selector de
+          colecciones y en los resultados de busqueda.
+        </p>
+        <p class="text-xs">
+          La visibilidad define si la coleccion puede ser encontrado en la
+          busqueda o no.
+        </p>
+        <p class="text-xs">
+          Las columnas definiran los atributos que se mostraran en la tabla.
+        </p>
+        <p class="text-xs">
+          Todos estos valores pueden ser modificados en cualquier momento.
+        </p>
+      </div>
+      <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+        <div class="col-span-full sm:col-span-3">
+          <label for="name" class="text-sm">Name</label>
+          <input
+            id="name"
+            type="text"
+            placeholder="Name"
+            class="w-full rounded-md focus:ring focus:ring-opacity-75"
+          />
         </div>
+        <div class="col-span-full sm:col-span-3">
+          <label for="visibility" class="text-sm">Visibility</label>
+          <select
+            id="visibility"
+            class="w-full rounded-md focus:ring focus:ring-opacity-75"
+          >
+            <option>Publico</option>
+            <option>Privado</option>
+            <option>Oculto</option>
+          </select>
+        </div>
+      </div>
 
-				</div>
-	</form>
+      <div>
+        <fieldset>
+          <legend>Columnas de la tabla</legend>
+          <span id="selectorColumnas">
+            <input type="text" class="columna" id="columna1" />
+            <label for="columna1">Columna 1</label>
+            <input type="text" class="columna" id="columna2" />
+            <label for="columna2">Columna 2</label>
+          </span>
+        </fieldset>
+        <button
+          type="button"
+          id="nuevaColumna"
+          class="self-center px-8 py-3 rounded">Añadir mas columnas</button
+        >
+      </div>
+    </fieldset>
+  </form>
 </section>
 
-<div id="crearColeccion" class="flex items-center justify-center cursor-pointer">
-    <GeneralBoton text="Añadir"></GeneralBoton>
+<div
+  id="crearColeccion"
+  class="flex items-center justify-center cursor-pointer"
+>
+  <GeneralBoton text="Añadir" />
 </div>
 
 <script>
-import { crearDialog } from "@libs/dialog/crearDialog";
+  import { crearDialog } from "@libs/dialog/crearDialog";
 
-    
-
-	let boton = document.querySelector('#crearColeccion');
-  let nuevaColumna = document.querySelector('#nuevaColumna');
-  let selectorColumnas = document.querySelector('#selectorColumnas');
+  let boton = document.querySelector("#crearColeccion");
+  let nuevaColumna = document.querySelector("#nuevaColumna");
+  let selectorColumnas = document.querySelector("#selectorColumnas");
   nuevaColumna?.addEventListener("click", newColumn);
   let contador = 3;
 
-  function newColumn(){
-    let input = document.createElement('input');
-    input.id = "columna"+contador;
-    input.classList.add('columna')
-    let label = document.createElement('label');
-    label.textContent = "Columna "+contador;
-    label.htmlFor = "columna"+contador;
-    contador++
+  function newColumn() {
+    let input = document.createElement("input");
+    input.id = "columna" + contador;
+    input.classList.add("columna");
+    let label = document.createElement("label");
+    label.textContent = "Columna " + contador;
+    label.htmlFor = "columna" + contador;
+    contador++;
     selectorColumnas?.append(input);
     selectorColumnas?.append(label);
-
   }
 
-	 async function newCollection() {
-    let collectionName =(document.querySelector("#name") as HTMLInputElement).value;
-    let main = document.querySelector('main');
-    if(main==null){
-      return
+  async function newCollection() {
+    let collectionName = (document.querySelector("#name") as HTMLInputElement)
+      .value;
+    let main = document.querySelector("main");
+    if (main == null) {
+      return;
     }
-    if (main.dataset==null){
-      return
+    if (main.dataset == null) {
+      return;
     }
-    if (main.dataset.cookie==null){
-      return
+    if (main.dataset.cookie == null) {
+      return;
     }
-    let cookie = main.dataset.cookie
+    let cookie = main.dataset.cookie;
 
     let userID = Number(cookie);
-    let collectionVisibility =(document.querySelector("#visibility") as HTMLInputElement).value;
-    let columnasRaw = selectorColumnas?.querySelectorAll('.columna')
+    let collectionVisibility = (
+      document.querySelector("#visibility") as HTMLInputElement
+    ).value;
+    let columnasRaw = selectorColumnas?.querySelectorAll(".columna");
     let columnas = [] as String[];
-    for (let iterable of columnasRaw as NodeListOf<HTMLInputElement>){
+    for (let iterable of columnasRaw as NodeListOf<HTMLInputElement>) {
       columnas.push(iterable.value);
     }
     let columnasJSON = JSON.stringify(columnas);
-    console.log(columnasJSON)
+    console.log(columnasJSON);
 
     const response = await fetch("/api/newCollection", {
       method: "POST",
@@ -110,17 +134,22 @@ import { crearDialog } from "@libs/dialog/crearDialog";
       body: JSON.stringify({
         name: collectionName,
         userID: userID,
-		visibility: collectionVisibility,
-    columns: columnasJSON
+        visibility: collectionVisibility,
+        columns: columnasJSON,
       }),
     });
     console.log(response);
     const result = await response.json();
     console.log("Response data:", result);
-    if(response.ok){
-      window.location.href = "/s/"+collectionName+"-"+result.data.id+"-"+collectionVisibility;
+    if (response.ok) {
+      window.location.href =
+        "/s/" +
+        collectionName +
+        "-" +
+        result.data.id +
+        "-" +
+        collectionVisibility;
     }
- 
   }
 
   boton?.addEventListener("click", newCollection);

@@ -1,174 +1,199 @@
 ---
 import "@styles/global.css";
-import GeneralBoton from '@general/GeneralBoton.astro';
-
-
+import GeneralBoton from "@general/GeneralBoton.astro";
 ---
+
 <section class="p-6 dark:text-gray-900">
-	<form novalidate="" action="" class="container flex flex-col mx-auto space-y-12">
-		<fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm">
-			<div class="space-y-2 col-span-full lg:col-span-1">
-				<p class="font-medium">Crear colecciones</p>
-				<p class="text-xs">El nombre del produto sera el nombre visible en el selector de colecciones y en los resultados de busqueda.</p>
-				<p class="text-xs">La visibilidad define si el producto puede ser encontrado en la busqueda o no.</p>
-				<p class="text-xs">Las columnas definiran los atributos que se mostraran en la tabla.</p>
-                <p class="text-xs">Todos estos valores pueden ser modificados en cualquier momento.</p>
-                
-			</div>
-			<div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-				<div class="col-span-full sm:col-span-3">
-					<label for="name" class="text-sm">Name</label>
-					<input id="name" type="text" placeholder="Name" class="w-full rounded-md focus:ring focus:ring-opacity-75">
-				</div>
-				<div class="col-span-full sm:col-span-3">
-					<label for="visibility" class="text-sm">Visibility</label>
-                    <select id="visibility" class="w-full rounded-md focus:ring focus:ring-opacity-75">
-        
-                        <option>Publico</option>
-                        <option>Privado</option>
-                        <option>Oculto</option>
-                    </select>
-				</div>
-		</fieldset>
-
-
-        <div>
-          <fieldset>
-            <legend>Columnas de la tabla</legend>
-            <span id="selectorColumnas" class="grid grid-cols-3 gap-10">
-              <fieldset>
-                <div>
-                  <input type="text" class="columna" id="NombreColumna1"> <label for="columna1">Nombre columna 1</label>
-                </div>
-                <div>
-                  <input type="text" class="columna" id="ValorColumna1"> <label for="columna1">Valor columna 1</label>
-                </div>
-              </fieldset>
-              <fieldset>
-                <div>
-                  <input type="text" class="columna" id="NombreColumna2"> <label for="columna2">Nombre columna 2</label>
-                </div>
-                <div>
-                  <input type="text" class="columna" id="ValorColumna2"> <label for="columna2">Valor columna 2</label>
-                </div>
-              </fieldset>
-            </span>
-          </fieldset>
-            <button type="button" id="nuevaColumna">Añadir mas columnas</button>
-
+  <form
+    novalidate=""
+    action=""
+    class="container flex flex-col mx-auto space-y-12"
+  >
+    <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm">
+      <div class="space-y-2 col-span-full lg:col-span-1">
+        <p class="font-medium">Crear colecciones</p>
+        <p class="text-xs">
+          El nombre del produto sera el nombre visible en el selector de
+          colecciones y en los resultados de busqueda.
+        </p>
+        <p class="text-xs">
+          La visibilidad define si el producto puede ser encontrado en la
+          busqueda o no.
+        </p>
+        <p class="text-xs">
+          Las columnas definiran los atributos que se mostraran en la tabla.
+        </p>
+        <p class="text-xs">
+          Todos estos valores pueden ser modificados en cualquier momento.
+        </p>
+      </div>
+      <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+        <div class="col-span-full sm:col-span-3">
+          <label for="name" class="text-sm">Name</label>
+          <input
+            id="name"
+            type="text"
+            placeholder="Name"
+            class="w-full rounded-md focus:ring focus:ring-opacity-75"
+          />
         </div>
+        <div class="col-span-full sm:col-span-3">
+          <label for="visibility" class="text-sm">Visibility</label>
+          <select
+            id="visibility"
+            class="w-full rounded-md focus:ring focus:ring-opacity-75"
+          >
+            <option>Publico</option>
+            <option>Privado</option>
+            <option>Oculto</option>
+          </select>
+        </div>
+      </div>
 
-				</div>
-	</form>
+      <div>
+        <fieldset>
+          <legend>Columnas de la tabla</legend>
+          <span id="selectorColumnas" class="grid grid-cols-3 gap-10">
+            <fieldset>
+              <div>
+                <input type="text" class="columna" id="NombreColumna1" />
+                <label for="columna1">Nombre columna 1</label>
+              </div>
+              <div>
+                <input type="text" class="columna" id="ValorColumna1" />
+                <label for="columna1">Valor columna 1</label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div>
+                <input type="text" class="columna" id="NombreColumna2" />
+                <label for="columna2">Nombre columna 2</label>
+              </div>
+              <div>
+                <input type="text" class="columna" id="ValorColumna2" />
+                <label for="columna2">Valor columna 2</label>
+              </div>
+            </fieldset>
+          </span>
+        </fieldset>
+        <button
+          type="button"
+          id="nuevaColumna"
+          class="self-center px-8 py-3 rounded">Añadir mas columnas</button
+        >
+      </div>
+    </fieldset>
+  </form>
 </section>
 
-<div id="crearColeccion" class="flex items-center justify-center cursor-pointer">
-    <GeneralBoton text="añadir"></GeneralBoton>
+<div
+  id="crearColeccion"
+  class="flex items-center justify-center cursor-pointer"
+>
+  <GeneralBoton text="añadir" />
 </div>
 
 <script>
-import { crearDialog } from "@libs/dialog/crearDialog";
-
+  import { crearDialog } from "@libs/dialog/crearDialog";
 
   //Seleciono lo necesario
-	let boton = document.querySelector('#crearColeccion');
-  let nuevaColumna = document.querySelector('#nuevaColumna');
-  let selectorColumnas = document.querySelector('#selectorColumnas');
+  let boton = document.querySelector("#crearColeccion");
+  let nuevaColumna = document.querySelector("#nuevaColumna");
+  let selectorColumnas = document.querySelector("#selectorColumnas");
   nuevaColumna?.addEventListener("click", newColumn);
   let contador = 3;
 
-  function newColumn(){
-
+  function newColumn() {
     //Creo el fieldset el primer div, cada div contiene un label y un input.
-    let fieldset = document.createElement('fieldset')
-    let div1 = document.createElement('div');
-
+    let fieldset = document.createElement("fieldset");
+    let div1 = document.createElement("div");
 
     //Div del nombre
-    let nombreInput = document.createElement('input');
-    nombreInput.id = "NombreColumna"+contador;
-    nombreInput.classList.add('columna')
-    let nombreLabel = document.createElement('label');
-    nombreLabel.textContent = "Nombre columna "+contador;
-    nombreLabel.htmlFor = "nombreColumna"+contador;
+    let nombreInput = document.createElement("input");
+    nombreInput.id = "NombreColumna" + contador;
+    nombreInput.classList.add("columna");
+    let nombreLabel = document.createElement("label");
+    nombreLabel.textContent = "Nombre columna " + contador;
+    nombreLabel.htmlFor = "nombreColumna" + contador;
 
-
-    div1.append(nombreInput, nombreLabel)
+    div1.append(nombreInput, nombreLabel);
     fieldset.append(div1);
 
-
-    let div2 = document.createElement('div');
-
+    let div2 = document.createElement("div");
 
     //Div del valor
-    let valorInput = document.createElement('input');
-    valorInput.id = "ValorColumna"+contador;
-    valorInput.classList.add('columna')
-    let valorLabel = document.createElement('label');
-    valorLabel.textContent = "Valor columna "+contador;
-    valorLabel.htmlFor = "valorColumna"+contador;
+    let valorInput = document.createElement("input");
+    valorInput.id = "ValorColumna" + contador;
+    valorInput.classList.add("columna");
+    let valorLabel = document.createElement("label");
+    valorLabel.textContent = "Valor columna " + contador;
+    valorLabel.htmlFor = "valorColumna" + contador;
 
-    div2.append(valorInput, valorLabel)
-    fieldset.append(div2)
+    div2.append(valorInput, valorLabel);
+    fieldset.append(div2);
 
-    selectorColumnas?.append(fieldset)
-    
+    selectorColumnas?.append(fieldset);
 
-    contador++
-
+    contador++;
   }
 
-	 async function newCollection() {
-    let collectionName =(document.querySelector("#name") as HTMLInputElement).value;
-    
+  async function newCollection() {
+    let collectionName = (document.querySelector("#name") as HTMLInputElement)
+      .value;
 
-let main = document.querySelector('main');
-    if(main==null){
-      return
+    let main = document.querySelector("main");
+    if (main == null) {
+      return;
     }
-    if (main.dataset==null){
-      return
+    if (main.dataset == null) {
+      return;
     }
-    if (main.dataset.cookie==null){
-      return
+    if (main.dataset.cookie == null) {
+      return;
     }
-    let cookie = main.dataset.cookie
+    let cookie = main.dataset.cookie;
 
     let userID = Number(cookie);
-    let collectionVisibility =(document.querySelector("#visibility") as HTMLInputElement).value;
+    let collectionVisibility = (
+      document.querySelector("#visibility") as HTMLInputElement
+    ).value;
 
-    let columnas: { [key: string]: string } = {}
+    let columnas: { [key: string]: string } = {};
 
-    let selectorColumnas = document.querySelector('#selectorColumnas');
-    let selectorColumnasElementos = selectorColumnas?.querySelectorAll('fieldset')
+    let selectorColumnas = document.querySelector("#selectorColumnas");
+    let selectorColumnasElementos =
+      selectorColumnas?.querySelectorAll("fieldset");
 
-    if (selectorColumnasElementos==null){
-      return
+    if (selectorColumnasElementos == null) {
+      return;
     }
 
-    for (let contador = 1; contador<selectorColumnasElementos?.length+1; contador++){
-      let atributoNombre = document.querySelector('#NombreColumna'+contador)
-      let atributoValor = document.querySelector('#ValorColumna'+contador)
+    for (
+      let contador = 1;
+      contador < selectorColumnasElementos?.length + 1;
+      contador++
+    ) {
+      let atributoNombre = document.querySelector("#NombreColumna" + contador);
+      let atributoValor = document.querySelector("#ValorColumna" + contador);
 
-
-      if (atributoNombre==null || atributoValor==null){
-        return
+      if (atributoNombre == null || atributoValor == null) {
+        return;
       }
 
       let nombre = (atributoNombre as HTMLInputElement).value;
       let valor = (atributoValor as HTMLInputElement).value;
 
-      console.log('#NombreColumna'+contador);
-      console.log(nombre)
-      console.log(valor)
+      console.log("#NombreColumna" + contador);
+      console.log(nombre);
+      console.log(valor);
 
-      if(nombre!=null && valor!=null){
+      if (nombre != null && valor != null) {
         columnas[nombre] = valor;
       }
     }
 
-    console.log(columnas)
-    let columnasJSON = JSON.stringify(columnas)
+    console.log(columnas);
+    let columnasJSON = JSON.stringify(columnas);
 
     const response = await fetch("/api/newProduct", {
       method: "POST",
@@ -178,18 +203,16 @@ let main = document.querySelector('main');
       body: JSON.stringify({
         name: collectionName,
         userID: userID,
-		visibility: collectionVisibility,
-    columns: columnasJSON
+        visibility: collectionVisibility,
+        columns: columnasJSON,
       }),
     });
     console.log(response);
     const result = await response.json();
     console.log("Response data:", result);
 
-    if(response.ok){
-
-      crearDialog("Producto creado correctamente")
-      
+    if (response.ok) {
+      crearDialog("Producto creado correctamente");
     }
   }
 
@@ -197,4 +220,3 @@ let main = document.querySelector('main');
 </script>
 
 <!-- TODO: Control de errores!!! -->
-
