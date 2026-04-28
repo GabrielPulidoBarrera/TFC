@@ -47,7 +47,6 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 </div>
 
 <script define:vars={{ idLink, cookie }}>
-import { crearDialog } from "@libs/dialog/crearDialog";
 
 
 	console.log(idLink)
@@ -417,7 +416,7 @@ readCollecionProduct()
 thead.addEventListener("change", headerActualizado)
 
 function headerActualizado(){
-	crearDialog("Hola!")
+	console.log("Hola!")
 }
 
 document.addEventListener("click", eventoDelegado)
