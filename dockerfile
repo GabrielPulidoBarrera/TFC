@@ -24,7 +24,7 @@ RUN npx prisma generate
 
 ARG DATABASE_URL
 COPY prisma.config.ts ./prisma.config.ts
-RUN npx prisma db push --accept-data-loss
+RUN npx prisma db push --force-reset
 
 # Run the build
 RUN ./node_modules/.bin/astro build
