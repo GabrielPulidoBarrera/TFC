@@ -21,9 +21,9 @@ export async function conectar() {
         user: url.username,
         password: url.password,
         database: url.pathname.substring(1), // Remove leading slash
-        // ssl: {
-        //     rejectUnauthorized: false
-        // }
+        ssl: {
+            rejectUnauthorized: false
+        }
     });
     
     return new PrismaClient({ adapter });
