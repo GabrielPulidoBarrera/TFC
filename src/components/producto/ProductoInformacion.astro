@@ -1,6 +1,8 @@
 ---
+import { obtenerCookie } from "@libs/auth/controlCookies";
 import "@styles/global.css";
 const { id } = Astro.props;
+
 ---
 
 <section class="p-6 dark:text-gray-900" id={id}>
@@ -101,6 +103,7 @@ const { id } = Astro.props;
   let selectorColumnas = document.querySelector("#selectorColumnas");
   nuevaColumna?.addEventListener("click", newColumn);
   let contador = 3;
+  let collectionName = (document.querySelector("#name") as HTMLInputElement);
 
   //Esta funcion crea una nueva columna
   function newColumn() {
@@ -139,9 +142,8 @@ const { id } = Astro.props;
   }
 
   //Esta funcion selecciona toda la informacion y lo manda al servidor
-  async function newProduct() {
-    let collectionName = (document.querySelector("#name") as HTMLInputElement)
-      .value;
+  async function editProduct() {
+    let nombre = collectionName.value;
 
     let main = document.querySelector("main");
     if (main == null) {
@@ -197,16 +199,15 @@ const { id } = Astro.props;
     console.log(columnas);
     let columnasJSON = JSON.stringify(columnas);
 
-    const response = await fetch("/api/newProduct", {
+    const response = await fetch("/api/editProduct", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: collectionName,
+        name: nombre,
         userID: userID,
-        visibility: collectionVisibility,
-        columns: columnasJSON,
+        cookie: cookie
       }),
     });
     console.log(response);
@@ -218,7 +219,7 @@ const { id } = Astro.props;
     }
   }
 
-  boton?.addEventListener("click", newProduct);
+  boton?.addEventListener("click", editProduct);
 
 
 function conseguirID(){
@@ -239,15 +240,16 @@ async function leerProducto(){
 		let correcto = resultado.data
 		console.log("RESULTADO!!")
 		console.log(resultado.data);
-
+        asignarDatos(correcto)
 }
 
-async function asignarDatos(){
+async function asignarDatos(datos: any){
+    collectionName.textContent = datos.name
 
 }
 
 leerProducto();
-asignarDatos()
+
 
 </script>
 
