@@ -240,6 +240,7 @@ const { id } = Astro.props;
 
     if (response.ok) {
       crearDialog("Producto creado correctamente");
+      deshabilitarCampos();
     }
   }
 
@@ -317,6 +318,7 @@ const { id } = Astro.props;
   leerProducto();
 
   function deshabilitarCampos() {
+    editando=false;
     let todosInput = Array.from(document.querySelectorAll("input"));
     let select = document.querySelector("select");
 
@@ -324,12 +326,14 @@ const { id } = Astro.props;
       e.disabled = true;
     });
     select.disabled = true;
-    editarProducto.display = "none";
+    editarProducto.display = "block";
+    boton.display = "hidden"
   }
 
   deshabilitarCampos();
 
   function habilitarCampos() {
+    editando=true
     console.log("holiwissss")
     let todosInput = Array.from(document.querySelectorAll("input"));
     let select = document.querySelector("select");
@@ -338,7 +342,9 @@ const { id } = Astro.props;
       e.disabled = false;
     });
     select.disabled = false;
-    crearColeccion.display = "flex";
+    editarProducto.display = "hidden";
+    boton.display = "block"
+    
   }
 console.log("EDITAR PRODUCTO!!")
   console.log(editarProducto);
