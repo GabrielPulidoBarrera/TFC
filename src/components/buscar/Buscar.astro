@@ -13,18 +13,20 @@ const { idUsuario = 1, idColeccion } = Astro.props;
 
   <div class="text-5xl flex justify-center">Categoria</div>
   <div class="flex w-full justify-around">
-    <div
+    <button
       id="selectorProducto"
-      class="self-center px-8 py-3 rounded font-semibold dark:bg-violet-600 dark:text-gray-50"
+      type="button"
+      class="self-center px-8 py-3 rounded font-semibold dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50"
       >
       Producto
-    </div>
-    <div
+    </button>
+    <button
       id="selectorColeccion"
-      class="self-center px-8 py-3 rounded bg-gray-300"
+      type="button"
+      class="self-center px-8 py-3 rounded bg-gray-300 hover:bg-gray-400"
       >
       Coleccion
-    </div>
+    </button>
   </div>
     }
 
@@ -90,18 +92,21 @@ const { idUsuario = 1, idColeccion } = Astro.props;
       "font-semibold",
       "dark:bg-violet-600",
       "dark:text-gray-50",
+      "hover:bg-violet-700"
     );
     selectorColeccion?.classList.remove(
       "font-semibold",
       "dark:bg-violet-600",
       "dark:text-gray-50",
+      "hover:bg-violet-700"
     );
     selectorColeccion?.classList.remove(
       "font-semibold",
       "dark:bg-violet-600",
       "dark:text-gray-50",
+      "hover:bg-violet-700"
     );
-    selectorColeccion?.classList.add("bg-gray-300");
+    selectorColeccion?.classList.add("bg-gray-300", "hover:bg-gray-400");
   }
   function seleccionarColeccion() {
     tipo = "coleccion";
