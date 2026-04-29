@@ -6,7 +6,7 @@ import { obtenerCookie } from "../libs/auth/controlCookies";
 let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 ---
 
-<Layout>
+<Layout titulo="Login">
     {!cookie &&
         <LoginFormulario></LoginFormulario>
     }

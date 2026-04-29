@@ -7,7 +7,7 @@ let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 
 ---
 
-<Layout>
+<Layout titulo="Registro">
     {!cookie &&
     <RegistoFormulario></RegistoFormulario>
     }
