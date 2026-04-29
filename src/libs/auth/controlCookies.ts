@@ -12,12 +12,7 @@ if(sesion!=null){
    console.log("USER!")
    console.log(user)
 
-   if (user){
-    return sesion
-   }
-   else{
-    return null
-   }
+   return(user);
 
 
 
