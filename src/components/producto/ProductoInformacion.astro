@@ -233,7 +233,7 @@ async function leerProducto(){
 
 		const response = await fetch("/api/readProduct", {
 			method: "POST",
-			body: JSON.stringify(id),
+			body: JSON.stringify({id: id}),
 		});
 		let resultado = await response.json();
 		let correcto = resultado.data
@@ -243,7 +243,7 @@ async function leerProducto(){
 }
 
 async function asignarDatos(){
-    
+
 }
 
 leerProducto();
