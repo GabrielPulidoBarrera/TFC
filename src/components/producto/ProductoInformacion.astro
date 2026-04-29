@@ -1,0 +1,251 @@
+---
+import "@styles/global.css";
+const { id } = Astro.props;
+---
+
+<section class="p-6 dark:text-gray-900" id={id}>
+  <form
+    novalidate=""
+    action=""
+    class="container flex flex-col mx-auto space-y-12"
+  >
+    <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm">
+      <div class="space-y-2 col-span-full lg:col-span-1">
+        <p class="font-medium">Crear colecciones</p>
+        <p class="text-xs">
+          El nombre del produto sera el nombre visible en el selector de
+          colecciones y en los resultados de busqueda.
+        </p>
+        <p class="text-xs">
+          La visibilidad define si el producto puede ser encontrado en la
+          busqueda o no.
+        </p>
+        <p class="text-xs">
+          Las columnas definiran los atributos que se mostraran en la tabla.
+        </p>
+        <p class="text-xs">
+          Todos estos valores pueden ser modificados en cualquier momento.
+        </p>
+      </div>
+      <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+        <div class="col-span-full sm:col-span-3">
+          <label for="name" class="text-sm">Name</label>
+          <input
+            id="name"
+            type="text"
+            placeholder="Name"
+            class="w-full rounded-md focus:ring focus:ring-opacity-75"
+          />
+        </div>
+        <div class="col-span-full sm:col-span-3">
+          <label for="visibility" class="text-sm">Visibility</label>
+          <select
+            id="visibility"
+            class="w-full rounded-md focus:ring focus:ring-opacity-75"
+          >
+            <option>Publico</option>
+            <option>Privado</option>
+            <option>Oculto</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-span-full">
+        <legend>Columnas de la tabla</legend>
+        <span
+          id="selectorColumnas"
+          class="grid grid-cols-2 lg:grid-cols-3 gap-10"
+        >
+          <div>
+            <input type="text" class="columna max-w-full" id="NombreColumna1" />
+            <label for="columna1">Nombre columna 1</label>
+            <input type="text" class="columna max-w-full" id="ValorColumna1" />
+            <label for="columna1">Valor columna 1</label>
+          </div>
+
+          <div>
+            <input type="text" class="columna max-w-full" id="NombreColumna2" />
+            <label for="columna2">Nombre columna 2</label>
+            <input type="text" class="columna max-w-full" id="ValorColumna2" />
+            <label for="columna2">Valor columna 2</label>
+          </div>
+        </span>
+      </div>
+      <button
+        type="button"
+        id="nuevaColumna"
+        class="self-center px-8 py-3 rounded bg-gray-300 hover:bg-gray-400 hover:cursor-pointer"
+        >Añadir mas columnas</button
+      >
+    </fieldset>
+  </form>
+</section>
+
+<div
+  id="crearColeccion"
+  class="flex items-center justify-center cursor-pointer"
+>
+  <button
+    id="crearColeccion"
+    class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50 hover:cursor-pointer"
+    >Añadir</button
+  >
+</div>
+
+<script>
+  import { crearDialog } from "@libs/dialog/crearDialog";
+
+  //Seleciono lo necesario
+  let boton = document.querySelector("#crearColeccion");
+  let nuevaColumna = document.querySelector("#nuevaColumna");
+  let selectorColumnas = document.querySelector("#selectorColumnas");
+  nuevaColumna?.addEventListener("click", newColumn);
+  let contador = 3;
+
+  //Esta funcion crea una nueva columna
+  function newColumn() {
+    //Creo el fieldset el primer div, cada div contiene un label y un input.
+    let divContenedor = document.createElement("div");
+    divContenedor.classList.add("max-w-full", "overflow-hidden");
+    let div1 = document.createElement("div");
+
+    //Div del nombre
+    let nombreInput = document.createElement("input");
+    nombreInput.id = "NombreColumna" + contador;
+    nombreInput.classList.add("columna", "max-w-full");
+    let nombreLabel = document.createElement("label");
+    nombreLabel.textContent = "Nombre columna " + contador;
+    nombreLabel.htmlFor = "nombreColumna" + contador;
+
+    div1.append(nombreInput, nombreLabel);
+    divContenedor.append(div1);
+
+    let div2 = document.createElement("div");
+
+    //Div del valor
+    let valorInput = document.createElement("input");
+    valorInput.id = "ValorColumna" + contador;
+    valorInput.classList.add("columna");
+    let valorLabel = document.createElement("label");
+    valorLabel.textContent = "Valor columna " + contador;
+    valorLabel.htmlFor = "valorColumna" + contador;
+
+    div2.append(valorInput, valorLabel);
+    divContenedor.append(div2);
+
+    selectorColumnas?.append(divContenedor);
+
+    contador++;
+  }
+
+  //Esta funcion selecciona toda la informacion y lo manda al servidor
+  async function newProduct() {
+    let collectionName = (document.querySelector("#name") as HTMLInputElement)
+      .value;
+
+    let main = document.querySelector("main");
+    if (main == null) {
+      return;
+    }
+    if (main.dataset == null) {
+      return;
+    }
+    if (main.dataset.cookie == null) {
+      return;
+    }
+    let cookie = main.dataset.cookie;
+
+    let userID = Number(cookie);
+    let collectionVisibility = (
+      document.querySelector("#visibility") as HTMLInputElement
+    ).value;
+
+    let columnas: { [key: string]: string } = {};
+
+    let selectorColumnas = document.querySelector("#selectorColumnas");
+    let selectorColumnasElementos =
+      selectorColumnas?.querySelectorAll("fieldset");
+
+    if (selectorColumnasElementos == null) {
+      return;
+    }
+
+    for (
+      let contador = 1;
+      contador < selectorColumnasElementos?.length + 1;
+      contador++
+    ) {
+      let atributoNombre = document.querySelector("#NombreColumna" + contador);
+      let atributoValor = document.querySelector("#ValorColumna" + contador);
+
+      if (atributoNombre == null || atributoValor == null) {
+        return;
+      }
+
+      let nombre = (atributoNombre as HTMLInputElement).value;
+      let valor = (atributoValor as HTMLInputElement).value;
+
+      console.log("#NombreColumna" + contador);
+      console.log(nombre);
+      console.log(valor);
+
+      if (nombre != null && valor != null) {
+        columnas[nombre] = valor;
+      }
+    }
+
+    console.log(columnas);
+    let columnasJSON = JSON.stringify(columnas);
+
+    const response = await fetch("/api/newProduct", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: collectionName,
+        userID: userID,
+        visibility: collectionVisibility,
+        columns: columnasJSON,
+      }),
+    });
+    console.log(response);
+    const result = await response.json();
+    console.log("Response data:", result);
+
+    if (response.ok) {
+      crearDialog("Producto creado correctamente");
+    }
+  }
+
+  boton?.addEventListener("click", newProduct);
+
+
+function conseguirID(){
+    return document.querySelector('section')?.id
+}
+
+  let id = conseguirID()
+
+
+
+async function leerProducto(){
+
+		const response = await fetch("/api/readProduct", {
+			method: "POST",
+			body: JSON.stringify(id),
+		});
+		let resultado = await response.json();
+		let correcto = resultado.data
+		console.log("RESULTADO!!")
+		console.log(resultado.data);
+
+}
+
+leerProducto();
+
+</script>
+
+<!-- TODO: Control de errores!!! -->
+
+

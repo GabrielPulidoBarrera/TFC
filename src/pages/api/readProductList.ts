@@ -9,12 +9,23 @@ const prisma = await conectar()
 
 export const POST: APIRoute = async function({ request }) {
   try {
-    const { id } = await request.json();
+    const { ids } = await request.json();
 
+    if (!Array.isArray(ids)) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: 'ids must be an array'
+        }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
 
-    const result = await prisma.product.findFirst({
+    const result = await prisma.product.findMany({
       where: {
-        id: id
+        id: {
+          in: ids   
+        }
       }
     });
 

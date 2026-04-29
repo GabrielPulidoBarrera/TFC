@@ -1,6 +1,5 @@
 ---
 import "@styles/global.css";
-import GeneralBoton from "@general/GeneralBoton.astro";
 ---
 
 <section class="p-6 dark:text-gray-900">
@@ -51,29 +50,32 @@ import GeneralBoton from "@general/GeneralBoton.astro";
       </div>
 
       <div class="col-span-full">
-          <legend>Columnas de la tabla</legend>
-          <span id="selectorColumnas" class=" grid grid-cols-2 lg:grid-cols-3 gap-10">
-              <div>
-                <input type="text" class="columna max-w-full" id="NombreColumna1" />
-                <label for="columna1">Nombre columna 1</label>
-                <input type="text" class="columna max-w-full" id="ValorColumna1" />
-                <label for="columna1">Valor columna 1</label>
-              </div>
-
-              <div>
-                <input type="text" class="columna max-w-full" id="NombreColumna2" />
-                <label for="columna2">Nombre columna 2</label>
-                <input type="text" class="columna max-w-full" id="ValorColumna2" />
-                <label for="columna2">Valor columna 2</label>
-              </div>
-          </span>
-        </fieldset>
-        <button
-          type="button"
-          id="nuevaColumna"
-          class="self-center px-8 py-3 rounded bg-gray-300 hover:bg-gray-400 hover:cursor-pointer">Añadir mas columnas</button
+        <legend>Columnas de la tabla</legend>
+        <span
+          id="selectorColumnas"
+          class="grid grid-cols-2 lg:grid-cols-3 gap-10"
         >
+          <div>
+            <input type="text" class="columna max-w-full" id="NombreColumna1" />
+            <label for="columna1">Nombre columna 1</label>
+            <input type="text" class="columna max-w-full" id="ValorColumna1" />
+            <label for="columna1">Valor columna 1</label>
+          </div>
+
+          <div>
+            <input type="text" class="columna max-w-full" id="NombreColumna2" />
+            <label for="columna2">Nombre columna 2</label>
+            <input type="text" class="columna max-w-full" id="ValorColumna2" />
+            <label for="columna2">Valor columna 2</label>
+          </div>
+        </span>
       </div>
+      <button
+        type="button"
+        id="nuevaColumna"
+        class="self-center px-8 py-3 rounded bg-gray-300 hover:bg-gray-400 hover:cursor-pointer"
+        >Añadir mas columnas</button
+      >
     </fieldset>
   </form>
 </section>
@@ -82,7 +84,11 @@ import GeneralBoton from "@general/GeneralBoton.astro";
   id="crearColeccion"
   class="flex items-center justify-center cursor-pointer"
 >
-<button id="crearColeccion" class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50 hover:cursor-pointer">Añadir</button>
+  <button
+    id="crearColeccion"
+    class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50 hover:cursor-pointer"
+    >Añadir</button
+  >
 </div>
 
 <script>
@@ -95,10 +101,11 @@ import GeneralBoton from "@general/GeneralBoton.astro";
   nuevaColumna?.addEventListener("click", newColumn);
   let contador = 3;
 
+  //Esta funcion crea una nueva columna
   function newColumn() {
     //Creo el fieldset el primer div, cada div contiene un label y un input.
     let divContenedor = document.createElement("div");
-    divContenedor.classList.add("max-w-full", "overflow-hidden")
+    divContenedor.classList.add("max-w-full", "overflow-hidden");
     let div1 = document.createElement("div");
 
     //Div del nombre
@@ -130,7 +137,8 @@ import GeneralBoton from "@general/GeneralBoton.astro";
     contador++;
   }
 
-  async function newCollection() {
+  //Esta funcion selecciona toda la informacion y lo manda al servidor
+  async function newProduct() {
     let collectionName = (document.querySelector("#name") as HTMLInputElement)
       .value;
 
@@ -209,7 +217,7 @@ import GeneralBoton from "@general/GeneralBoton.astro";
     }
   }
 
-  boton?.addEventListener("click", newCollection);
+  boton?.addEventListener("click", newProduct);
 </script>
 
 <!-- TODO: Control de errores!!! -->

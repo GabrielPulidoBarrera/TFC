@@ -1,7 +1,5 @@
 ---
 import "@styles/global.css";
-import GeneralBoton from "@general/GeneralBoton.astro";
-import { obtenerCookie } from "@libs/auth/controlCookies";
 ---
 
 <section class="p-6 dark:text-gray-900">
@@ -88,7 +86,7 @@ import { obtenerCookie } from "@libs/auth/controlCookies";
   let selectorColumnas = document.querySelector("#selectorColumnas");
   nuevaColumna?.addEventListener("click", newColumn);
   let contador = 3;
-
+  //Esta funcion crea una nueva columna
   function newColumn() {
     let input = document.createElement("input");
     input.id = "columna" + contador;
@@ -102,6 +100,7 @@ import { obtenerCookie } from "@libs/auth/controlCookies";
     divContenedor.append(input, label)
     selectorColumnas?.append(divContenedor);
   }
+  //Esta funcion selecciona toda la informacion y lo manda al servidor
 
   async function newCollection() {
     let collectionName = (document.querySelector("#name") as HTMLInputElement)

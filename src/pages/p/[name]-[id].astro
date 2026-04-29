@@ -3,6 +3,7 @@ const {name, id} = Astro.params
 import Layout from '@layouts/Layout.astro';
 import GeneralBoton from '@components/general/GeneralBoton.astro';
 import { obtenerCookie } from '@libs/auth/controlCookies';
+import ProductoInformacion from '@components/producto/ProductoInformacion.astro';
 
 // export async function getStaticPaths() {
 // let listaColecciones = [];
@@ -43,6 +44,10 @@ console.log(id);
 		<div class="flex">
 			<GeneralBoton text="añadir a coleccion"></GeneralBoton>
 		</div>
+
+		<ProductoInformacion name="name">
+
+		</ProductoInformacion>
 	</div>
 </Layout>
 

@@ -126,7 +126,7 @@ import "@styles/global.css";
 
   buttonRead?.addEventListener("click", readProduct);
   async function readProduct() {
-    const response = await fetch("/api/readProduct", {
+    const response = await fetch("/api/readProductList", {
       method: "POST",
     });
     let resultado = await response.json();
