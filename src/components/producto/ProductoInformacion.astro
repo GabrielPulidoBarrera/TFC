@@ -255,7 +255,8 @@ async function asignarDatos(datos: any){
         if (e.textContent == datos.visibility){
             console.log("NYA :3")
             console.log(e);
-            e.setAttribute("selected"); //averiguar porque hay que hacerlo así
+            e.selected = "true";
+            e.setAttribute("selected", ""); //averiguar porque hay que hacerlo así
         }
     })
 }
