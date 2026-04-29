@@ -276,9 +276,10 @@ const { id } = Astro.props;
         newColumn();
       }
 
+      let contadorAcelerado = contador+1
 
-      let nombre = document.querySelector('#NombreColumna'+contador+1);
-      let valor = document.querySelector('#ValorColumna'+contador+1);
+      let nombre = document.querySelector('#NombreColumna'+contadorAcelerado);
+      let valor = document.querySelector('#ValorColumna'+contadorAcelerado);
 
       console.log(nombre)
       console.log(valor)
