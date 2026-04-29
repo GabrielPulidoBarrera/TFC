@@ -22,7 +22,7 @@ export const POST: APIRoute = async function({ request }){
     }
     
           if (visibility !== undefined) {
-      data.columns = visibility;
+      data.visibility = visibility;
     }
 
 
