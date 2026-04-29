@@ -2,7 +2,6 @@
 import { obtenerCookie } from "@libs/auth/controlCookies";
 import "@styles/global.css";
 const { id } = Astro.props;
-
 ---
 
 <section class="p-6 dark:text-gray-900" id={id}>
@@ -103,9 +102,10 @@ const { id } = Astro.props;
   let selectorColumnas = document.querySelector("#selectorColumnas");
   nuevaColumna?.addEventListener("click", newColumn);
   let contador = 3;
-  let collectionName = (document.querySelector("#name") as HTMLInputElement);
-  let collectionVisibility = (document.querySelector("#visibility") as HTMLInputElement)
-
+  let collectionName = document.querySelector("#name") as HTMLInputElement;
+  let collectionVisibility = document.querySelector(
+    "#visibility",
+  ) as HTMLInputElement;
 
   //Esta funcion crea una nueva columna
   function newColumn() {
@@ -209,7 +209,7 @@ const { id } = Astro.props;
         name: nombre,
         userID: userID,
         visibility: visibilidad,
-        cookie: cookie
+        cookie: cookie,
       }),
     });
     console.log(response);
@@ -223,48 +223,62 @@ const { id } = Astro.props;
 
   boton?.addEventListener("click", editProduct);
 
+  function conseguirID() {
+    return document.querySelector("section")?.id;
+  }
 
-function conseguirID(){
-    return document.querySelector('section')?.id
-}
+  let id = conseguirID();
 
-  let id = conseguirID()
+  async function leerProducto() {
+    const response = await fetch("/api/readProduct", {
+      method: "POST",
+      body: JSON.stringify({ id: id }),
+    });
+    let resultado = await response.json();
+    let correcto = resultado.data;
+    console.log("RESULTADO!!");
+    console.log(resultado.data);
+    asignarDatos(correcto);
+  }
 
-
-
-async function leerProducto(){
-
-		const response = await fetch("/api/readProduct", {
-			method: "POST",
-			body: JSON.stringify({id: id}),
-		});
-		let resultado = await response.json();
-		let correcto = resultado.data
-		console.log("RESULTADO!!")
-		console.log(resultado.data);
-        asignarDatos(correcto)
-}
-
-async function asignarDatos(datos: any){
-    console.log(datos.name)
+  async function asignarDatos(datos: any) {
+    //Nombre
+    console.log(datos.name);
     console.log(datos);
-    collectionName.value = datos.name
-    console.log(datos.visibility)
+
+    collectionName.value = datos.name;
+
+    //Visibilidad
+    console.log(datos.visibility);
+
     let todosOptions = Array.from(collectionVisibility.children);
-    todosOptions.map(e => {
-        if (e.textContent == datos.visibility){
-            console.log("NYA :3")
-            console.log(e);
-            e.selected = "true";
-        }
-    })
-}
+    todosOptions.map((e) => {
+      if (e.textContent == datos.visibility) {
+        console.log("NYA :3");
+        console.log(e);
+        e.selected = "true";
+      }
+    });
 
-leerProducto();
+    //Columnas
+    let columnas = await JSON.parse(datos.columns)
+    let contador = 0;
+    console.log(columnas);
+    for (let iterable of columnas){
+
+      if (!selectorColumnas?.children[contador]){
+        newColumn();
+      }
+      let nombre = selectorColumnas?.children[contador].querySelector('#NombreColumna'+contador);
+      let valor = selectorColumnas?.children[contador].querySelector('#ValorColumna'+contador);
+
+      
 
 
+    }
+  }
+
+  leerProducto();
 </script>
 
 <!-- TODO: Control de errores!!! -->
-
-
