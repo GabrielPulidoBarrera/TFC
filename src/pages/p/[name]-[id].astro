@@ -1,9 +1,9 @@
 ---
-const {name, id} = Astro.params
-import Layout from '@layouts/Layout.astro';
-import GeneralBoton from '@components/general/GeneralBoton.astro';
-import { obtenerCookie } from '@libs/auth/controlCookies';
-import ProductoInformacion from '@components/producto/ProductoInformacion.astro';
+const { name, id } = Astro.params;
+import Layout from "@layouts/Layout.astro";
+import GeneralBoton from "@components/general/GeneralBoton.astro";
+import { obtenerCookie } from "@libs/auth/controlCookies";
+import ProductoInformacion from "@components/producto/ProductoInformacion.astro";
 
 // export async function getStaticPaths() {
 // let listaColecciones = [];
@@ -15,42 +15,35 @@ import ProductoInformacion from '@components/producto/ProductoInformacion.astro'
 // 	listaColecciones.push({
 // 		params: {slug: iteracion.name+'-'+iteracion.id},
 // 		props: {name: iteracion.name, id: iteracion.id}});
-	
-	
+
 // })
 // return listaColecciones
 // }
 
-let cookie = await obtenerCookie(Astro.cookies?.get('sesion'));
-
+let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 
 console.log(id);
 
-
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
-
-
-
 ---
 
 <Layout>
 	<div class="flex flex-col justify-center">
-		<div>
+		<div class="text-center">
 			<div class="text-5xl">
-				
 				{name}
 			</div>
-			
+
 			<div class="flex">
-				<GeneralBoton text="añadir a coleccion"></GeneralBoton>
+				<GeneralBoton text="añadir a coleccion" />
+				<button
+					class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50 hover:cursor-pointer"
+					id="editarProducto">Añadir</button
+				>
 			</div>
 		</div>
-		
 
-		<ProductoInformacion id={id}>
-
-		</ProductoInformacion>
+		<ProductoInformacion id={id} />
 	</div>
 </Layout>
-

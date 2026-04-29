@@ -84,10 +84,9 @@ const { id } = Astro.props;
 
 <div
   id="crearColeccion"
-  class="flex items-center justify-center cursor-pointer"
+  class="items-center justify-center cursor-pointer hidden"
 >
   <button
-    id="crearColeccion"
     class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50 hover:cursor-pointer"
     >Añadir</button
   >
@@ -106,12 +105,17 @@ const { id } = Astro.props;
   let collectionVisibility = document.querySelector(
     "#visibility",
   ) as HTMLInputElement;
+  let editarProducto = document.querySelector("editarProducto");
 
   //Esta funcion crea una nueva columna
   function newColumn() {
     //Creo el fieldset el primer div, cada div contiene un label y un input.
     let divContenedor = document.createElement("div");
-    divContenedor.classList.add("max-w-full", "overflow-hidden", "contenedorInputLabel");
+    divContenedor.classList.add(
+      "max-w-full",
+      "overflow-hidden",
+      "contenedorInputLabel",
+    );
     let div1 = document.createElement("div");
 
     //Div del nombre
@@ -165,11 +169,12 @@ const { id } = Astro.props;
     let columnas: { [key: string]: string } = {};
 
     let selectorColumnas = document.querySelector("#selectorColumnas");
-    let selectorColumnasElementos =
-      selectorColumnas?.querySelectorAll(".contenedorInputLabel");
+    let selectorColumnasElementos = selectorColumnas?.querySelectorAll(
+      ".contenedorInputLabel",
+    );
 
     if (selectorColumnasElementos == null) {
-      console.log("VAMOS A MORIR TODOS")
+      console.log("VAMOS A MORIR TODOS");
       return;
     }
 
@@ -200,7 +205,7 @@ const { id } = Astro.props;
     console.log(columnas);
     let columnasJSON = JSON.stringify(columnas);
 
-    console.log(columnasJSON)
+    console.log(columnasJSON);
 
     const response = await fetch("/api/editProduct", {
       method: "POST",
@@ -213,7 +218,7 @@ const { id } = Astro.props;
         userID: userID,
         visibility: visibilidad,
         cookie: cookie,
-        columns: columnasJSON
+        columns: columnasJSON,
       }),
     });
     console.log(response);
@@ -265,40 +270,64 @@ const { id } = Astro.props;
     });
 
     //Columnas
-    let columnasOriginal = await JSON.parse(datos.columns)
+    let columnasOriginal = await JSON.parse(datos.columns);
     let contador = 0;
     console.log(columnasOriginal);
-    for (let iterable of Object.entries(columnasOriginal)){
+    for (let iterable of Object.entries(columnasOriginal)) {
+      console.log(contador);
+      console.log(iterable);
+      console.log(document.querySelector("#NombreColumna1"));
 
-      console.log(contador)
-      console.log(iterable)
-      console.log(document.querySelector('#NombreColumna1'))
-
-      if (!selectorColumnas?.children[contador]){
-        console.log("NYAAAAA NEW COLUMN")
+      if (!selectorColumnas?.children[contador]) {
+        console.log("NYAAAAA NEW COLUMN");
         newColumn();
       }
 
-      let contadorAcelerado = contador+1
+      let contadorAcelerado = contador + 1;
 
-      let nombre = document.querySelector('#NombreColumna'+contadorAcelerado);
-      let valor = document.querySelector('#ValorColumna'+contadorAcelerado);
+      let nombre = document.querySelector("#NombreColumna" + contadorAcelerado);
+      let valor = document.querySelector("#ValorColumna" + contadorAcelerado);
 
-      console.log(nombre)
-      console.log(valor)
+      console.log(nombre);
+      console.log(valor);
 
       nombre.value = iterable[0];
       valor.value = iterable[1];
 
-console.log(nombre)
-      console.log(valor)
-      
-      contador+=1;
+      console.log(nombre);
+      console.log(valor);
 
+      contador += 1;
     }
   }
 
   leerProducto();
+
+  function deshabilitarCampos() {
+    let todosInput = Array.from(document.querySelectorAll("input"));
+    let select = document.querySelector("select");
+
+    todosInput.map((e) => {
+      e.disabled = true;
+    });
+    select.disabled = true;
+    crearColeccion = "none";
+  }
+
+  deshabilitarCampos();
+
+  function habilitarCampos() {
+    let todosInput = Array.from(document.querySelectorAll("input"));
+    let select = document.querySelector("select");
+
+    todosInput.map((e) => {
+      e.disabled = false;
+    });
+    select.disabled = false;
+    crearColeccion.display = "flex";
+  }
+
+  editarProducto?.addEventListener("click", habilitarCampos);
 </script>
 
 <!-- TODO: Control de errores!!! -->
