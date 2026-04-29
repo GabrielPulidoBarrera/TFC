@@ -199,6 +199,8 @@ const { id } = Astro.props;
     console.log(columnas);
     let columnasJSON = JSON.stringify(columnas);
 
+    console.log(columnasJSON)
+
     const response = await fetch("/api/editProduct", {
       method: "POST",
       headers: {
