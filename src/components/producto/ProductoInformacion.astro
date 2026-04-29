@@ -270,11 +270,18 @@ const { id } = Astro.props;
       if (!selectorColumnas?.children[contador]){
         newColumn();
       }
-      let nombre = selectorColumnas?.children[contador].querySelector('#NombreColumna'+contador);
-      let valor = selectorColumnas?.children[contador].querySelector('#ValorColumna'+contador);
+      let nombre = selectorColumnas?.children[contador].querySelector('#NombreColumna'+contador+1);
+      let valor = selectorColumnas?.children[contador].querySelector('#ValorColumna'+contador+1);
 
-      nombre = iterable[0];
-      valor = iterable[1];
+      console.log(nombre)
+      console.log(valor)
+
+      nombre.textContent = iterable[0];
+      valor.textContent = iterable[1];
+
+console.log(nombre)
+      console.log(valor)
+      
 
 
     }
