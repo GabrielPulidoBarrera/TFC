@@ -244,7 +244,9 @@ async function leerProducto(){
 }
 
 async function asignarDatos(datos: any){
-    collectionName.textContent = datos.name
+    console.log(datos.name)
+    console.log(datos);
+    collectionName.value = datos.name
 
 }
 

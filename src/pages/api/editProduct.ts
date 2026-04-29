@@ -26,7 +26,7 @@ export const POST: APIRoute = async function({ request }){
 
     const result = await prisma.product.update({
       where: {
-        id: id,
+        id: Number(id),
         userID: cookie,
       },
       data
