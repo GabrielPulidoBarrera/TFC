@@ -2,7 +2,6 @@ import type { APIRoute } from 'astro';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb'
 import { PrismaClient } from '../../generated/prisma/client'
 import { conectar } from '@libs/database/adapter';
-import { descifrarCookie } from '@libs/auth/jwt';
 export const prerender = false
 
 const prisma = await conectar()
@@ -11,7 +10,6 @@ const prisma = await conectar()
 export const POST: APIRoute = async function({ request }){
   try {
     let {id, name, cookie, visibility} = await request.json();
-    cookie = descifrarCookie(cookie);
     console.log(name)
 
     console.log("ID!!!"+ id)
