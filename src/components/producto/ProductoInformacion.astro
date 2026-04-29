@@ -104,6 +104,8 @@ const { id } = Astro.props;
   nuevaColumna?.addEventListener("click", newColumn);
   let contador = 3;
   let collectionName = (document.querySelector("#name") as HTMLInputElement);
+  let collectionVisibility = (document.querySelector("#visibility") as HTMLInputElement)
+
 
   //Esta funcion crea una nueva columna
   function newColumn() {
@@ -158,9 +160,7 @@ const { id } = Astro.props;
     let cookie = main.dataset.cookie;
 
     let userID = Number(cookie);
-    let collectionVisibility = (
-      document.querySelector("#visibility") as HTMLInputElement
-    ).value;
+    let visibilidad = collectionVisibility.value;
 
     let columnas: { [key: string]: string } = {};
 
@@ -208,6 +208,7 @@ const { id } = Astro.props;
         id: id,
         name: nombre,
         userID: userID,
+        visibility: visibilidad,
         cookie: cookie
       }),
     });
@@ -249,6 +250,12 @@ async function asignarDatos(datos: any){
     console.log(datos);
     collectionName.value = datos.name
 
+    let todosOptions = Array.from(collectionVisibility.children);
+    todosOptions.map(e => {
+        if (e.textContent == datos.visibility){
+            collectionVisibility.value = datos.visibility;
+        }
+    })
 }
 
 leerProducto();

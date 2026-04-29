@@ -101,6 +101,7 @@ import "@styles/global.css";
   nuevaColumna?.addEventListener("click", newColumn);
   let contador = 3;
   let collectionName = (document.querySelector("#name") as HTMLInputElement);
+  let collectionVisibility = (document.querySelector("#visibility") as HTMLInputElement)
 
   //Esta funcion crea una nueva columna
   function newColumn() {
@@ -155,9 +156,8 @@ import "@styles/global.css";
     let cookie = main.dataset.cookie;
 
     let userID = Number(cookie);
-    let collectionVisibility = (
-      document.querySelector("#visibility") as HTMLInputElement
-    ).value;
+    let visibilidad = collectionVisibility.value;
+
 
     let columnas: { [key: string]: string } = {};
 
@@ -204,7 +204,7 @@ import "@styles/global.css";
       body: JSON.stringify({
         name: nombre,
         userID: userID,
-        visibility: collectionVisibility,
+        visibility: visibilidad,
         columns: columnasJSON,
       }),
     });

@@ -9,7 +9,7 @@ const prisma = await conectar()
 
 export const POST: APIRoute = async function({ request }){
   try {
-    let {id, name, cookie} = await request.json();
+    let {id, name, cookie, visibility} = await request.json();
     console.log(name)
 
     console.log("ID!!!"+ id)
@@ -21,6 +21,9 @@ export const POST: APIRoute = async function({ request }){
       data.name = name;
     }
     
+          if (visibility !== undefined) {
+      data.columns = visibility;
+    }
 
 
 
@@ -32,12 +35,13 @@ export const POST: APIRoute = async function({ request }){
       data
     });
     
-    console.log("Collection edited:", result);
+    console.log("DATA "+data)
+    console.log("Product edited:", result);
     
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: 'Collection editing successfully',
+        message: 'Product edited successfully',
         data: result 
       }),
       { 
@@ -46,7 +50,7 @@ export const POST: APIRoute = async function({ request }){
       }
     );
   } catch (error: any) {
-    console.error("Error editing collection: ", error);
+    console.error("Error editing product: ", error);
     
     return new Response(
       JSON.stringify({ 
