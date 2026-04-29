@@ -105,7 +105,10 @@ const { id } = Astro.props;
   let collectionVisibility = document.querySelector(
     "#visibility",
   ) as HTMLInputElement;
-  let editarProducto = document.querySelector("editarProducto");
+  let editarProducto = document.querySelector("#editarProducto");
+  let editando = false;
+
+
 
   //Esta funcion crea una nueva columna
   function newColumn() {
@@ -138,6 +141,11 @@ const { id } = Astro.props;
     let valorLabel = document.createElement("label");
     valorLabel.textContent = "Valor columna " + contador;
     valorLabel.htmlFor = "valorColumna" + contador;
+
+
+    if(editando==false){
+      valorInput.disabled=true;
+    }
 
     div2.append(valorInput, valorLabel);
     divContenedor.append(div2);
