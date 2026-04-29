@@ -324,7 +324,7 @@ const { id } = Astro.props;
       e.disabled = true;
     });
     select.disabled = true;
-    crearColeccion = "none";
+    editarProducto.display = "none";
   }
 
   deshabilitarCampos();
@@ -340,7 +340,8 @@ const { id } = Astro.props;
     select.disabled = false;
     crearColeccion.display = "flex";
   }
-
+console.log("EDITAR PRODUCTO!!")
+  console.log(editarProducto);
   editarProducto?.addEventListener("click", habilitarCampos);
 </script>
 
