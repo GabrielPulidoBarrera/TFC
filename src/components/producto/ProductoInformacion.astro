@@ -57,14 +57,14 @@ const { id } = Astro.props;
           id="selectorColumnas"
           class="grid grid-cols-2 lg:grid-cols-3 gap-10"
         >
-          <div>
+          <div class="contenedorInputLabel">
             <input type="text" class="columna max-w-full" id="NombreColumna1" />
             <label for="columna1">Nombre columna 1</label>
             <input type="text" class="columna max-w-full" id="ValorColumna1" />
             <label for="columna1">Valor columna 1</label>
           </div>
 
-          <div>
+          <div class="contenedorInputLabel">
             <input type="text" class="columna max-w-full" id="NombreColumna2" />
             <label for="columna2">Nombre columna 2</label>
             <input type="text" class="columna max-w-full" id="ValorColumna2" />
@@ -111,7 +111,7 @@ const { id } = Astro.props;
   function newColumn() {
     //Creo el fieldset el primer div, cada div contiene un label y un input.
     let divContenedor = document.createElement("div");
-    divContenedor.classList.add("max-w-full", "overflow-hidden");
+    divContenedor.classList.add("max-w-full", "overflow-hidden", "contenedorInputLabel");
     let div1 = document.createElement("div");
 
     //Div del nombre
@@ -166,9 +166,10 @@ const { id } = Astro.props;
 
     let selectorColumnas = document.querySelector("#selectorColumnas");
     let selectorColumnasElementos =
-      selectorColumnas?.querySelectorAll("fieldset");
+      selectorColumnas?.querySelectorAll(".contenedorInputLabel");
 
     if (selectorColumnasElementos == null) {
+      console.log("VAMOS A MORIR TODOS")
       return;
     }
 
@@ -264,10 +265,10 @@ const { id } = Astro.props;
     });
 
     //Columnas
-    let columnas = await JSON.parse(datos.columns)
+    let columnasOriginal = await JSON.parse(datos.columns)
     let contador = 0;
-    console.log(columnas);
-    for (let iterable of Object.entries(columnas)){
+    console.log(columnasOriginal);
+    for (let iterable of Object.entries(columnasOriginal)){
 
       console.log(contador)
       console.log(iterable)

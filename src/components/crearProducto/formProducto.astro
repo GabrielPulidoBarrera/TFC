@@ -55,14 +55,14 @@ import "@styles/global.css";
           id="selectorColumnas"
           class="grid grid-cols-2 lg:grid-cols-3 gap-10"
         >
-          <div>
+          <div class="contenedorInputLabel">
             <input type="text" class="columna max-w-full" id="NombreColumna1" />
             <label for="columna1">Nombre columna 1</label>
             <input type="text" class="columna max-w-full" id="ValorColumna1" />
             <label for="columna1">Valor columna 1</label>
           </div>
 
-          <div>
+          <div class="contenedorInputLabel">
             <input type="text" class="columna max-w-full" id="NombreColumna2" />
             <label for="columna2">Nombre columna 2</label>
             <input type="text" class="columna max-w-full" id="ValorColumna2" />
@@ -107,7 +107,7 @@ import "@styles/global.css";
   function newColumn() {
     //Creo el fieldset el primer div, cada div contiene un label y un input.
     let divContenedor = document.createElement("div");
-    divContenedor.classList.add("max-w-full", "overflow-hidden");
+    divContenedor.classList.add("max-w-full", "overflow-hidden", "contenedorInputLabel");
     let div1 = document.createElement("div");
 
     //Div del nombre
