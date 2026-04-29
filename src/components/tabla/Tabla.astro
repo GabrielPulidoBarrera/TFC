@@ -25,10 +25,10 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 		<h2 class="mb-4 text-2xl font-semibold leading-tight" id="collectionTitle"> TITULO ASTRO</h2>
 		{ cookie &&
 
-			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer" id="editar">Editar</button>
-			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-red-600 dark:text-gray-50 cursor-pointer" id="borrar">Borrar</button>
-			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-red-600 dark:text-gray-50 cursor-pointer" id="dejarBorrar">Dejar de borrar</button>
-			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden" id="terminar">Finish</button>
+			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hover:bg-violet-700" id="editar">Editar</button>
+			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-red-600 dark:text-gray-50 cursor-pointer hidden hover:bg-red-700" id="borrar">Borrar</button>
+			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-red-600 dark:text-gray-50 cursor-pointer hidden hover:bg-red-700" id="dejarBorrar">Dejar de borrar</button>
+			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden hover:bg-violet-700" id="terminar">Finish</button>
 		}
 	</div>
 	<div class="overflow-x-auto flex">

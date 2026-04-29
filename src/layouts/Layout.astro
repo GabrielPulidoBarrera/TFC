@@ -9,8 +9,8 @@ const { titulo } = Astro.props;
         let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 ---
 <!doctype html>
-<GeneralHeader titulo={titulo}></GeneralHeader>
-<html lang="en">
+<html lang="ea">
+    <GeneralHeader titulo={titulo}></GeneralHeader>
 
 	<body class="min-h-screen flex flex-col">
         <GeneralNav>
