@@ -229,13 +229,13 @@ if (tbody == null) return;
 	function marcarRojo(){
 		let todosTR = tbody.querySelectorAll('tr');
 		for (let iterable of todosTR){
-			iterable.classList.add("hover:bg-red-800")
+			iterable.classList.add("hover:bg-red-500")
 		}
 	}
 	function desmarcarRojo(){
 		let todosTR = tbody.querySelectorAll('tr');
 		for (let iterable of todosTR){
-			iterable.classList.remove("hover:bg-red-800")
+			iterable.classList.remove("hover:bg-red-500")
 		}
 	}
 
@@ -255,7 +255,7 @@ if (tbody == null) return;
 
 	
 	function deshacerSeleccionBorrar(){
-		if(!modoBorrar){
+		if(modoBorrar){
 			return
 		}
 		desmarcarRojo();

@@ -74,8 +74,12 @@ import { obtenerCookie } from "@libs/auth/controlCookies";
   </form>
 </section>
 
-<button id="crearColeccion" class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50 hover:cursor-pointer">Añadir</button>
-
+<div
+  id="crearColeccion"
+  class="flex items-center justify-center cursor-pointer"
+>
+<button type="button" class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50">añadir</button>
+</div>
 
 <script>
 
@@ -143,12 +147,10 @@ import { obtenerCookie } from "@libs/auth/controlCookies";
     console.log("Response data:", result);
     if (response.ok) {
       window.location.href =
-        "/s/" +
+        "/c/" +
         collectionName +
         "-" +
         result.data.id +
-        "-" +
-        collectionVisibility;
     }
   }
 
