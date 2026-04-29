@@ -12,10 +12,10 @@ export const POST: APIRoute = async function({ request }) {
     const { id } = await request.json();
 
     console.log("ID! " + id)
-
+    console.log(typeof id)
     const result = await prisma.product.findFirst({
       where: {
-        id: id
+        id: Number(id)
       }
     });
     console.log(result);
@@ -28,12 +28,13 @@ export const POST: APIRoute = async function({ request }) {
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    return new Response(
-      JSON.stringify({
-        success: false,
-        message: 'Invalid request body or database error'
-      }),
-      { status: 400, headers: { 'Content-Type': 'application/json' } }
-    );
-  }
-};
+  console.error('Prisma query error:', error);
+  return new Response(
+    JSON.stringify({
+      success: false,
+      message: error instanceof Error ? error.message : 'Database error',
+    }),
+    { status: 500, headers: { 'Content-Type': 'application/json' } }
+  );
+}
+}
