@@ -249,10 +249,11 @@ async function asignarDatos(datos: any){
     console.log(datos.name)
     console.log(datos);
     collectionName.value = datos.name
-
+    console.log(datos.visibility)
     let todosOptions = Array.from(collectionVisibility.children);
     todosOptions.map(e => {
         if (e.textContent == datos.visibility){
+            console.log("NYA :3")
             e.selected = true;
         }
     })
