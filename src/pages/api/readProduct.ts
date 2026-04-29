@@ -11,13 +11,14 @@ export const POST: APIRoute = async function({ request }) {
   try {
     const { id } = await request.json();
 
+    console.log("ID! " + id)
 
     const result = await prisma.product.findFirst({
       where: {
         id: id
       }
     });
-
+    console.log(result);
     return new Response(
       JSON.stringify({
         success: true,
