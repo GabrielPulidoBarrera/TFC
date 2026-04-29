@@ -269,10 +269,14 @@ const { id } = Astro.props;
 
       console.log(contador)
       console.log(iterable)
+      console.log(document.querySelector('#NombreColumna1'))
 
       if (!selectorColumnas?.children[contador]){
+        console.log("NYAAAAA NEW COLUMN")
         newColumn();
       }
+
+
       let nombre = document.querySelector('#NombreColumna'+contador+1);
       let valor = document.querySelector('#ValorColumna'+contador+1);
 
@@ -285,7 +289,7 @@ const { id } = Astro.props;
 console.log(nombre)
       console.log(valor)
       
-
+      contador+=1;
 
     }
   }
