@@ -205,6 +205,7 @@ const { id } = Astro.props;
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        id: id,
         name: nombre,
         userID: userID,
         cookie: cookie
