@@ -250,15 +250,14 @@ async function asignarDatos(datos: any){
     console.log(datos);
     collectionName.value = datos.name
     console.log(datos.visibility)
-    let todosOptions = Array.from(collectionVisibility.children);
-    todosOptions.map(e => {
-        if (e.textContent == datos.visibility){
-            console.log("NYA :3")
-            console.log(typeof e)
-            e.selected = "selected";
-            console.log(e);
-        }
-    })
+    let todosOptions = (collectionVisibility.children);
+for (const opt of collectionVisibility.options) {
+    console.log(opt)
+    if (opt.textContent.trim() === datos.visibility.trim()) {
+        opt.selected = true;
+        console.log("Nya!")
+    }
+}
 }
 
 leerProducto();
