@@ -114,13 +114,15 @@ const { idUsuario = 1, idColeccion } = Astro.props;
       "font-semibold",
       "dark:bg-violet-600",
       "dark:text-gray-50",
+      "hover:bg-violet-700"
     );
     selectorProducto?.classList.remove(
       "font-semibold",
       "dark:bg-violet-600",
       "dark:text-gray-50",
+      "hover:bg-violet-700"
     );
-    selectorProducto?.classList.add("bg-gray-300");
+    selectorProducto?.classList.add("bg-gray-300", "hover:bg-gray-400");
   }
 
   let contenedor = document.querySelector("#contenedorTarjetas");
