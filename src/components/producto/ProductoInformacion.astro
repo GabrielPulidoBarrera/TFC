@@ -253,7 +253,7 @@ async function asignarDatos(datos: any){
     let todosOptions = Array.from(collectionVisibility.children);
     todosOptions.map(e => {
         if (e.textContent == datos.visibility){
-            collectionVisibility.value = datos.visibility;
+            e.selected = true;
         }
     })
 }
