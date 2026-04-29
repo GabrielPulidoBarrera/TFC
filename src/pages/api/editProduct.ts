@@ -9,7 +9,7 @@ const prisma = await conectar()
 
 export const POST: APIRoute = async function({ request }){
   try {
-    let {id, name, cookie, visibility} = await request.json();
+    let {id, name, cookie, visibility, columns} = await request.json();
     console.log(name)
 
     console.log("ID!!!"+ id)
@@ -23,6 +23,10 @@ export const POST: APIRoute = async function({ request }){
     
           if (visibility !== undefined) {
       data.visibility = visibility;
+    }
+
+      if (columns !== undefined) {
+      data.columns = columns;
     }
 
 

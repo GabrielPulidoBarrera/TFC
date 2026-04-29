@@ -210,6 +210,7 @@ const { id } = Astro.props;
         userID: userID,
         visibility: visibilidad,
         cookie: cookie,
+        columns: columnasJSON
       }),
     });
     console.log(response);
@@ -264,7 +265,7 @@ const { id } = Astro.props;
     let columnas = await JSON.parse(datos.columns)
     let contador = 0;
     console.log(columnas);
-    for (let iterable of columnas){
+    for (let iterable of Object.entries(columnas)){
 
       if (!selectorColumnas?.children[contador]){
         newColumn();
@@ -272,7 +273,8 @@ const { id } = Astro.props;
       let nombre = selectorColumnas?.children[contador].querySelector('#NombreColumna'+contador);
       let valor = selectorColumnas?.children[contador].querySelector('#ValorColumna'+contador);
 
-      
+      nombre = iterable[0]:
+      valor = iterable[1];
 
 
     }
