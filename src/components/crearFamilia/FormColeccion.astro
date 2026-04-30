@@ -80,6 +80,8 @@ import "@styles/global.css";
 </div>
 
 <script>
+import { crearDialog } from "@libs/dialog/crearDialog";
+
 
   let boton = document.querySelector("#crearColeccion");
   let nuevaColumna = document.querySelector("#nuevaColumna");
@@ -130,27 +132,40 @@ import "@styles/global.css";
     let columnasJSON = JSON.stringify(columnas);
     console.log(columnasJSON);
 
-    const response = await fetch("/api/newCollection", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: nombre,
-        userID: userID,
-        visibility: visibilidad,
-        columns: columnasJSON,
-      }),
-    });
-    console.log(response);
-    const result = await response.json();
-    console.log("Response data:", result);
-    if (response.ok) {
-      window.location.href =
+    let textoError = ""
+    let valido = true;
+    if (nombre.trim()==""){
+      valido = false;
+      textoError+="\n La coleccion debe de tener un nombre";     
+    }    
+
+    if(valido){
+      
+      const response = await fetch("/api/newCollection", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: nombre,
+          userID: userID,
+          visibility: visibilidad,
+          columns: columnasJSON,
+        }),
+      });
+      console.log(response);
+      const result = await response.json();
+      console.log("Response data:", result);
+      if (response.ok) {
+        window.location.href =
         "/c/" +
         nombre +
         "-" +
         result.data.id
+      }
+    }
+    else{
+      crearDialog(textoError);
     }
   }
 

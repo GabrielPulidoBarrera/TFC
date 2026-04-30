@@ -11,6 +11,10 @@ export const POST: APIRoute = async function({ request }){
   try {
     let {name, userID, columns, visibility} = await request.json();
   
+    if (name.trim()==""){
+      throw new Error("Illegal name");
+    }
+
     const result = await prisma.collection.create({
       data: {name, userID, columns, visibility}
     });

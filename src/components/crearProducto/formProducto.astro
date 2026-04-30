@@ -195,25 +195,43 @@ import "@styles/global.css";
 
     console.log(columnas);
     let columnasJSON = JSON.stringify(columnas);
+    let valido = true;
+    let textoError = ""
 
-    const response = await fetch("/api/newProduct", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: nombre,
-        userID: userID,
-        visibility: visibilidad,
-        columns: columnasJSON,
-      }),
-    });
-    console.log(response);
-    const result = await response.json();
-    console.log("Response data:", result);
+    if (nombre.trim()==""){
+      valido = false
+      textoError+="\n El producto debe de tener un nombre";      
+    }
+    if (columnasJSON==null){
+      valido = false
+      textoError+="\n El producto debe de tener atributos";     
+    }
 
-    if (response.ok) {
-      crearDialog("Producto creado correctamente");
+
+    if (valido){
+
+      const response = await fetch("/api/newProduct", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: nombre,
+          userID: userID,
+          visibility: visibilidad,
+          columns: columnasJSON,
+        }),
+      });
+      console.log(response);
+      const result = await response.json();
+      console.log("Response data:", result);
+      
+      if (response.ok) {
+        crearDialog("Producto creado correctamente");
+      }
+    }
+    else{
+      crearDialog(textoError);
     }
   }
 
