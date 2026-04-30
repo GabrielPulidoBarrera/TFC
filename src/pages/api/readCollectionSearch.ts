@@ -9,16 +9,18 @@ const prisma = await conectar()
 
 export const POST: APIRoute = async function({ request }) {
 
-    const { text } = await request.json();
+    const { text, userID } = await request.json();
 
   
     const result = await prisma.collection.findMany({
-      where: {
+ where: {
         name: {
-          contains: text   
+          contains: text
         },
-        visibility: "publico",
-
+        OR: [
+          { visibility: "publico" },
+          { userID: userID }
+        ]
       }
     });
 

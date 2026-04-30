@@ -133,6 +133,24 @@ const { idUsuario = 1, idColeccion } = Astro.props;
   }
 
   async function readProduct() {
+
+
+
+    let main = document.querySelector("main");
+    if (main == null) {
+      return;
+    }
+    if (main.dataset == null) {
+      return;
+    }
+    if (main.dataset.cookie == null) {
+      return;
+    }
+    let cookie = main.dataset.cookie;
+
+
+
+
     if (buscar == null) {
       return;
     }
@@ -163,6 +181,7 @@ const { idUsuario = 1, idColeccion } = Astro.props;
         method: "POST",
         body: JSON.stringify({
           text: textoBuscado,
+          userID: cookie
         }),
       });
       resultado = await response.json();
@@ -172,6 +191,7 @@ const { idUsuario = 1, idColeccion } = Astro.props;
         method: "POST",
         body: JSON.stringify({
           text: textoBuscado,
+          userID: cookie
         }),
       });
       resultado = await response.json();

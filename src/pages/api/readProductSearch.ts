@@ -9,7 +9,7 @@ const prisma = await conectar()
 
 export const POST: APIRoute = async function({ request }) {
   try {
-    const { text } = await request.json();
+    const { text, userID } = await request.json();
 
     console.log(text)
 
@@ -18,7 +18,10 @@ export const POST: APIRoute = async function({ request }) {
         name: {
           contains: text   
         },
-        visibility: "publico",
+        OR: [
+          {visibility: "publico"},
+          {userID: userID}
+        ]
       }
     });
 
