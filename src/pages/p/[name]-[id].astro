@@ -24,7 +24,7 @@ let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 
 console.log("ID PRODUCTO"+ id);
 console.log("COOKIE PERSONA "+cookie)
-let mostrar = false;
+let mostrar = true;
 let poderEditar = false;
 	const url = new URL('/api/readProduct', Astro.url);
 	
@@ -45,10 +45,10 @@ let poderEditar = false;
 	if (respuesta.data.visibility == "Privado"){
 		if(respuesta.data.userID!=cookie){
 			console.log("naynay!")
+			mostrar=false
 		}
 		else{
 			console.log("Bieeen!")
-			mostrar=true
 		}
 }
 if (cookie){
