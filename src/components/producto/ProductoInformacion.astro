@@ -78,10 +78,6 @@ const { id } = Astro.props;
         class="self-center px-8 py-3 rounded bg-gray-300 hover:bg-gray-400 hover:cursor-pointer"
         >Añadir mas columnas</button
       >
-      				<button type="button"
-					class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50 hover:cursor-pointer"
-					id="editarProducto">Editar producto</button
-				>
     </fieldset>
   </form>
 </section>
@@ -95,12 +91,22 @@ const { id } = Astro.props;
     >Añadir</button
   >
 </div>
+<div
+  id="editarProducto"
+  class="items-center justify-center cursor-pointer hidden"
+>
+  <button
+    type="button"
+    class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50 hover:cursor-pointer"
+    >Editar producto</button
+  >
+</div>
 
 <script>
   import { crearDialog } from "@libs/dialog/crearDialog";
 
   //Seleciono lo necesario
-  let boton = (document.querySelector("#crearColeccion") as HTMLElement);
+  let boton = document.querySelector("#crearColeccion") as HTMLElement;
   let nuevaColumna = document.querySelector("#nuevaColumna");
   let selectorColumnas = document.querySelector("#selectorColumnas");
   nuevaColumna?.addEventListener("click", newColumn);
@@ -109,10 +115,8 @@ const { id } = Astro.props;
   let collectionVisibility = document.querySelector(
     "#visibility",
   ) as HTMLSelectElement;
-  let editarProducto = (document.querySelector("#editarProducto") as HTMLElement);
+  let editarProducto = document.querySelector("#editarProducto") as HTMLElement;
   let editando = false;
-
-
 
   //Esta funcion crea una nueva columna
   function newColumn() {
@@ -146,10 +150,9 @@ const { id } = Astro.props;
     valorLabel.textContent = "Valor columna " + contador;
     valorLabel.htmlFor = "valorColumna" + contador;
 
-
-    if(editando==false){
-      valorInput.disabled=true;
-      nombreInput.disabled=true;
+    if (editando == false) {
+      valorInput.disabled = true;
+      nombreInput.disabled = true;
     }
 
     div2.append(valorInput, valorLabel);
@@ -274,7 +277,9 @@ const { id } = Astro.props;
     //Visibilidad
     console.log(datos.visibility);
 
-const todosOptions: HTMLOptionElement[] = Array.from(collectionVisibility.options);
+    const todosOptions: HTMLOptionElement[] = Array.from(
+      collectionVisibility.options,
+    );
     todosOptions.map((e: HTMLOptionElement) => {
       if (e.textContent == datos.visibility) {
         console.log("NYA :3");
@@ -299,17 +304,21 @@ const todosOptions: HTMLOptionElement[] = Array.from(collectionVisibility.option
 
       let contadorAcelerado = contador + 1;
 
-      let nombre = (document.querySelector("#NombreColumna" + contadorAcelerado) as HTMLInputElement);
-      let valor = (document.querySelector("#ValorColumna" + contadorAcelerado) as HTMLInputElement);
+      let nombre = document.querySelector(
+        "#NombreColumna" + contadorAcelerado,
+      ) as HTMLInputElement;
+      let valor = document.querySelector(
+        "#ValorColumna" + contadorAcelerado,
+      ) as HTMLInputElement;
 
       console.log(nombre);
       console.log(valor);
 
-      if(nombre ==null){
-        return
+      if (nombre == null) {
+        return;
       }
-      if (valor==null){
-        return
+      if (valor == null) {
+        return;
       }
 
       nombre.value = iterable[0];
@@ -325,54 +334,55 @@ const todosOptions: HTMLOptionElement[] = Array.from(collectionVisibility.option
   leerProducto();
 
   function deshabilitarCampos() {
-    editando=false;
+    editando = false;
     let todosInput = Array.from(document.querySelectorAll("input"));
     let select = document.querySelector("select");
 
-    if (select==null){
-      return
+    if (select == null) {
+      return;
     }
-    if (editarProducto==null){
-      return
+    if (editarProducto == null) {
+      return;
     }
-    if (boton==null){
-      return
+    if (boton == null) {
+      return;
     }
 
     todosInput.map((e) => {
       e.disabled = true;
     });
+
+    console.log("me ejecuto!")
+
     select.disabled = true;
     editarProducto.style.display = "block";
-    boton.style.display = "hidden"
+    boton.style.display = "none";
   }
 
   deshabilitarCampos();
 
   function habilitarCampos() {
-
-
-
-
-    editando=true
-    console.log("holiwissss")
-    console.log(boton)
+    editando = true;
+    console.log("holiwissss");
+    console.log(boton);
     let todosInput = Array.from(document.querySelectorAll("input"));
     let select = document.querySelector("select");
 
-    if (select==null){
-      return
+    if (select == null) {
+      return;
     }
 
     todosInput.map((e) => {
       e.disabled = false;
     });
+
+    console.log("me ejecuto!")
+
     select.disabled = false;
-    editarProducto.style.display = "hidden";
-    boton.style.display = "flex"
-    
+    editarProducto.style.display = "none";
+    boton.style.display = "flex";
   }
-console.log("EDITAR PRODUCTO!!")
+  console.log("EDITAR PRODUCTO!!");
   console.log(editarProducto);
   editarProducto?.addEventListener("click", habilitarCampos);
 </script>
