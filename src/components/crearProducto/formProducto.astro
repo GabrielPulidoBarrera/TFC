@@ -94,7 +94,7 @@ import "@styles/global.css";
 <script>
   import { crearDialog } from "@libs/dialog/crearDialog";
 
-  //Seleciono lo necesario
+  //Seleciono e inicializo lo necesario
   let boton = document.querySelector("#crearColeccion");
   let nuevaColumna = document.querySelector("#nuevaColumna");
   let selectorColumnas = document.querySelector("#selectorColumnas");
@@ -104,7 +104,8 @@ import "@styles/global.css";
   let collectionVisibility = document.querySelector(
     "#visibility",
   ) as HTMLInputElement;
-
+    let valido = true;
+    let textoError = "";
   //Esta funcion crea una nueva columna
   function newColumn() {
     //Creo el fieldset el primer div, cada div contiene un label y un input.
@@ -196,6 +197,10 @@ import "@styles/global.css";
       console.log(valor);
 
       if (nombre != null && valor != null) {
+        if (columnas[nombre]!=null){
+            valido = false;
+            textoError += "\n No puedes tener dos atributos con el mismo nombre.";
+        }
         columnas[nombre] = valor;
       }
     }
@@ -203,15 +208,14 @@ import "@styles/global.css";
     console.log(columnas);
     let columnasJSON = JSON.stringify(columnas);
 
-    // Control de errores.
+    // Validacion de errores.
 
-    let valido = true;
-    let textoError = "";
-
+    //Reviso que el nombre no sea null
     if (nombre.trim() == "") {
       valido = false;
       textoError += "\n El producto debe de tener un nombre";
     }
+    //Reviso que hayan columnas
     if (columnasJSON == null) {
       valido = false;
       textoError += "\n El producto debe de tener atributos";

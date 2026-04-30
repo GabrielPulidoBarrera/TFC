@@ -22,7 +22,7 @@ const { id, poderEditar } = Astro.props;
           busqueda o no.
         </p>
         <p class="text-xs">
-          Las columnas definiran los atributos que se mostraran en la tabla.
+          Las atributos definiarn el contenido del producto. Puedes añadir tantos cuantos quieren, aunque todos deben de tener un nombre (El nombre de la columna donde quieres que aparezca esta informacion), y un valor (El propio contenido del atributo)
         </p>
         <p class="text-xs">
           Todos estos valores pueden ser modificados en cualquier momento.
@@ -117,7 +117,7 @@ const { id, poderEditar } = Astro.props;
     columns: string;
   }
 
-  //Seleciono lo necesario
+  //Seleciono e inicializo lo necesario
   let boton = document.querySelector("#crearColeccion") as HTMLElement;
   let nuevaColumna = document.querySelector("#nuevaColumna");
   let selectorColumnas = document.querySelector("#selectorColumnas");
@@ -129,7 +129,8 @@ const { id, poderEditar } = Astro.props;
   ) as HTMLSelectElement;
   let editarProducto = document.querySelector("#editarProducto") as HTMLElement;
   let editando = false;
-
+    let valido = true;
+    let textoError = "";
   //Esta funcion crea una nueva columna
   function newColumn() {
     //Creo el fieldset el primer div, cada div contiene un label y un input.
@@ -224,6 +225,10 @@ const { id, poderEditar } = Astro.props;
       console.log(valor);
 
       if (nombre != null && valor != null) {
+        if (columnas[nombre]!=null){
+            valido = false;
+            textoError += "\n No puedes tener dos atributos con el mismo nombre.";
+        }        
         columnas[nombre] = valor;
       }
     }
@@ -232,6 +237,20 @@ const { id, poderEditar } = Astro.props;
     let columnasJSON = JSON.stringify(columnas);
 
     console.log(columnasJSON);
+    // Validacion de errores.
+
+    //Reviso que el nombre no sea null
+    if (nombre.trim() == "") {
+      valido = false;
+      textoError += "\n El producto debe de tener un nombre";
+    }
+    //Reviso que hayan columnas
+    if (columnasJSON == null) {
+      valido = false;
+      textoError += "\n El producto debe de tener atributos";
+    }
+
+    if(valido){
 
     const response = await fetch("/api/editProduct", {
       method: "POST",
@@ -250,12 +269,18 @@ const { id, poderEditar } = Astro.props;
     console.log(response);
     const result = await response.json();
     console.log("Response data:", result);
+    
 
     if (response.ok) {
       crearDialog("Producto creado correctamente");
       deshabilitarCampos();
     }
   }
+  else{
+    crearDialog(textoError)
+  }
+}
+
 
   boton?.addEventListener("click", editProduct);
 
