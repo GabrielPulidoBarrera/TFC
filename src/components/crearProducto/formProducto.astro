@@ -184,8 +184,15 @@ import "@styles/global.css";
       contador < selectorColumnasElementos?.length + 1;
       contador++
     ) {
+      
+      console.log(contador)
+      
       let atributoNombre = document.querySelector("#NombreColumna" + contador);
       let atributoValor = document.querySelector("#ValorColumna" + contador);
+
+
+      console.log(atributoNombre)
+        console.log(atributoValor)
 
       if (atributoNombre == null || atributoValor == null) {
         return;
