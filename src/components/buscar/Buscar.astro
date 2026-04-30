@@ -135,18 +135,15 @@ const { idUsuario = 1, idColeccion } = Astro.props;
   async function readProduct() {
 
 
+    let cookie = 0;
 
     let main = document.querySelector("main");
     if (main == null) {
       return;
     }
-    if (main.dataset == null) {
-      return;
+    if (main.dataset.cookie != null) {
+      cookie = Number(main.dataset.cookie);
     }
-    if (main.dataset.cookie == null) {
-      return;
-    }
-    let cookie = main.dataset.cookie;
 
 
 
