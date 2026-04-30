@@ -100,7 +100,7 @@ const { id } = Astro.props;
   import { crearDialog } from "@libs/dialog/crearDialog";
 
   //Seleciono lo necesario
-  let boton = document.querySelector("#crearColeccion");
+  let boton = (document.querySelector("#crearColeccion") as HTMLElement);
   let nuevaColumna = document.querySelector("#nuevaColumna");
   let selectorColumnas = document.querySelector("#selectorColumnas");
   nuevaColumna?.addEventListener("click", newColumn);
@@ -108,8 +108,8 @@ const { id } = Astro.props;
   let collectionName = document.querySelector("#name") as HTMLInputElement;
   let collectionVisibility = document.querySelector(
     "#visibility",
-  ) as HTMLInputElement;
-  let editarProducto = document.querySelector("#editarProducto");
+  ) as HTMLSelectElement;
+  let editarProducto = (document.querySelector("#editarProducto") as HTMLElement);
   let editando = false;
 
 
@@ -274,12 +274,12 @@ const { id } = Astro.props;
     //Visibilidad
     console.log(datos.visibility);
 
-    let todosOptions = Array.from(collectionVisibility.children);
-    todosOptions.map((e) => {
+const todosOptions: HTMLOptionElement[] = Array.from(collectionVisibility.options);
+    todosOptions.map((e: HTMLOptionElement) => {
       if (e.textContent == datos.visibility) {
         console.log("NYA :3");
         console.log(e);
-        e.selected = "true";
+        e.selected = true;
       }
     });
 
@@ -299,14 +299,21 @@ const { id } = Astro.props;
 
       let contadorAcelerado = contador + 1;
 
-      let nombre = document.querySelector("#NombreColumna" + contadorAcelerado);
-      let valor = document.querySelector("#ValorColumna" + contadorAcelerado);
+      let nombre = (document.querySelector("#NombreColumna" + contadorAcelerado) as HTMLInputElement);
+      let valor = (document.querySelector("#ValorColumna" + contadorAcelerado) as HTMLInputElement);
 
       console.log(nombre);
       console.log(valor);
 
+      if(nombre ==null){
+        return
+      }
+      if (valor==null){
+        return
+      }
+
       nombre.value = iterable[0];
-      valor.value = iterable[1];
+      valor.value = iterable[1] as string;
 
       console.log(nombre);
       console.log(valor);
@@ -322,28 +329,47 @@ const { id } = Astro.props;
     let todosInput = Array.from(document.querySelectorAll("input"));
     let select = document.querySelector("select");
 
+    if (select==null){
+      return
+    }
+    if (editarProducto==null){
+      return
+    }
+    if (boton==null){
+      return
+    }
+
     todosInput.map((e) => {
       e.disabled = true;
     });
     select.disabled = true;
-    editarProducto.display = "block";
-    boton.display = "hidden"
+    editarProducto.style.display = "block";
+    boton.style.display = "hidden"
   }
 
   deshabilitarCampos();
 
   function habilitarCampos() {
+
+
+
+
     editando=true
     console.log("holiwissss")
+    console.log(boton)
     let todosInput = Array.from(document.querySelectorAll("input"));
     let select = document.querySelector("select");
+
+    if (select==null){
+      return
+    }
 
     todosInput.map((e) => {
       e.disabled = false;
     });
     select.disabled = false;
-    editarProducto.display = "hidden";
-    boton.display = "flex"
+    editarProducto.style.display = "hidden";
+    boton.style.display = "flex"
     
   }
 console.log("EDITAR PRODUCTO!!")
