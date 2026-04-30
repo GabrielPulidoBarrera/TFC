@@ -226,6 +226,7 @@ const { id, poderEditar } = Astro.props;
       console.log(valor);
 
       if (nombre != null && valor != null) {
+        //Valido que no haya dos atributos iguales
         if (columnas[nombre]!=null){
             valido = false;
             textoError += "\n No puedes tener dos atributos con el mismo nombre.";

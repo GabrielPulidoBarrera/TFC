@@ -165,7 +165,7 @@ import "@styles/global.css";
 
     let userID = Number(cookie);
     let visibilidad = collectionVisibility.value;
-
+    let duplicado=false;
     //Las columnas los guardo en JSON, la estructura es un objeto con estructura clave valor.
         console.log("ME EJECUTO")
 
@@ -207,13 +207,17 @@ import "@styles/global.css";
 
       if (nombre != null && valor != null) {
         console.log("ME EJECUTO")
+        //Valido que no haya dos atributos iguales
         console.log(columnas[nombre])
         if (columnas[nombre]!=null){
-            valido = false;
-            textoError += "\n No puedes tener dos atributos con el mismo nombre.";
+          duplicado=true;
+          valido = false;
         }
         columnas[nombre] = valor;
       }
+    }
+    if (duplicado){
+      textoError += "\n No puedes tener dos atributos con el mismo nombre.";
     }
 
     console.log(columnas);

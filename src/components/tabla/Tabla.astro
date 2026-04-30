@@ -313,6 +313,11 @@ if (tbody == null) return;
 		if (terminar == null) return;
 		if (tbody == null) return;
 
+		modoBorrar = false
+		desmarcarRojo()
+		dejarBorrar.style.display="none";
+		borrar.style.display="block"
+
 		editando = false;
 
 		let data = { id: Number(idLink) };
