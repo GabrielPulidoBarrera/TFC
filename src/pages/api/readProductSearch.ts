@@ -12,7 +12,7 @@ export const POST: APIRoute = async function({ request }) {
     const { text, userID } = await request.json();
 
     console.log(text)
-
+//Si es publico, lo selecciono siempre, si no lo es, me aseguro que el userID sea el mismo que el proporcionado.
     const result = await prisma.product.findMany({
       where: {
         name: {

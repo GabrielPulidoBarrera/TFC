@@ -16,6 +16,7 @@ export const POST: APIRoute = async function({ request }){
 
     console.log("COOKIE!!!"+ id)
 
+    //Leo la informacion recibido y lo meto dentro de un objeto data, que luego sera añadido a la query para realizar la modificacion.
     let data: any = {} 
 
 

@@ -12,9 +12,7 @@ export const POST: APIRoute = async function({ request }){
     let {email, id} = await request.json();
 
 
-    //let columnas = {columna: "nombre", precio: 20, fecha: "hoy"}
-    //let parseado = await JSON.stringify(columnas);
-
+    //Para la validacion de email, el email lo envio mediante un webhook de n8n. Los datos para iniciar sesion en el webhook estaran presentes en la documentacion del proyecto. Si has montado el proyecto en local, y mi servidor esta apagado, esta linea puede ser un problema. Reemplazalo con tu propio N8N o borralo enteramente.
     let responseEmail = await fetch("https://n8n.gabrielpulido.xyz/webhook/bf8ea997-b6a2-4a20-9166-511843e8599b", { 
     method: "POST",
     headers: { "Content-Type": "application/json" },

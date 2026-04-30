@@ -2,7 +2,7 @@
 import "@styles/global.css";
 ---
 
-<section class="p-6 dark:text-gray-900">
+<section class="p-6 text-gray-900">
   <form
     novalidate=""
     action=""
@@ -45,7 +45,7 @@ import "@styles/global.css";
     <button
       type="button"
       id="crearUsuario"
-      class="self-center px-8 py-3 rounded font-semibold dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50"
+      class="self-center px-8 py-3 rounded font-semibold bg-violet-600 hover:bg-violet-700 text-gray-50"
     >
       <span id="textoBoton">Crear usuario</span>
 
@@ -73,6 +73,8 @@ import "@styles/global.css";
 <script>
   import { getSHA256Hash } from "boring-webcrypto-sha256";
   import { crearDialog } from "@libs/dialog/crearDialog";
+
+  //Selecciono e inicializo lo necesario.
 
   let cargar = document.querySelector(".cargar") as HTMLElement;
   let textoBoton = document.querySelector("#textoBoton") as HTMLElement;
@@ -105,7 +107,10 @@ import "@styles/global.css";
     let password = (document.querySelector("#password") as HTMLInputElement)
       .value;
 
-    //He copiado y pegado este regex de google.
+
+    //Validacion de errores
+
+    //He copiado y pegado este regex de google. Valida si un email es valido o no. Parece funcionar bien.
     let emailRegex =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (emailRegex.test(emailUsuario) == false) {
@@ -118,36 +123,42 @@ import "@styles/global.css";
       error+="\n Tu usuario no puede contener caracteres especiales";
       valido = false;
     }
-
+    //Reviso la longitud del usuario
     if (username.length<8){
       error+="\n Tu usuario es demasiado corto"
       valido = false;
     }
 
+    //Defino regex que voy a usar luego.
+
     let mayusculaRegex = /[A-Z]/;
     let minusculaRegex = /[a-z]/;
     let numeroRegex = /[0-9]/;
 
+    //Reviso la longitud de la contraseña 
     if (password.length < 8) {
       error+="\n Tu contraseña es muy corta";
       valido = false;
     }
 
+    //Reviso si la contraseña tiene al menos una mayuscula
     if (mayusculaRegex.test(password) == false) {
       error+="\n Tu contraseña debe de contener al menos una mayuscula.";
       valido = false;
     }
-
+    //Reviso si la contraseña tiene al menos una minuscula.
     if (minusculaRegex.test(password) == false) {
       error+="\n Tu contraseña debe de contener al menos una minuscula.";
       valido = false;
     }
+    //Reviso si la contraseña tiene un numero.
     if (numeroRegex.test(password) == false) {
       error+="\n Tu contraseña debe de contener al menos un numero.";
       valido = false;
     }
 
     if (valido == true) {
+      //Encripto la contraseña antes de enviarla al servidor.
       password = await getSHA256Hash(password);
       const response = await fetch("../api/newUser", {
         method: "POST",
@@ -185,7 +196,7 @@ import "@styles/global.css";
       }
       cargar.style.display = "none";
       textoBoton.style.display = "block";
-    } else {
+    } else { // en caso de que algun campo haya sido einvalido, elimino el spinner y te doy el mensaje de error
       crearDialog(error)
       cargar.style.display = "none";
       textoBoton.style.display = "block";

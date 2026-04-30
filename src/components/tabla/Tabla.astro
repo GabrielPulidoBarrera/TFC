@@ -11,7 +11,7 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 
 
 ---
-<div class="container p-2 mx-auto sm:p-4 dark:text-gray-800">
+<div class="container p-2 mx-auto sm:p-4 text-gray-800">
 
 
 	<div class="bg-black z-40 fixed top-0 right-0 w-full h-full hidden opacity-30" id="oscurecer"></div>
@@ -25,20 +25,20 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 		<h2 class="mb-4 text-2xl font-semibold leading-tight" id="collectionTitle"> TITULO ASTRO</h2>
 		{ cookie &&
 
-			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hover:bg-violet-700" id="editar">Editar</button>
-			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-red-600 dark:text-gray-50 cursor-pointer hidden hover:bg-red-700" id="borrar">Borrar</button>
-			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-red-600 dark:text-gray-50 cursor-pointer hidden hover:bg-red-700" id="dejarBorrar">Dejar de borrar</button>
-			<button class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50 cursor-pointer hidden hover:bg-violet-700" id="terminar">Finish</button>
+			<button class="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-gray-50 cursor-pointer hover:bg-violet-700" id="editar">Editar</button>
+			<button class="self-center px-8 py-3 font-semibold rounded bg-red-600 text-gray-50 cursor-pointer hidden hover:bg-red-700" id="borrar">Borrar</button>
+			<button class="self-center px-8 py-3 font-semibold rounded bg-red-600 text-gray-50 cursor-pointer hidden hover:bg-red-700" id="dejarBorrar">Dejar de borrar</button>
+			<button class="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-gray-50 cursor-pointer hidden hover:bg-violet-700" id="terminar">Finish</button>
 		}
 	</div>
 	<div class="overflow-x-auto flex">
 		<div class="grow flex-col" >
 
 			<table class="text-xs *:text-center grow w-full" id="tabla">
-				<thead class="dark:bg-gray-300">
+				<thead class="bg-gray-300">
 					<tr class=" *:p-3" id="trDeThead"></tr>
 				</thead>
-				<tbody class="*:border-b *:border-opacity-20 *:dark:border-gray-300 *:dark:bg-gray-50">
+				<tbody class="*:border-b *:border-opacity-20 *:border-gray-300 *:bg-gray-50">
 				</tbody>
 			</table>
 		<div class="hidden bg-white border-dashed border-black border-3 text-center items-center justify-center text-7xl cursor-pointer" id="crearNuevaFila">+</div>
@@ -52,7 +52,7 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 
 
 	console.log(idLink)
-	// Selectores
+	// Defino y selecciono lo necesario
 	let tbody = document.querySelector('tbody');
 	let editar = document.querySelector('#editar');
 	let terminar = document.querySelector('#terminar');
@@ -82,7 +82,7 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 
 
 
-
+//Esta funcion lee el producto
 async function readProduct() {
 		if (tbody == null) return;
 		if (titulo == null) return;
@@ -103,7 +103,7 @@ async function readProduct() {
 		columnasOriginal = JSON.parse(correcto.columns);
 		//console.log(columnasOriginal)
 		titulo.textContent = correcto.name;
-
+		//Creo colgroups y th segun los datos que hayan.
 		for (let i of columnas) {
 			let colgroup = document.createElement('colgroup')
 			let th = document.createElement('th');
@@ -116,7 +116,7 @@ async function readProduct() {
 	}
 
 
-
+	//Esta funcion hace una segunda peticion que mira que productos tiene la coleccion.
 	async function readCollecionProduct() {
 
 		//Borro los datos anteriores de la tabla si existen.
@@ -155,7 +155,6 @@ async function readProduct() {
 		// Rellenar la tabla con los datos
 		for (let objetoRaw of dataProduct) {
 
-			//console.log("Me ejcuto!!")
 			console.log(columnas)
 			crearTR(objetoRaw.id);
 			let objeto = JSON.parse(objetoRaw.columns);
@@ -170,7 +169,7 @@ async function readProduct() {
 	}
 
 	
-
+	//Esta funcion activa el modo de edicion
 	function activarEditar() {
 		if (editar == null) return;
 		if (terminar == null) return;
@@ -203,42 +202,26 @@ if (tbody == null) return;
 		titulo?.setAttribute("contenteditable", "true");
 
 
-		//Selecciono todos los TR y genero a la izquierda un boton de borrar para todos ellos.
-
-		// let todosTR = document.querySelectorAll('tr');
-
-		// for (let iterable of todosTR){
-		// 	let svg = document.createElement = "svg";
-		// 	svg.xmlns = "http://www.w3.org/2000/svg";
-		// 	svg.fill="currentColor";
-		// 	svg.viewBox="0 0 16 16";
-
-		// 	let path1 = document.createElement = "path";
-		// 	path1.d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"
-		// 	let path2 = document.createElement = "path";
-		// 	path2.d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"
-		// }
-
-
 	}
 
 	// Esta parte del codigo contiene todas las funciones necesarias para permitir la capacidad de borrar elementos.
 
 	let modoBorrar=false
-
+	//Asigna la clase de hover a todos los elementos
 	function marcarRojo(){
 		let todosTR = tbody.querySelectorAll('tr');
 		for (let iterable of todosTR){
 			iterable.classList.add("hover:bg-red-500")
 		}
 	}
+	//Quita la clase de hover a todos los elementos
 	function desmarcarRojo(){
 		let todosTR = tbody.querySelectorAll('tr');
 		for (let iterable of todosTR){
 			iterable.classList.remove("hover:bg-red-500")
 		}
 	}
-
+	//Asigna la clase de hover a todos los elementos si presionas alt, estas en el modo edicion pero no en el modo de borrar.
 	function seleccionBorrar(e){
 		if (!editando){
 			return
@@ -253,7 +236,7 @@ if (tbody == null) return;
 		marcarRojo()	
 	}
 
-	
+	//borra la clase de hover a todos los elementos si presionas alt, estas en el modo edicion pero no en el modo de borrar.	
 	function deshacerSeleccionBorrar(){
 		if(modoBorrar){
 			return
@@ -261,7 +244,7 @@ if (tbody == null) return;
 		desmarcarRojo();
 	}
 
-
+	//Esta funcion borra un elemento
 	async function borrarElemento(e){
 		if (!editando){
 			console.log("No es editando")
@@ -275,6 +258,7 @@ if (tbody == null) return;
 		if (e.target.closest("tr").id=="trDeThead"){
 			return
 		} 
+			//Detecta un click con alt en caso de que estes en modo de edicion pero no en el modo de borrado.
 		if (!modoBorrar){
 			if (!e.altKey){
 				console.log("No es alt!")
@@ -287,7 +271,6 @@ if (tbody == null) return;
 
 		
 
-		alert("Todo chachipiruli!")
 		let objetoAPI = {collectionID: Number(idLink), productID: Number(id)};
 		const response = await fetch("/api/deleteCollectionProduct", {
 			method: "POST",
@@ -299,13 +282,14 @@ if (tbody == null) return;
 			console.log(response);
 		readCollecionProduct()
 	}
-
+	//Activa el modo de borrar
 	function activarBorrar(){
 		modoBorrar = true
 		marcarRojo()
 		dejarBorrar.style.display="block";
 		borrar.style.display="none"
 	}
+	//Desactiva el modo de borrar
 	function desactivarBorrar(){
 		modoBorrar = false
 		desmarcarRojo()
@@ -313,7 +297,7 @@ if (tbody == null) return;
 		borrar.style.display="block"
 	}
 
-	document.addEventListener("click", borrarElemento) //TODO: HAZ ESTO RESPONSIVE
+	document.addEventListener("click", borrarElemento)
 	document.addEventListener("keydown", seleccionBorrar)
 	document.addEventListener("keyup", deshacerSeleccionBorrar)
 
@@ -322,7 +306,7 @@ if (tbody == null) return;
 
 
 
-
+	//Desactivo el modo de editar. Al desactivarlo, ademas se guardan los datos en la base de datos
 	async function terminarEditar() {
 
 		if (editar == null) return;
@@ -391,14 +375,14 @@ readCollecionProduct()
 		titulo?.setAttribute("contenteditable", "false");
 
 	}
-
+	//Esta funcion es una funcion de apoyo. Crea un TR
 	function crearTR(id) {
 
 		if (tbody == null) return;
 		let tr = document.createElement('tr');
 		tr.className = '*:p-3';
 		tr.id = id
-
+		//leo cuantas columnas crear para para determinar cuantos TD crear.
 		let numeroTD = thead.lastElementChild?.childElementCount;
 		console.log(numeroTD)
 		if (numeroTD == null) return;
@@ -414,28 +398,35 @@ readCollecionProduct()
 			tbody.append(tr);
 
 	}
+
+	//Funcion asistente al igual que la anterior, crea una nueva columna
 	function crearColumna() {
 		if (tbody == null || thead == null) return;
 		let colgroup = document.createElement('colgroup')
 		let th = document.createElement('th');
 		th.textContent = "nueva Columna"
 		thead.querySelector('tr').append(th);
+		//Reviso cuantos TR hay para saber cuantos TD crear.
 		let lista = tbody.querySelectorAll('tr')
 		for (let iterable of lista){
+			//Si estoy en el modo de edicion, hago que las casillas sean editables.
 			let td = document.createElement('td');
+			if (editando){
+				iterable.setAttribute("contenteditable", "true");
+			}
 			//console.log(iterable);
 			iterable.append(td)
 		}
 		tabla.prepend(colgroup)
 		
 	}
-
+	//Esta funcion se ejecuta al activar el modo de editar y muestra la interfaz para crear una nueva fila
 		function activarPanelNuevaFila(){
 		oscurecer.style.display="flex"
 		panelBuscar.style.display="flex"
 	
 	}
-
+	//Detecta cuando se cierra un dialog para regenerar la tabla. Normalmente se activa despues de confirmar los cambios a la tabla y leer la confirmacion.
 	async function eventoDelegado(e) {
     if (e.target == null) {
       console.log("regreso en e.target")
@@ -451,10 +442,10 @@ readCollecionProduct()
 	
 }
 	
+//Funcion que detecta cuando has dejado el TH de una columna en blanco para borarla
+thead.addEventListener("focusout", borrarHeader)
 
-thead.addEventListener("focusout", headerActualizado)
-
-function headerActualizado(e){
+function borrarHeader(e){
 	if (e.target.textContent.trim()==""){
 		console.log("Hola!")
 		console.log(e.target.textContent)

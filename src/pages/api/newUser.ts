@@ -19,8 +19,8 @@ export const POST: APIRoute = async function({ request }){
     console.log("Nombre: "+name)
     console.log("password: "+password)
     console.log("email: "+email)
-
-
+    //Validacion de errores.
+    //Reivso que el email sea valido
     let emailRegex =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (emailRegex.test(email) == false) {
@@ -32,12 +32,13 @@ export const POST: APIRoute = async function({ request }){
     if (usuarioRegex.test(name) == false) {
     throw new Error('Illegal characters on username')
     }
-
+    //Revisa la longitud del usuario.
     if (name.length<8){
     throw new Error('Invalid username length')
 
     }
 
+    //No realizo validacion de contraseña, ya que la contraseña que recibo ya esta encriptada y no se podria validar mediante regex, ademas se supone que no debo de ser capaz de desencriptar la contraseña.
 
     console.log(name)
   

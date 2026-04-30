@@ -4,7 +4,7 @@ import "@styles/global.css";
 //if (!user) return Astro.redirect('/login')
 ---
 
-<section class="p-6 dark:text-gray-900">
+<section class="p-6 text-gray-900">
   <form
     novalidate=""
     action=""
@@ -33,7 +33,7 @@ import "@styles/global.css";
     <button
       type="button"
       id="crearUsuario"
-      class="self-center px-8 py-3 rounded font-semibold dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50"
+      class="self-center px-8 py-3 rounded font-semibold bg-violet-600 hover:bg-violet-700 text-gray-50"
     >
       <span id="textoBoton">Iniciar sesion</span>
 
@@ -62,6 +62,8 @@ import "@styles/global.css";
   import { getSHA256Hash } from "boring-webcrypto-sha256";
   import { crearDialog } from "@libs/dialog/crearDialog";
 
+  //Selecciono y inicializo lo necesario
+
   let cargar = document.querySelector(".cargar") as HTMLElement;
   let textoBoton = document.querySelector("#textoBoton") as HTMLElement;
 
@@ -80,6 +82,8 @@ import "@styles/global.css";
     textoBoton.style.display = "none";
     cargar.style.display = "block";
 
+    //Recupero valores
+
     let username = (document.querySelector("#nombre") as HTMLInputElement)
       .value;
     let password = (document.querySelector("#password") as HTMLInputElement)
@@ -97,6 +101,7 @@ import "@styles/global.css";
     });
 
     if (response.ok) {
+      //Si todo es correcto, redirecciono.
       window.location.href = "/seleccion";
 
     } else {

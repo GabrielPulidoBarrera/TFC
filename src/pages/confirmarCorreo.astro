@@ -1,6 +1,6 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import { crearDialog } from "@libs/dialog/crearDialog";
+//Esta pagina es la que accedes cuando haces click en el correo que te llega para validar tu correo.
 const id = Astro.url.searchParams.get("id");
 const url = new URL('/api/validateUser', Astro.url);
 
@@ -28,19 +28,3 @@ const url = new URL('/api/validateUser', Astro.url);
   }
 </Layout>
  
-<!-- <script>
-
-  let boton = document.querySelector('#enviar');
-  boton?.addEventListener("click", mandarCorreo);
-
-async function mandarCorreo(){
-
-  let responseEmail = await fetch("/api/sendEmail", { 
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: "gabrielpulidobarrera@gmail.com" }),
-  });
-  console.log(responseEmail);
-}
-
-</script> -->

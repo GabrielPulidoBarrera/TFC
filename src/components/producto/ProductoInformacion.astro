@@ -4,7 +4,7 @@ import "@styles/global.css";
 const { id, poderEditar } = Astro.props;
 ---
 
-<section class="p-6 dark:text-gray-900" id={id}>
+<section class="p-6 text-gray-900" id={id}>
   <form
     novalidate=""
     action=""
@@ -72,25 +72,50 @@ const { id, poderEditar } = Astro.props;
           </div>
         </span>
       </div>
-      <button
-        type="button"
-        id="nuevaColumna"
-        class="self-center px-8 py-3 rounded bg-gray-300 hover:bg-gray-400 hover:cursor-pointer"
-        >Añadir mas columnas</button
-      >
+      {
+        poderEditar && (
+          <button
+            type="button"
+            id="nuevaColumna"
+            class="self-center px-8 py-3 rounded bg-gray-300 hover:bg-gray-400 hover:cursor-pointer"
+          >
+            Añadir mas columnas
+          </button>
+        )
+      }
     </fieldset>
   </form>
-  
-  {poderEditar &&
-  <div class="flex items-center justify-center cursor-pointer mt-2 ">
-    <button id="crearColeccion" class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50 hover:cursor-pointer hidden">Añadir</button>
-    <button id="editarProducto" type="button" class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50 hover:cursor-pointer" >Editar producto</button>
-  </div>
+
+  {
+    poderEditar && (
+      <div class="flex items-center justify-center cursor-pointer mt-2 ">
+        <button
+          id="crearColeccion"
+          class="self-center px-8 py-3 font-semibold rounded bg-violet-600 hover:bg-violet-700 text-gray-50 hover:cursor-pointer hidden"
+        >
+          Añadir
+        </button>
+        <button
+          id="editarProducto"
+          type="button"
+          class="self-center px-8 py-3 font-semibold rounded bg-violet-600 hover:bg-violet-700 text-gray-50 hover:cursor-pointer"
+        >
+          Editar producto
+        </button>
+      </div>
+    )
   }
 </section>
 
 <script>
   import { crearDialog } from "@libs/dialog/crearDialog";
+
+  interface interfazProducto {
+    name: string;
+    userID: number;
+    visibility: string;
+    columns: string;
+  }
 
   //Seleciono lo necesario
   let boton = document.querySelector("#crearColeccion") as HTMLElement;
@@ -137,6 +162,8 @@ const { id, poderEditar } = Astro.props;
     valorLabel.textContent = "Valor columna " + contador;
     valorLabel.htmlFor = "valorColumna" + contador;
 
+    //Si no estamos en modo edicion, la nueva columna estara deshabilitada.
+
     if (editando == false) {
       valorInput.disabled = true;
       nombreInput.disabled = true;
@@ -153,7 +180,7 @@ const { id, poderEditar } = Astro.props;
   //Esta funcion selecciona toda la informacion y lo manda al servidor
   async function editProduct() {
     let nombre = collectionName.value;
-  let cookie = 0  //No puede haber usuario con ID 0;
+    let cookie = 0; //No puede haber usuario con ID 0;
     let main = document.querySelector("main");
     if (main == null) {
       return;
@@ -232,12 +259,15 @@ const { id, poderEditar } = Astro.props;
 
   boton?.addEventListener("click", editProduct);
 
+  //Esta funcion selecciona la ID del producto.
   function conseguirID() {
     return document.querySelector("section")?.id;
   }
 
   let id = conseguirID();
 
+
+  //Esta funcion recupera los datos del producto
   async function leerProducto() {
     const response = await fetch("/api/readProduct", {
       method: "POST",
@@ -249,8 +279,8 @@ const { id, poderEditar } = Astro.props;
     console.log(resultado.data);
     asignarDatos(correcto);
   }
-
-  async function asignarDatos(datos: any) {
+  //Esta funcion edita todos los campos para que contengan la informacion del proudcto anteriormente recuperada.
+  async function asignarDatos(datos: interfazProducto) {
     //Nombre
     console.log(datos.name);
     console.log(datos);
@@ -314,8 +344,13 @@ const { id, poderEditar } = Astro.props;
     }
   }
 
+
+  //Ejecuto la funcion de leer producto (Y por lo tanto, la de asignar datos), nada mas encener la pagina.
   leerProducto();
 
+
+
+  //Esta funcion deshabilita todos los campos en caso de no estar en modo edición. No es necesario como tal, pero mejora la experiencia de usuario.
   function deshabilitarCampos() {
     editando = false;
     let todosInput = Array.from(document.querySelectorAll("input"));
@@ -324,8 +359,6 @@ const { id, poderEditar } = Astro.props;
     if (select == null) {
       return;
     }
-
-    
 
     todosInput.map((e) => {
       e.disabled = true;
@@ -337,6 +370,8 @@ const { id, poderEditar } = Astro.props;
     editarProducto.style.display = "block";
     boton.style.display = "none";
   }
+
+  //Deshabilito todos los campos nada mas iniciar la pagina.
 
   deshabilitarCampos();
 

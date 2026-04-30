@@ -20,6 +20,7 @@ export const POST: APIRoute = async function({ cookies, request }){
     }
   })
 
+  //Si el login es correcto, creo una cookie
   if(result!=null){
     
 

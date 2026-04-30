@@ -5,26 +5,13 @@ import { obtenerCookie } from '@libs/auth/controlCookies';
 
 const {name, id, visibility} = Astro.params
 
-// export async function getStaticPaths() {
-// let listaColecciones = [];
 
-// const response = await POST();
-// let resultado = await response.json();
-// console.log
-// resultado.data.map((iteracion: any) =>{
-// 	listaColecciones.push({
-// 		params: {slug: iteracion.name+'-'+iteracion.id},
-// 		props: {name: iteracion.name, id: iteracion.id}});
-	
-	
-// })
-// return listaColecciones
-// }
 
 let mostrar = true
 let cookie = await obtenerCookie(Astro.cookies?.get('sesion'));
+//Reviso los datos de la coleccion para poder determinar si puedes ver la pagina o no.
 const url = new URL('/api/readCollectionVisibility', Astro.url);
-
+	
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -52,13 +39,17 @@ const url = new URL('/api/readCollectionVisibility', Astro.url);
 console.log(id);
 
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+
 ---
-{ mostrar==true &&
 
 <Layout>
+	{ mostrar==true &&
+
 	<Tabla idLink={id}/>
+	}
+	{!mostrar==true &&
+		<div>No tienes permiso para ver esta coleccion </div>
+	}
+
 </Layout>
-}
 

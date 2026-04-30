@@ -11,6 +11,7 @@ export const POST: APIRoute = async function({ request }){
   try {
     let {name, userID, columns, visibility} = await request.json();
   
+    //Validacion de errores
     if (name.trim()==""){
       throw new Error("Illegal name");
     }

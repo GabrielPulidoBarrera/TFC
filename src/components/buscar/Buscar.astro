@@ -16,7 +16,7 @@ const { idUsuario = 1, idColeccion } = Astro.props;
     <button
       id="selectorProducto"
       type="button"
-      class="self-center px-8 py-3 rounded font-semibold dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50"
+      class="self-center px-8 py-3 rounded font-semibold bg-violet-600 hover:bg-violet-700 text-gray-50"
       >
       Producto
     </button>
@@ -66,6 +66,8 @@ const { idUsuario = 1, idColeccion } = Astro.props;
 <script>
   import { crearDialog } from "@libs/dialog/crearDialog";
 
+//Selecciono y inicializo lo necesario
+
   interface interfazBusqueda {
     name: string;
     id: string;
@@ -86,61 +88,73 @@ const { idUsuario = 1, idColeccion } = Astro.props;
     selectorColeccion.addEventListener("click", seleccionarColeccion);
   }
 
+
+  //Esta funcion se activa al presionar en el boton de "producto", y sirve para definir que se van a buscar productos.
   function seleccionarProducto() {
     tipo = "producto";
     selectorProducto?.classList.add(
       "font-semibold",
-      "dark:bg-violet-600",
-      "dark:text-gray-50",
+      "bg-violet-600",
+      "text-gray-50",
       "hover:bg-violet-700"
     );
     selectorColeccion?.classList.remove(
       "font-semibold",
-      "dark:bg-violet-600",
-      "dark:text-gray-50",
+      "bg-violet-600",
+      "text-gray-50",
       "hover:bg-violet-700"
     );
     selectorColeccion?.classList.remove(
       "font-semibold",
-      "dark:bg-violet-600",
-      "dark:text-gray-50",
+      "bg-violet-600",
+      "text-gray-50",
       "hover:bg-violet-700"
     );
     selectorColeccion?.classList.add("bg-gray-300", "hover:bg-gray-400");
+
+
+
+
+    
   }
+  //Esta funcion se activa al presionar en el boton de "colecciones", y sirve para definir que se van a buscar colecciones.  
   function seleccionarColeccion() {
     tipo = "coleccion";
     selectorColeccion?.classList.add(
       "font-semibold",
-      "dark:bg-violet-600",
-      "dark:text-gray-50",
+      "bg-violet-600",
+      "text-gray-50",
       "hover:bg-violet-700"
     );
     selectorProducto?.classList.remove(
       "font-semibold",
-      "dark:bg-violet-600",
-      "dark:text-gray-50",
+      "bg-violet-600",
+      "text-gray-50",
       "hover:bg-violet-700"
     );
     selectorProducto?.classList.add("bg-gray-300", "hover:bg-gray-400");
   }
 
+
+
+
+
+//Defino las variables necesarias para la siguiente funcion
   let contenedor = document.querySelector("#contenedorTarjetas");
   let buscar = document.querySelector("#buscar") as HTMLInputElement;
-  buscar?.addEventListener("change", buscarElementos);
-  function buscarElementos() {
-    readProduct();
-  }
+  buscar?.addEventListener("change", readProduct);
 
+  //Cada vez que se actualice la barra de busqueda, busca el producto.
   async function readProduct() {
 
-
+    //Asumimos que la ID de usuario es 0, la cual es una id imposible que nunca se asigna a nadie. Esto es para prevenir errores derivados de "null"
     let cookie = 0;
 
     let main = document.querySelector("main");
     if (main == null) {
       return;
     }
+    //Si resulta que hay una cookie definida, actualiza la variable de cookie con la correcta
     if (main.dataset.cookie != null) {
       cookie = Number(main.dataset.cookie);
     }
@@ -278,8 +292,8 @@ const { idUsuario = 1, idColeccion } = Astro.props;
           "py-3",
           "font-semibold",
           "rounded",
-          "dark:bg-violet-600",
-          "dark:text-gray-50",
+          "bg-violet-600",
+          "text-gray-50",
         );
         
         a.append(button);

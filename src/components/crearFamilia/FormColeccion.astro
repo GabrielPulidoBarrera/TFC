@@ -2,7 +2,7 @@
 import "@styles/global.css";
 ---
 
-<section class="p-6 dark:text-gray-900">
+<section class="p-6 text-gray-900">
   <form
     novalidate=""
     action=""
@@ -51,7 +51,10 @@ import "@styles/global.css";
 
       <div class="col-span-full">
         <legend>Columnas de la tabla</legend>
-        <span id="selectorColumnas" class="grid grid-cols-2 lg:grid-cols-3 gap-10">
+        <span
+          id="selectorColumnas"
+          class="grid grid-cols-2 lg:grid-cols-3 gap-10"
+        >
           <div class="max-w-full overflow-hidden">
             <input type="text" class="columna max-w-full" id="columna1" />
             <label for="columna1">Columna 1</label>
@@ -76,20 +79,27 @@ import "@styles/global.css";
   id="crearColeccion"
   class="flex items-center justify-center cursor-pointer"
 >
-<button type="button" class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50">añadir</button>
+  <button
+    type="button"
+    class="self-center px-8 py-3 font-semibold rounded bg-violet-600 hover:bg-violet-700 text-gray-50"
+    >añadir</button
+  >
 </div>
 
 <script>
-import { crearDialog } from "@libs/dialog/crearDialog";
+  import { crearDialog } from "@libs/dialog/crearDialog";
 
+  //Defino y inicializo lo necesario
 
   let boton = document.querySelector("#crearColeccion");
   let nuevaColumna = document.querySelector("#nuevaColumna");
   let selectorColumnas = document.querySelector("#selectorColumnas");
   nuevaColumna?.addEventListener("click", newColumn);
   let contador = 3;
-  let collectionName = (document.querySelector("#name") as HTMLInputElement);
-  let collectionVisibility = (document.querySelector("#visibility") as HTMLInputElement)
+  let collectionName = document.querySelector("#name") as HTMLInputElement;
+  let collectionVisibility = document.querySelector(
+    "#visibility",
+  ) as HTMLInputElement;
 
   //Esta funcion crea una nueva columna
   function newColumn() {
@@ -100,9 +110,9 @@ import { crearDialog } from "@libs/dialog/crearDialog";
     label.textContent = "Columna " + contador;
     label.htmlFor = "columna" + contador;
     contador++;
-    let divContenedor = document.createElement('div');
-    divContenedor.classList.add("max-w-full", "overflow-hidden")
-    divContenedor.append(input, label)
+    let divContenedor = document.createElement("div");
+    divContenedor.classList.add("max-w-full", "overflow-hidden");
+    divContenedor.append(input, label);
     selectorColumnas?.append(divContenedor);
   }
   //Esta funcion selecciona toda la informacion y lo manda al servidor
@@ -124,6 +134,8 @@ import { crearDialog } from "@libs/dialog/crearDialog";
     let userID = Number(cookie);
     let visibilidad = collectionVisibility.value;
 
+    //Las columnas las guardo en un JSON
+
     let columnasRaw = selectorColumnas?.querySelectorAll(".columna");
     let columnas = [] as String[];
     for (let iterable of columnasRaw as NodeListOf<HTMLInputElement>) {
@@ -132,15 +144,16 @@ import { crearDialog } from "@libs/dialog/crearDialog";
     let columnasJSON = JSON.stringify(columnas);
     console.log(columnasJSON);
 
-    let textoError = ""
-    let valido = true;
-    if (nombre.trim()==""){
-      valido = false;
-      textoError+="\n La coleccion debe de tener un nombre";     
-    }    
+    //Validacion de errores.
 
-    if(valido){
-      
+    let textoError = "";
+    let valido = true;
+    if (nombre.trim() == "") {
+      valido = false;
+      textoError += "\n La coleccion debe de tener un nombre";
+    }
+
+    if (valido) {
       const response = await fetch("/api/newCollection", {
         method: "POST",
         headers: {
@@ -157,14 +170,9 @@ import { crearDialog } from "@libs/dialog/crearDialog";
       const result = await response.json();
       console.log("Response data:", result);
       if (response.ok) {
-        window.location.href =
-        "/c/" +
-        nombre +
-        "-" +
-        result.data.id
+        window.location.href = "/c/" + nombre + "-" + result.data.id;
       }
-    }
-    else{
+    } else {
       crearDialog(textoError);
     }
   }
@@ -172,4 +180,3 @@ import { crearDialog } from "@libs/dialog/crearDialog";
   boton?.addEventListener("click", newCollection);
 </script>
 
-<!-- TODO: Control de errores!!! -->

@@ -5,22 +5,21 @@ import { obtenerCookie } from "@libs/auth/controlCookies";
 let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 
 ---
-<section class=" dark:text-gray-800">
+<section class=" text-gray-800">
 	<div class="container flex flex-col justify-center p-6 mx-auto sm:py-12 lg:py-24 lg:flex-row lg:justify-between">
 		<div class="flex items-center justify-center p-6 mt-8 lg:mt-0 h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128">
 			<img src={foto.src} alt="" class="object-contain h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128">
 		</div>
 		<div class="flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left">
 			<h1 class="text-5xl font-bold leading-none sm:text-6xl">Gestión de inventario 
-				<span class="dark:text-violet-600">rápida y eficiente. </span> 
+				<span class="text-violet-600">rápida y eficiente. </span> 
 			</h1>
 			<p class="mt-6 mb-8 text-lg sm:mb-12">Añade productos, crea colecciones, comparte creaciones.
-				<!-- <br class="hidden md:inline lg:hidden">turpis pulvinar, est scelerisque ligula sem -->
 			</p>
 			{!cookie &&
 			<div class="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
-				<a rel="noopener noreferrer" href="/registro" class="px-8 py-3 text-lg font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50">Registrarse</a>
-				<a rel="noopener noreferrer" href="/login" class="px-8 py-3 text-lg font-semibold border rounded dark:border-gray-800 hover:bg-gray-100" >Iniciar sesión</a>
+				<a rel="noopener noreferrer" href="/registro" class="px-8 py-3 text-lg font-semibold rounded bg-violet-600 hover:bg-violet-700 text-gray-50">Registrarse</a>
+				<a rel="noopener noreferrer" href="/login" class="px-8 py-3 text-lg font-semibold border rounded border-gray-800 hover:bg-gray-100" >Iniciar sesión</a>
 			</div>
 			}
 		</div>

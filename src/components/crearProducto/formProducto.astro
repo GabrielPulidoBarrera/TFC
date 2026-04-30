@@ -2,7 +2,7 @@
 import "@styles/global.css";
 ---
 
-<section class="p-6 dark:text-gray-900">
+<section class="p-6 text-gray-900">
   <form
     novalidate=""
     action=""
@@ -86,7 +86,7 @@ import "@styles/global.css";
 >
   <button
     id="crearColeccion"
-    class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50 hover:cursor-pointer"
+    class="self-center px-8 py-3 font-semibold rounded bg-violet-600 hover:bg-violet-700 text-gray-50 hover:cursor-pointer"
     >Añadir</button
   >
 </div>
@@ -100,14 +100,20 @@ import "@styles/global.css";
   let selectorColumnas = document.querySelector("#selectorColumnas");
   nuevaColumna?.addEventListener("click", newColumn);
   let contador = 3;
-  let collectionName = (document.querySelector("#name") as HTMLInputElement);
-  let collectionVisibility = (document.querySelector("#visibility") as HTMLInputElement)
+  let collectionName = document.querySelector("#name") as HTMLInputElement;
+  let collectionVisibility = document.querySelector(
+    "#visibility",
+  ) as HTMLInputElement;
 
   //Esta funcion crea una nueva columna
   function newColumn() {
     //Creo el fieldset el primer div, cada div contiene un label y un input.
     let divContenedor = document.createElement("div");
-    divContenedor.classList.add("max-w-full", "overflow-hidden", "contenedorInputLabel");
+    divContenedor.classList.add(
+      "max-w-full",
+      "overflow-hidden",
+      "contenedorInputLabel",
+    );
     let div1 = document.createElement("div");
 
     //Div del nombre
@@ -158,6 +164,7 @@ import "@styles/global.css";
     let userID = Number(cookie);
     let visibilidad = collectionVisibility.value;
 
+    //Las columnas los guardo en JSON, la estructura es un objeto con estructura clave valor.
 
     let columnas: { [key: string]: string } = {};
 
@@ -195,21 +202,22 @@ import "@styles/global.css";
 
     console.log(columnas);
     let columnasJSON = JSON.stringify(columnas);
+
+    // Control de errores.
+
     let valido = true;
-    let textoError = ""
+    let textoError = "";
 
-    if (nombre.trim()==""){
-      valido = false
-      textoError+="\n El producto debe de tener un nombre";      
+    if (nombre.trim() == "") {
+      valido = false;
+      textoError += "\n El producto debe de tener un nombre";
     }
-    if (columnasJSON==null){
-      valido = false
-      textoError+="\n El producto debe de tener atributos";     
+    if (columnasJSON == null) {
+      valido = false;
+      textoError += "\n El producto debe de tener atributos";
     }
 
-
-    if (valido){
-
+    if (valido) {
       const response = await fetch("/api/newProduct", {
         method: "POST",
         headers: {
@@ -225,12 +233,11 @@ import "@styles/global.css";
       console.log(response);
       const result = await response.json();
       console.log("Response data:", result);
-      
+
       if (response.ok) {
         crearDialog("Producto creado correctamente");
       }
-    }
-    else{
+    } else {
       crearDialog(textoError);
     }
   }
@@ -238,4 +245,3 @@ import "@styles/global.css";
   boton?.addEventListener("click", newProduct);
 </script>
 
-<!-- TODO: Control de errores!!! -->

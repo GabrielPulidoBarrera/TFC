@@ -5,20 +5,7 @@ import GeneralBoton from "@components/general/GeneralBoton.astro";
 import { obtenerCookie } from "@libs/auth/controlCookies";
 import ProductoInformacion from "@components/producto/ProductoInformacion.astro";
 
-// export async function getStaticPaths() {
-// let listaColecciones = [];
 
-// const response = await POST();
-// let resultado = await response.json();
-// console.log
-// resultado.data.map((iteracion: any) =>{
-// 	listaColecciones.push({
-// 		params: {slug: iteracion.name+'-'+iteracion.id},
-// 		props: {name: iteracion.name, id: iteracion.id}});
-
-// })
-// return listaColecciones
-// }
 
 let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 
@@ -26,6 +13,7 @@ console.log("ID PRODUCTO"+ id);
 console.log("COOKIE PERSONA "+cookie)
 let mostrar = true;
 let poderEditar = false;
+//Reviso los datos del producto para definir si puedes verlo o editarlo.
 	const url = new URL('/api/readProduct', Astro.url);
 	
 	
@@ -40,8 +28,7 @@ let poderEditar = false;
     });
 	let respuesta = await response.json();
 
-//	console.log(respuesta.data.visibility)
-
+//Si es privado y no eres el dueño, no te deja verlo, si es privado pero eres el dueño, puedes ver y editarlo, si eres el dueño y es publico/oculto, puedes ver y editarlo también. Si no eres el dueño y es publico/oculto, puedes verlo pero no editarlo.
 	if (respuesta.data.visibility == "Privado"){
 		if(respuesta.data.userID!=cookie){
 			console.log("naynay!")
@@ -52,7 +39,6 @@ let poderEditar = false;
 		}
 }
 if (cookie){
-
 	if (respuesta.data.userID == cookie){
 		poderEditar = true;
 	}
@@ -66,24 +52,16 @@ console.log("PODER EDITAR "+poderEditar)
 console.log("MOSTRAR "+mostrar)
 
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
 	<div class="flex flex-col justify-center">
-		<!-- <div class="text-center">
-			<div class="text-5xl">
-				{name}
-			</div>
-
-			<div class="flex">
-				<GeneralBoton text="añadir a coleccion" />
-
-			</div>
-		</div> -->
+		<!--Condicional de astro para ocultar el producoten caso de que no tengas permisos -->
 		{ mostrar &&
 			<ProductoInformacion id={id} poderEditar={poderEditar} />
+		}
+		{!mostrar &&
+			<div>No tienes permisos para ver este producto.</div>
 		}
 	</div>
 </Layout>

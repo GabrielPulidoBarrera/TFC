@@ -10,7 +10,7 @@ const prisma = await conectar()
 export const POST: APIRoute = async function({ request }) {
   try {
     const { ids } = await request.json();
-
+    //Valido que he recibido un array de ids
     if (!Array.isArray(ids)) {
       return new Response(
         JSON.stringify({
