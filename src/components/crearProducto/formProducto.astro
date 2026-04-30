@@ -166,6 +166,7 @@ import "@styles/global.css";
     let visibilidad = collectionVisibility.value;
 
     //Las columnas los guardo en JSON, la estructura es un objeto con estructura clave valor.
+        console.log("ME EJECUTO")
 
     let columnas: { [key: string]: string } = {};
 
@@ -176,6 +177,7 @@ import "@styles/global.css";
     if (selectorColumnasElementos == null) {
       return;
     }
+        console.log("ME EJECUTO")
 
     for (
       let contador = 1;
@@ -188,12 +190,14 @@ import "@styles/global.css";
       if (atributoNombre == null || atributoValor == null) {
         return;
       }
+        console.log("ME EJECUTO")
 
       let nombre = (atributoNombre as HTMLInputElement).value;
       let valor = (atributoValor as HTMLInputElement).value;
 
 
       if (nombre != null && valor != null) {
+        console.log("ME EJECUTO")
         console.log(columnas[nombre])
         if (columnas[nombre]!=null){
             valido = false;
