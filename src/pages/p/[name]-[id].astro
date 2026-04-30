@@ -35,7 +35,7 @@ let poderEditar = false;
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-		  id: Number(cookie)
+		  id: id
 		}),
     });
 	let respuesta = await response.json();

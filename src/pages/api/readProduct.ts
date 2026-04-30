@@ -8,6 +8,8 @@ const prisma = await conectar()
 
 
 export const POST: APIRoute = async function({ request }) {
+
+  console.log("HOLA SOY READPRODUCT.TS")
   try {
     const { id } = await request.json();
 
