@@ -24,6 +24,35 @@ let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 
 console.log("ID PRODUCTO"+ id);
 console.log("COOKIE PERSONA "+cookie)
+let mostrar = true;
+
+const url = new URL('/api/readProduct', Astro.url);
+
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: Number(cookie)
+      }),
+    });
+	let respuesta = await response.json();
+
+	console.log(respuesta.data.visibility)
+
+	if (respuesta.data.visibility == "Privado"){
+		if(respuesta.data.userID!=cookie){
+			console.log("naynay!")
+			mostrar=false
+		}
+		else{
+			console.log("Bieeen!")
+		}
+	}
+
+
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -42,6 +71,6 @@ console.log("COOKIE PERSONA "+cookie)
 			</div>
 		</div> -->
 
-		<ProductoInformacion id={Number(id)} cookie={Number(cookie)} />
+		<ProductoInformacion id={id} mostrar={mostrar} />
 	</div>
 </Layout>
