@@ -104,8 +104,7 @@ import "@styles/global.css";
   let collectionVisibility = document.querySelector(
     "#visibility",
   ) as HTMLInputElement;
-    let valido = true;
-    let textoError = "";
+
   //Esta funcion crea una nueva columna
   function newColumn() {
     //Creo el fieldset el primer div, cada div contiene un label y un input.
@@ -148,6 +147,8 @@ import "@styles/global.css";
 
   //Esta funcion selecciona toda la informacion y lo manda al servidor
   async function newProduct() {
+    let valido = true;
+    let textoError = "";
     let nombre = collectionName.value;
 
     let main = document.querySelector("main");

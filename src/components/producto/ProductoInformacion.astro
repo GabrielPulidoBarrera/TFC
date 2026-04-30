@@ -129,8 +129,7 @@ const { id, poderEditar } = Astro.props;
   ) as HTMLSelectElement;
   let editarProducto = document.querySelector("#editarProducto") as HTMLElement;
   let editando = false;
-    let valido = true;
-    let textoError = "";
+
   //Esta funcion crea una nueva columna
   function newColumn() {
     //Creo el fieldset el primer div, cada div contiene un label y un input.
@@ -180,6 +179,8 @@ const { id, poderEditar } = Astro.props;
 
   //Esta funcion selecciona toda la informacion y lo manda al servidor
   async function editProduct() {
+    let valido = true;
+    let textoError = "";    
     let nombre = collectionName.value;
     let cookie = 0; //No puede haber usuario con ID 0;
     let main = document.querySelector("main");
