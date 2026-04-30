@@ -1,7 +1,7 @@
 ---
 import { obtenerCookie } from "@libs/auth/controlCookies";
 import "@styles/global.css";
-const { id } = Astro.props;
+const { id, cookie } = Astro.props;
 ---
 
 <section class="p-6 dark:text-gray-900" id={id}>
@@ -81,19 +81,12 @@ const { id } = Astro.props;
     </fieldset>
   </form>
   
-  <div class="flex items-center justify-center cursor-pointer ">
-    <button
-    id="crearColeccion"
-    class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50 hover:cursor-pointer hidden"
-    >Añadir</button
-    >
-    <button
-    id="editarProducto"
-    type="button"
-    class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50 hover:cursor-pointer"
-    >Editar producto</button
-    >
+  {cookie == id &&
+  <div class="flex items-center justify-center cursor-pointer mt-2 ">
+    <button id="crearColeccion" class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50 hover:cursor-pointer hidden">Añadir</button>
+    <button id="editarProducto" type="button" class="self-center px-8 py-3 font-semibold rounded dark:bg-violet-600 hover:bg-violet-700 dark:text-gray-50 hover:cursor-pointer" >Editar producto</button>
   </div>
+  }
 </section>
 
 <script>
