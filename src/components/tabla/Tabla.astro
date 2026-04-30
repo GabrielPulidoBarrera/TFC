@@ -405,6 +405,10 @@ readCollecionProduct()
 		let colgroup = document.createElement('colgroup')
 		let th = document.createElement('th');
 		th.textContent = "nueva Columna"
+		//Si estoy en el modo de edicion, hago que el titulo sea editable.
+		if (editando){
+			th.setAttribute("contenteditable", "true");
+		}
 		thead.querySelector('tr').append(th);
 		//Reviso cuantos TR hay para saber cuantos TD crear.
 		let lista = tbody.querySelectorAll('tr')
