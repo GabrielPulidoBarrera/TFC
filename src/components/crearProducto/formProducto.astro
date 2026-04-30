@@ -192,11 +192,9 @@ import "@styles/global.css";
       let nombre = (atributoNombre as HTMLInputElement).value;
       let valor = (atributoValor as HTMLInputElement).value;
 
-      console.log("#NombreColumna" + contador);
-      console.log(nombre);
-      console.log(valor);
 
       if (nombre != null && valor != null) {
+        console.log(columnas[nombre])
         if (columnas[nombre]!=null){
             valido = false;
             textoError += "\n No puedes tener dos atributos con el mismo nombre.";
