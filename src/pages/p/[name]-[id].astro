@@ -25,18 +25,19 @@ let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 console.log("ID PRODUCTO"+ id);
 console.log("COOKIE PERSONA "+cookie)
 let mostrar = true;
+if (cookie){
 
-const url = new URL('/api/readProduct', Astro.url);
-
-
+	const url = new URL('/api/readProduct', Astro.url);
+	
+	
     const response = await fetch(url, {
-      method: "POST",
-      headers: {
+		method: "POST",
+		headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: Number(cookie)
-      }),
+		  id: Number(cookie)
+		}),
     });
 	let respuesta = await response.json();
 
@@ -52,6 +53,7 @@ const url = new URL('/api/readProduct', Astro.url);
 		}
 	}
 
+}
 
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
