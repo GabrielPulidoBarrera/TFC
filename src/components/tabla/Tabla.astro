@@ -352,11 +352,11 @@ if (tbody == null) return;
 			data.visibility = visibility.value;
 		}
 
-		if (nombre.trim() == "") {
+		if (titulo?.textContent.trim() == "") {
 		valido = false;
 		textoError += "\n La coleccion debe de tener un nombre";
 		}
-		if(nombre.length>100){
+		if(titulo?.textContent.length>100){
 		valido=false;
 		textoError += "\n El nombre de la coleccion es demasiado largo";
 		}
