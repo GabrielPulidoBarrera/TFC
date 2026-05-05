@@ -24,7 +24,18 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 	<div class="flex justify-between mb-2">
 		<h2 class="mb-4 text-2xl font-semibold leading-tight" id="collectionTitle"> TITULO ASTRO</h2>
 		{ cookie &&
+			<div>
+				<label for="visibility" class="text-sm">Visibilidad</label>
+          	<select
+            id="visibility"
+            class="w-full rounded-md focus:ring focus:ring-opacity-75 hidden"
+          	>
+            <option>Publico</option>
+            <option>Privado</option>
+            <option>Oculto</option>
+          </select>
 
+			</div>
 			<button class="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-gray-50 cursor-pointer hover:bg-violet-700" id="editar">Editar</button>
 			<button class="self-center px-8 py-3 font-semibold rounded bg-red-600 text-gray-50 cursor-pointer hidden hover:bg-red-700" id="borrar">Borrar</button>
 			<button class="self-center px-8 py-3 font-semibold rounded bg-red-600 text-gray-50 cursor-pointer hidden hover:bg-red-700" id="dejarBorrar">Dejar de borrar</button>
@@ -71,9 +82,10 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 	let editando = false;
 	let borrar = document.querySelector('#borrar')
 	let dejarBorrar = document.querySelector('#dejarBorrar')
+	let visibilidad = document.querySelector('#visibility')
 	nuevaColumna.addEventListener("click", crearColumna)
 	
-	readProduct();
+	readCollection();
 	readCollecionProduct();
 	editar?.addEventListener("click", activarEditar);
 	terminar?.addEventListener("click", terminarEditar);
@@ -82,8 +94,8 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 
 
 
-//Esta funcion lee el producto
-async function readProduct() {
+//Esta funcion lee la coleccion
+async function readCollection() {
 		if (tbody == null) return;
 		if (titulo == null) return;
 		if (thead == null) return;
@@ -113,6 +125,7 @@ async function readProduct() {
 			tabla.prepend(colgroup);
 		}
 		id = correcto.id;
+		visibility.value=resultado.data.visibility;
 	}
 
 
@@ -181,6 +194,7 @@ async function readProduct() {
 		crearNuevaFila.style.display = "flex"
 		terminar.style.display = "block";
 		borrar.style.display = "block";
+		visibilidad.style.display = "block"
 
 
 		//creo el selector para crear una nueva columna
@@ -314,6 +328,7 @@ if (tbody == null) return;
 		desmarcarRojo()
 		dejarBorrar.style.display="none";
 		borrar.style.display="block"
+		visibilidad.style.display="none"
 
 		editando = false;
 
