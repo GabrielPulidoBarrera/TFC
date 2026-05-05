@@ -28,7 +28,7 @@ export const POST: APIRoute = async function({ request }){
       if (columns !== undefined) {
       data.columns = columns;
     }
-		if (visibility.value=="Privado" || visibility.value == "Publico" || visibility.value == "Oculto"){
+		if (visibility=="Privado" || visibility == "Publico" || visibility == "Oculto"){
 			data.visibility = visibility.value;
       console.log("Me ejecuto! soy visiblidad!")
 		}
