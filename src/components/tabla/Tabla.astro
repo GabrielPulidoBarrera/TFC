@@ -11,7 +11,7 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 
 
 ---
-<div class="container p-2 mx-auto sm:p-4 text-gray-800">
+<div class="container p-2 mx-auto sm:p-4 overflow-x-auto text-gray-800">
 
 
 	<div class="bg-black z-40 fixed top-0 right-0 w-full h-full hidden opacity-30" id="oscurecer"></div>
@@ -42,7 +42,7 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 			<button class="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-gray-50 cursor-pointer hidden hover:bg-violet-700" id="terminar">Terminar</button>
 		}
 	</div>
-	<div class="overflow-x-auto flex">
+	<div class="flex">
 		<div class="grow flex-col" >
 
 			<table class="text-xs *:text-center grow w-full" id="tabla">
