@@ -446,6 +446,24 @@ readCollecionProduct()
 		panelBuscar.style.display="flex"
 	
 	}
+	//Funcion delegada para desactivar buscar si clicas fuera.
+	
+	function desactivarPanelNuevaFila(){
+	oscurecer.style.display="none"
+	panelBuscar.style.display="none"	
+	}
+
+	function detectarClickNuevaFila(e){
+		if (!panelBuscar.style.display=="flex"){
+			return
+		}
+		if(e.target === oscurecer){
+			desactivarPanelNuevaFila()
+		}	
+	}
+
+	document.addEventListener("click", detectarClickNuevaFila)
+
 	//Detecta cuando se cierra un dialog para regenerar la tabla. Normalmente se activa despues de confirmar los cambios a la tabla y leer la confirmacion.
 	document.addEventListener('dialogo-cerrado', () => {
 		readCollecionProduct(); // o la función que regenera la tabla

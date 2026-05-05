@@ -9,7 +9,7 @@ const prisma = await conectar()
 
 export const POST: APIRoute = async function({ request }){
   try {
-    let {id, name, columns, cookie} = await request.json();
+    let {id, name, columns, cookie, visibility} = await request.json();
 
 
     console.log(name)
@@ -27,7 +27,9 @@ export const POST: APIRoute = async function({ request }){
       if (columns !== undefined) {
       data.columns = columns;
     }
-
+		if (visibility.value=="Privado" || visibility.value == "Publico" || visibility.value == "Oculto"){
+			data.visibility = visibility.value;
+		}
 
 
     const result = await prisma.collection.update({
