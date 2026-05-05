@@ -82,8 +82,8 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 	let editando = false;
 	let borrar = document.querySelector('#borrar')
 	let dejarBorrar = document.querySelector('#dejarBorrar')
-	let visibilidad = document.querySelector('#visibility')
-	let visibilidadContenedor = document.querySelector('#visibility')
+	let visibility = document.querySelector('#visibility')
+	let visibilidadContenedor = document.querySelector('#visibilidadContenedor')
 	nuevaColumna.addEventListener("click", crearColumna)
 	
 	readCollection();
@@ -458,7 +458,7 @@ readCollecionProduct()
 			return
 		}
 		console.log(e.target)
-		if(e.target.closest('#panelBuscar')){
+		if(e.target===panelBuscar){
 			desactivarPanelNuevaFila()
 		}	
 	}
