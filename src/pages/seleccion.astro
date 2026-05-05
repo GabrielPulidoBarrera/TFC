@@ -38,9 +38,9 @@ interface interfazColeccion{
   {cookie &&
     <div class="grid grid-cols-1 md:grid-cols-3 *:aspect-square gap-20 *:m-20">
         <a href="/crearColeccion" class="border border-dashed flex justify-center items-center text-4xl transition-all duration-150 hover:text-7xl  ">+</a>
-        <!-- <div class="border flex justify-center items-center bg-[url(../assets/fondoSelectorTabla.png)] transition-all duration-150 grayscale-100 bg-size-[300%] bg-no-repeat hover:bg-size-[400%] hover:grayscale-0">b</div> -->
+        <!-- <div class="border flex justify-center items-center bg-[url(../assets/fondoSelectorTabla.png)] transition-all duration-150 grayscale-100 bg-size-[120%] bg-no-repeat hover:bg-size-[200%] hover:grayscale-0">b</div> -->
         {resultado.data.map((iteracion: interfazColeccion) =>(
-          <a href={'/c/'+iteracion.name+"-"+iteracion.id}<div class="border flex justify-center items-center bg-[url(../assets/fondoSelectorTabla.png)] transition-all duration-150 grayscale-100 bg-size-[300%] bg-no-repeat hover:bg-size-[400%] hover:grayscale-0"><div class="bg-black/20 p-2">{iteracion.name}</div></div></a>
+          <a href={'/c/'+iteracion.name+"-"+iteracion.id}<div class="border flex justify-center items-center bg-[url(../assets/fondoSelectorTabla.png)] transition-all duration-150 grayscale-100 bg-size-[120%] bg-no-repeat hover:bg-size-[200%] hover:grayscale-0"><div class="bg-black/20 p-2">{iteracion.name}</div></div></a>
           
         ))}
 
