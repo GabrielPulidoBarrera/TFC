@@ -15,23 +15,20 @@ export function crearDialog(texto: string) {
   dialog.classList.add("fixed", "inset-0", "m-auto", "w-1/2", "h-1/2", "text-center", "*:m-10" );
     dialog.showModal();
 
-    button.addEventListener("click", e => {
-        dialog.close()
-
-
-document.removeEventListener("click", e => {
-      if (!e.target.closest("dialog")){
-        dialog.close()
-      }
-    })
-
-    dialog.remove();
-
-    })
-  
-    document.addEventListener("click", e => {
-      if (!e.target.closest("dialog")){
-        dialog.close()
-      }
-    })
+    button.addEventListener("click", cerrar)
+    
+    function cerrar() {
+      dialog.close()
+      dialog.remove();
+    //   document.removeEventListener("click", e => {
+    //   if (!e.target.closest("dialog")){
+    //     cerrar()
+    //   }
+    // })
+    }
+    // document.addEventListener("click", e => {
+    //   if (!e.target.closest("dialog")){
+    //     cerrar()
+    //   }
+    // })
 }
