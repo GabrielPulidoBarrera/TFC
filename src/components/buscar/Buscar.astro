@@ -227,6 +227,8 @@ const { idUsuario = 1, idColeccion } = Astro.props;
       //creo el enlace
       let a = document.createElement("a");
 
+      let name = e.name.toLowerCase()
+
       if (tipo == "producto") {
         a.href = "/p/" + e.name + "-" + e.id;
       } else if (tipo == "coleccion") {
@@ -234,7 +236,7 @@ const { idUsuario = 1, idColeccion } = Astro.props;
       }
 
       //busco donde esta la ocurriencia del texto buscado
-      let posicion = e.name.indexOf(textoBuscado);
+      let posicion = name.indexOf(textoBuscado.toLowerCase());
 
       //creo un span y le pongo el texto encontrado dentro del span con otro color de texto.
       let span = document.createElement("span");
