@@ -17,5 +17,21 @@ export function crearDialog(texto: string) {
 
     button.addEventListener("click", e => {
         dialog.close()
+
+
+document.removeEventListener("click", e => {
+      if (!e.target.closest("dialog")){
+        dialog.close()
+      }
+    })
+
+    dialog.remove();
+
+    })
+  
+    document.addEventListener("click", e => {
+      if (!e.target.closest("dialog")){
+        dialog.close()
+      }
     })
 }
