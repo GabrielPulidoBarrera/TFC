@@ -246,12 +246,19 @@ const { id, poderEditar } = Astro.props;
       valido = false;
       textoError += "\n El producto debe de tener un nombre";
     }
+    if(nombre.length>100){
+      valido=false;
+      textoError += "\n El nombre de la coleccion es demasiado largo";
+    }
     //Reviso que hayan columnas
     if (columnasJSON == null) {
       valido = false;
       textoError += "\n El producto debe de tener atributos";
     }
-
+    if(columnasJSON.length>=1000){
+      valido=false;
+      textoError += "\n Tienes demasiadas atributos o tienes un atributo cuyo nombre o valor es demasiado largo.";
+    }
     if(valido){
 
     const response = await fetch("/api/editProduct", {
