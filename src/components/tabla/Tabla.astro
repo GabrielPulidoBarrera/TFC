@@ -361,7 +361,7 @@ if (tbody == null) return;
 		valido=false;
 		textoError += "\n El nombre de la coleccion es demasiado largo";
 		}
-		if(data.columns.length>1000){
+		if(JSON.stringify(nuevaColumnas).length>1000){
 			valido=false;
 		textoError += "\n Tienes demasiadas columnas o tienes una columna cuyo nombre es demasiado largo.";
 		}
@@ -514,7 +514,6 @@ function borrarHeader(e){
 	}
 }
 
-document.addEventListener("click", eventoDelegado)
 
 
 
