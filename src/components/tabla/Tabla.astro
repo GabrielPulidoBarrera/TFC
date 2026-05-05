@@ -24,7 +24,7 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 	<div class="flex justify-between mb-2">
 		<h2 class="mb-4 text-2xl font-semibold leading-tight" id="collectionTitle"> TITULO ASTRO</h2>
 		{ cookie &&
-			<div>
+			<div id="visibilidadContenedor">
 				<label for="visibility" class="text-sm">Visibilidad</label>
           	<select
             id="visibility"
@@ -83,6 +83,7 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 	let borrar = document.querySelector('#borrar')
 	let dejarBorrar = document.querySelector('#dejarBorrar')
 	let visibilidad = document.querySelector('#visibility')
+	let visibilidadContenedor = document.querySelector('#visibility')
 	nuevaColumna.addEventListener("click", crearColumna)
 	
 	readCollection();
@@ -194,7 +195,7 @@ async function readCollection() {
 		crearNuevaFila.style.display = "flex"
 		terminar.style.display = "block";
 		borrar.style.display = "block";
-		visibilidad.style.display = "block"
+		visibilidadContenedor.style.display = "block"
 
 
 		//creo el selector para crear una nueva columna
@@ -328,7 +329,7 @@ if (tbody == null) return;
 		desmarcarRojo()
 		dejarBorrar.style.display="none";
 		borrar.style.display="block"
-		visibilidad.style.display="none"
+		visibilidadContenedor.style.display="none"
 
 		editando = false;
 
@@ -347,6 +348,11 @@ if (tbody == null) return;
 		if (titulo?.textContent != tituloOriginal) {
 			data.name = titulo?.textContent;
 		}
+
+		if (visibility.value=="Privado" || visibility.value == "Publico" || visibility.value == "Oculto"){
+			data.visibility = visibility.value;
+		}
+
 
 		//mirar si el usuario esta loggeado
 		if (cookie){
