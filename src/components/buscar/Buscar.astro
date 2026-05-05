@@ -11,7 +11,7 @@ const { idUsuario = 1, idColeccion } = Astro.props;
 <!-- Condicional para evitar que salga la opcion entreseleccionar un producto o una coleccion en caso de que este componente sea cargado desde la funcion de búsqueda de producto de la coleccion. No tendria mucho sentido poder buscar colecciones dentro de una coleccion. -->
 { idColeccion==null &&
 
-  <div class="text-5xl flex justify-center">Categoria</div>
+  <div class="text-5xl flex justify-center">Categoría</div>
   <div class="flex w-full justify-around">
     <button
       id="selectorProducto"
@@ -25,7 +25,7 @@ const { idUsuario = 1, idColeccion } = Astro.props;
       type="button"
       class="self-center px-8 py-3 rounded bg-gray-300 hover:bg-gray-400"
       >
-      Coleccion
+      Colección
     </button>
   </div>
     }

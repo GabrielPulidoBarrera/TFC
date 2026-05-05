@@ -14,7 +14,7 @@ const { id, poderEditar } = Astro.props;
       <div class="space-y-2 col-span-full lg:col-span-1">
         <p class="font-medium">Crear colecciones</p>
         <p class="text-xs">
-          El nombre del produto sera el nombre visible en el selector de
+          El nombre del producto será el nombre visible en el selector de
           colecciones y en los resultados de búsqueda.
         </p>
         <p class="text-xs">
@@ -57,14 +57,14 @@ const { id, poderEditar } = Astro.props;
           id="selectorColumnas"
           class="grid grid-cols-2 lg:grid-cols-3 gap-10"
         >
-          <div class="contenedorInputLabel">
+          <div class="contenedorInputLabel max-w-full overflow-hidden">
             <input type="text" class="columna max-w-full" id="NombreColumna1" />
             <label for="columna1">Nombre columna 1</label>
             <input type="text" class="columna max-w-full" id="ValorColumna1" />
             <label for="columna1">Valor columna 1</label>
           </div>
 
-          <div class="contenedorInputLabel">
+          <div class="contenedorInputLabel max-w-full overflow-hidden">
             <input type="text" class="columna max-w-full" id="NombreColumna2" />
             <label for="columna2">Nombre columna 2</label>
             <input type="text" class="columna max-w-full" id="ValorColumna2" />
