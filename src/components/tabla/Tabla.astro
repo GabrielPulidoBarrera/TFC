@@ -28,7 +28,7 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 				<label for="visibility" class="text-sm">Visibilidad</label>
           	<select
             id="visibility"
-            class="w-full rounded-md focus:ring focus:ring-opacity-75 hidden"
+            class="w-full rounded-md focus:ring focus:ring-opacity-75"
           	>
             <option>Publico</option>
             <option>Privado</option>
@@ -457,9 +457,8 @@ readCollecionProduct()
 		if (!panelBuscar.style.display=="flex"){
 			return
 		}
-		console.log(e.target.closest('#oscurecer'))
 		console.log(e.target)
-		if(e.target.closest('#oscurecer')){
+		if(e.target.closest('#panelBuscar')){
 			desactivarPanelNuevaFila()
 		}	
 	}
