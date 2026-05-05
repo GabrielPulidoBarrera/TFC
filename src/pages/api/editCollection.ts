@@ -13,6 +13,7 @@ export const POST: APIRoute = async function({ request }){
 
 
     console.log(name)
+    console.log("VISIBILITY!! " +visibility)
 
     console.log("COOKIE!!!"+ id)
 

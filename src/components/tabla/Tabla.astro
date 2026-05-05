@@ -24,7 +24,7 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 	<div class="flex justify-between mb-2">
 		<h2 class="mb-4 text-2xl font-semibold leading-tight" id="collectionTitle"> TITULO ASTRO</h2>
 		{ cookie &&
-			<div id="visibilidadContenedor">
+			<div id="visibilidadContenedor" class="hidden">
 				<label for="visibility" class="text-sm">Visibilidad</label>
           	<select
             id="visibility"
@@ -457,7 +457,9 @@ readCollecionProduct()
 		if (!panelBuscar.style.display=="flex"){
 			return
 		}
-		if(e.target === oscurecer){
+		console.log(e.target.closest('#oscurecer'))
+		console.log(e.target)
+		if(e.target.closest('#oscurecer')){
 			desactivarPanelNuevaFila()
 		}	
 	}
