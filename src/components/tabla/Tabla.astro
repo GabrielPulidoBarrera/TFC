@@ -426,20 +426,9 @@ readCollecionProduct()
 	
 	}
 	//Detecta cuando se cierra un dialog para regenerar la tabla. Normalmente se activa despues de confirmar los cambios a la tabla y leer la confirmacion.
-	async function eventoDelegado(e) {
-    if (e.target == null) {
-      console.log("regreso en e.target")
-      return;
-    }
-    console.log(e.target.id);
-    if (e.target.id != "cerrarDialog") {
-      console.log("regreso en meterColeccion")
-
-      return;
-    }
-	readCollecionProduct();
-	
-}
+	document.addEventListener('dialogo-cerrado', () => {
+		readCollecionProduct(); // o la función que regenera la tabla
+	});
 	
 //Funcion que detecta cuando has dejado el TH de una columna en blanco para borarla
 thead.addEventListener("focusout", borrarHeader)

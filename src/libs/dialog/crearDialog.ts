@@ -20,8 +20,8 @@ export function crearDialog(texto: string) {
     function cerrar() {
       dialog.close()
       dialog.remove();
-
       dialog.removeEventListener("click", cerrarfuera)
+      document.dispatchEvent(new CustomEvent('dialogo-cerrado'));
     }
 
       function cerrarfuera(e: Event) {
