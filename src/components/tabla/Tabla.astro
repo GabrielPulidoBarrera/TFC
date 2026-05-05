@@ -361,7 +361,7 @@ if (tbody == null) return;
 		valido=false;
 		textoError += "\n El nombre de la coleccion es demasiado largo";
 		}
-		if(nuevaColumnas.length>1000){
+		if(data.columns.length>1000){
 			valido=false;
 		textoError += "\n Tienes demasiadas columnas o tienes una columna cuyo nombre es demasiado largo.";
 		}
@@ -388,6 +388,11 @@ if (tbody == null) return;
 		columnas = nuevaColumnas;
 		console.log("EDITADO!");
 		console.log(columnas)
+				modoBorrar = false
+		desmarcarRojo()
+		dejarBorrar.style.display="none";
+		borrar.style.display="block"
+		visibilidadContenedor.style.display="none"
 
 		//muestros los botones correctos
 		editar.style.display = "flex";
@@ -396,11 +401,7 @@ if (tbody == null) return;
 		terminar.style.display = "none";
 		borrar.style.display = "none"
 
-		modoBorrar = false
-		desmarcarRojo()
-		dejarBorrar.style.display="none";
-		borrar.style.display="block"
-		visibilidadContenedor.style.display="none"
+
 
 
 
