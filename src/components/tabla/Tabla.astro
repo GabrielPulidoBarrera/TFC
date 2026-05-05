@@ -11,12 +11,12 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 
 
 ---
-<div class="container p-2 mx-auto sm:p-4 overflow-x-auto text-gray-800">
+<div class="container p-2 mx-auto sm:p-4 overflow-auto text-gray-800">
 
 
 	<div class="bg-black z-40 fixed top-0 right-0 w-full h-full hidden opacity-30" id="oscurecer"></div>
 	<div class="z-40 fixed top-0 right-0 w-full h-full hidden items-center align-middle text-center justify-center" id="panelBuscar">
-		<div class="bg-white w-1/2 h-1/2">
+		<div class="bg-white w-1/2 h-1/2 overflow-scroll">
 			<Buscar idColeccion={idLink}></Buscar>
 		</div>
 	</div>
