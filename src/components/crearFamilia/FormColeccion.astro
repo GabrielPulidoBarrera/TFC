@@ -152,6 +152,15 @@ import "@styles/global.css";
       valido = false;
       textoError += "\n La coleccion debe de tener un nombre";
     }
+    if(nombre.length>100){
+      valido=false;
+      textoError += "\n El nombre de la coleccion es demasiado largo";
+    }
+
+    if(columnasJSON.length>=1000){
+      valido=false;
+      textoError += "\n Tienes demasiadas columnas o tienes una columna cuyo nombre es demasiado largo.";
+    }
 
     if (valido) {
       const response = await fetch("/api/newCollection", {

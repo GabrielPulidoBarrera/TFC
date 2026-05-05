@@ -38,7 +38,7 @@ import "@styles/global.css";
       </div>
       <div>
         <p>Reglas para el registro:</p>
-        <p>El usuario no debe de contener caracteres especiales y debe de tener al menos 8 caracteres</p>
+        <p>El usuario no debe de contener caracteres especiales y debe de tener al menos 4 caracteres</p>
         <p>La contraseña debe de tener al menos una mayuscula, una minuscula, un numero, y 8 caracteres de longitud.</p>
       </div>
     </fieldset>
@@ -124,8 +124,12 @@ import "@styles/global.css";
       valido = false;
     }
     //Reviso la longitud del usuario
-    if (username.length<8){
+    if (username.length<4){
       error+="\n Tu usuario es demasiado corto"
+      valido = false;
+    }
+        if (username.length>60){
+      error+="\n Tu usuario es demasiado largo"
       valido = false;
     }
 

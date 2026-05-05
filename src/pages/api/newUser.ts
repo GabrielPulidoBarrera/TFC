@@ -33,7 +33,7 @@ export const POST: APIRoute = async function({ request }){
     throw new Error('Illegal characters on username')
     }
     //Revisa la longitud del usuario.
-    if (name.length<8){
+    if (name.length<4 || name.length>200){
     throw new Error('Invalid username length')
 
     }
