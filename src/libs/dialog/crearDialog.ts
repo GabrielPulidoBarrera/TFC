@@ -20,15 +20,22 @@ export function crearDialog(texto: string) {
     function cerrar() {
       dialog.close()
       dialog.remove();
-    //   document.removeEventListener("click", e => {
-    //   if (!e.target.closest("dialog")){
-    //     cerrar()
-    //   }
-    // })
+
+      dialog.removeEventListener("click", cerrarfuera)
     }
-    // document.addEventListener("click", e => {
-    //   if (!e.target.closest("dialog")){
-    //     cerrar()
-    //   }
-    // })
+
+      function cerrarfuera(e: Event) {
+        let valido = e.target===dialog;
+      if (valido){
+        cerrar()
+      }
+    }
+
+    //Close borra el dialog aun si lo cierras con la tecla escape.
+  dialog.addEventListener('close', () => {
+    dialog.remove();
+  });
+
+    dialog.addEventListener("click", cerrarfuera)
+
 }
