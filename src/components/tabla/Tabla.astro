@@ -215,7 +215,7 @@ if (tbody == null) return;
 		for (let iterable of todosTH) {
 			iterable.setAttribute("contenteditable", "plaintext-only");
 		}
-		titulo?.setAttribute("contenteditable", "true");
+		titulo?.setAttribute("contenteditable", "plaintext-only");
 
 
 	}
@@ -331,6 +331,7 @@ if (tbody == null) return;
 		let valido = true;
 
 		editando = false;
+		let textoError = ""
 
 		let data = { id: Number(idLink) };
 		let nuevaColumnas = [];
