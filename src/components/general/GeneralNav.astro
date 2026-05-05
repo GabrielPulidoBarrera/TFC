@@ -27,11 +27,11 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 		</ul>
 		<div class="items-center shrink-0 flex">
 			{!cookie &&
-				<a href="/login"><button class="self-center px-8 py-3 rounded">Iniciar sesión</button></a>
-				<a href="/registro"><button class="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-gray-50">Registrarse</button></a>
+				<a href="/login"><button class="self-center px-8 py-3 cursor-pointer rounded hover:bg-gray-200">Iniciar sesión</button></a>
+				<a href="/registro"><button class="self-center px-8 py-3 font-semibold rounded cursor-pointer bg-violet-600 text-gray-50 hover:bg-violet-700">Registrarse</button></a>
 			}
 			{cookie &&
-				<a href="/logout"><button class="hidden lg:block self-center px-8 py-3 rounded hover:bg-gray-200">Cerrar sesión</button></a>
+				<a href="/logout"><button class="hidden lg:block self-center px-8 py-3 cursor-pointer rounded hover:bg-gray-200">Cerrar sesión</button></a>
 				
 			}
 		</div>
