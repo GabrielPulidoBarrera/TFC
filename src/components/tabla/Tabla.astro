@@ -188,6 +188,10 @@ async function readCollection() {
 		if (editar == null) return;
 		if (terminar == null) return;
 		if (tbody == null) return;
+
+
+
+
 		//muestros los botones correctos
 		editando = true;
 		editar.style.display = "none";
@@ -324,12 +328,7 @@ if (tbody == null) return;
 		if (editar == null) return;
 		if (terminar == null) return;
 		if (tbody == null) return;
-
-		modoBorrar = false
-		desmarcarRojo()
-		dejarBorrar.style.display="none";
-		borrar.style.display="block"
-		visibilidadContenedor.style.display="none"
+		let valido = true;
 
 		editando = false;
 
@@ -353,6 +352,23 @@ if (tbody == null) return;
 			data.visibility = visibility.value;
 		}
 
+		if (nombre.trim() == "") {
+		valido = false;
+		textoError += "\n La coleccion debe de tener un nombre";
+		}
+		if(nombre.length>100){
+		valido=false;
+		textoError += "\n El nombre de la coleccion es demasiado largo";
+		}
+		if(nuevaColumnas.length>1000){
+			valido=false;
+		textoError += "\n Tienes demasiadas columnas o tienes una columna cuyo nombre es demasiado largo.";
+		}
+
+		if (!valido){
+			alert(textoError); //no puedo usar crearDialog porque uso define:vars, fumadas raras del astro
+			return
+		}
 
 		//mirar si el usuario esta loggeado
 		if (cookie){
@@ -379,6 +395,11 @@ if (tbody == null) return;
 		terminar.style.display = "none";
 		borrar.style.display = "none"
 
+		modoBorrar = false
+		desmarcarRojo()
+		dejarBorrar.style.display="none";
+		borrar.style.display="block"
+		visibilidadContenedor.style.display="none"
 
 
 
