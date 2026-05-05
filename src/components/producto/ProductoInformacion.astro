@@ -15,11 +15,11 @@ const { id, poderEditar } = Astro.props;
         <p class="font-medium">Crear colecciones</p>
         <p class="text-xs">
           El nombre del produto sera el nombre visible en el selector de
-          colecciones y en los resultados de busqueda.
+          colecciones y en los resultados de búsqueda.
         </p>
         <p class="text-xs">
           La visibilidad define si el producto puede ser encontrado en la
-          busqueda o no.
+          búsqueda o no.
         </p>
         <p class="text-xs">
           Las atributos definiarn el contenido del producto. Puedes añadir tantos cuantos quieren, aunque todos deben de tener un nombre (El nombre de la columna donde quieres que aparezca esta informacion), y un valor (El propio contenido del atributo)
@@ -248,7 +248,7 @@ const { id, poderEditar } = Astro.props;
     }
     if(nombre.length>100){
       valido=false;
-      textoError += "\n El nombre de la coleccion es demasiado largo";
+      textoError += "\n el nombre de la colección es demasiado largo";
     }
     //Reviso que hayan columnas
     if (columnasJSON == null) {

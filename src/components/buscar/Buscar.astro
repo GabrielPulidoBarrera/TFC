@@ -8,7 +8,7 @@ const { idUsuario = 1, idColeccion } = Astro.props;
   id="contenedorBuscar"
 >
 
-<!-- Condicional para evitar que salga la opcion entreseleccionar un producto o una coleccion en caso de que este componente sea cargado desde la funcion de busqueda de producto de la coleccion. No tendria mucho sentido poder buscar colecciones dentro de una coleccion. -->
+<!-- Condicional para evitar que salga la opcion entreseleccionar un producto o una coleccion en caso de que este componente sea cargado desde la funcion de búsqueda de producto de la coleccion. No tendria mucho sentido poder buscar colecciones dentro de una coleccion. -->
 { idColeccion==null &&
 
   <div class="text-5xl flex justify-center">Categoria</div>
@@ -144,7 +144,7 @@ const { idUsuario = 1, idColeccion } = Astro.props;
   let buscar = document.querySelector("#buscar") as HTMLInputElement;
   buscar?.addEventListener("change", readProduct);
 
-  //Cada vez que se actualice la barra de busqueda, busca el producto.
+  //Cada vez que se actualice la barra de búsqueda, busca el producto.
   async function readProduct() {
 
     //Asumimos que la ID de usuario es 0, la cual es una id imposible que nunca se asigna a nadie. Esto es para prevenir errores derivados de "null"
@@ -279,7 +279,7 @@ const { idUsuario = 1, idColeccion } = Astro.props;
 
       let idColeccion = conseguirIDColeccion()
 
-      // Condicional para mostrar el boton de añadir solo si estas dentro de una coleccion y no desde la funcion de busqueda global de la pagina.
+      // Condicional para mostrar el boton de añadir solo si estas dentro de una coleccion y no desde la funcion de búsqueda global de la pagina.
 
       if(idColeccion != null){
 
