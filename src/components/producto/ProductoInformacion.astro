@@ -455,12 +455,14 @@ function borrarHeader(e: Event){
     return
   }
   console.log(objetivo.id)
-  console.log(objetivo.id[objetivo.id.length])
+  console.log(objetivo.id.length);
+  console.log(objetivo.id[objetivo.id.length-1])
 
   let input = document.querySelector('#NombreColumna'+objetivo.id[objetivo.id.length])
   let valor = document.querySelector('#valorColumna'+objetivo.id[objetivo.id.length])
 
   if (input?.textContent.trim() == "" && valor?.textContent.trim() == ""){
+    console.log("Me ejecuto!!")
     if (objetivo.parentElement==null){
       return
     }
