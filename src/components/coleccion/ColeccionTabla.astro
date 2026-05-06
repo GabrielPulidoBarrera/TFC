@@ -527,7 +527,7 @@ async function borrarColeccionFunction(){
 	method: "POST",
 	body: JSON.stringify({ 
 		idLink: Number(idLink),
-		cookie: cookie
+		cookie: Number(cookie)
 	}),
 	});
 }
