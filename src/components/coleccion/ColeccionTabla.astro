@@ -523,6 +523,38 @@ function borrarHeader(e){
 borrarColeccion.addEventListener("click", borrarColeccionFunction)
 
 async function borrarColeccionFunction(){
+
+	//Esta funcion esta casi copiada de crearDialog, pero editada para que sea una opcion de si/no, no puedo importar crearDialog entonces tengo que hacer esto.
+
+
+	let dialog = document.createElement('dialog');
+	let p = document.createElement('p');
+	let botonBorrar = document.createElement('button')
+	botonBorrar.textContent="Borrar";
+	p.textContent = texto;
+	p.style.whiteSpace = 'pre-line';
+	dialog.append(p);
+	dialog.append(botonBorrar);
+	document.querySelector('body')?.append(dialog);
+	botonBorrar.classList.add("self-center", "px-8", "py-3", "font-semibold", "rounded", "bg-red-700", "hover:bg-red-800",  "text-gray-50")
+	botonBorrar.id = "confirmarBorrarColeccion"
+
+
+	let botonCerrar = document.createElement('button');
+	botonCerrar.textContent="Cancelar";
+	botonCerrar.classList.add("self-center", "px-8", "py-3", "font-semibold", "rounded", "bg-violet-600", "text-gray-50")
+	botonCerrar.id = "cerrarDialog"
+
+	dialog.append(botonCerrar);
+
+
+
+	dialog.classList.add("fixed", "inset-0", "m-auto", "w-1/2", "h-1/2", "text-center", "*:m-10" );
+    dialog.showModal();
+
+	botonCerrar.addEventListener("click", cerrar)
+
+    botonBorrar.addEventListener("click", async e => {
 	const response = await fetch("/api/deleteCollection", {
 	method: "POST",
 	body: JSON.stringify({ 
@@ -530,6 +562,34 @@ async function borrarColeccionFunction(){
 		cookie: Number(cookie)
 	}),
 	});
+	if (response.ok){
+		window.location.href = "/seleccion";
+	}
+	})
+    
+    function cerrar() {
+      dialog.close()
+      dialog.remove();
+      dialog.removeEventListener("click", cerrarfuera)
+      document.dispatchEvent(new CustomEvent('dialogo-cerrado'));
+    }
+
+      function cerrarfuera(e) {
+        let valido = e.target===dialog;
+      if (valido){
+        cerrar()
+      }
+    }
+
+    //Close borra el dialog aun si lo cierras con la tecla escape.
+  dialog.addEventListener('close', () => {
+    dialog.remove();
+  });
+
+    dialog.addEventListener("click", cerrarfuera)
+
+
+
 }
 
 
