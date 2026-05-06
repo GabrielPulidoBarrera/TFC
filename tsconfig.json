@@ -7,7 +7,7 @@
       "@components/*": ["./src/components/*"],
       "@buscar/*": ["./src/components/buscar/*"],
       "@coleccion/*": ["./src/components/coleccion/*"],
-      "@crearFamilia/*": ["./src/components/crearFamilia/*"],
+      "@crearColeccion/*": ["./src/components/crearColeccion/*"],
       "@crearProducto/*": ["./src/components/crearProducto/*"],
       "@general/*": ["./src/components/general/*"],
       "@index/*": ["./src/components/index/*"],

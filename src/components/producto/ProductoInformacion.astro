@@ -81,6 +81,7 @@ const { id, poderEditar } = Astro.props;
       </div>
       {
         poderEditar && (
+                <div class="col-span-full flex justify-center">
           <button
             type="button"
             id="nuevaColumna"
@@ -88,6 +89,7 @@ const { id, poderEditar } = Astro.props;
           >
             Añadir mas columnas
           </button>
+          </div>
         )
       }
     </fieldset>
