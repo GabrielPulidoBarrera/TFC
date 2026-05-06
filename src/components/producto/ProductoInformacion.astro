@@ -469,12 +469,12 @@ function borrarHeader(e: Event){
   console.log(input?.value.trim())
   console.log(valor?.value.trim())
 
-  if (input?.textContent.trim() == "" && valor?.textContent.trim() == ""){
+  if (input?.value.trim() == "" && valor?.value.trim() == ""){
     console.log("Me ejecuto!!")
-    if (objetivo.parentElement==null){
+    if (valor.parentElement?.parentElement==null){
       return
     }
-	objetivo.parentElement.remove()
+	valor.parentElement?.parentElement.remove()
   contador--
   }
 
