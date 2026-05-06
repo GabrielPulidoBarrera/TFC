@@ -1,6 +1,5 @@
 ---
 import "@styles/global.css";
-import CrearProductoScriptComun from "./CrearProductoScriptComun.astro";
 ---
 
 <section class="p-6 text-gray-900">
@@ -100,12 +99,9 @@ import CrearProductoScriptComun from "./CrearProductoScriptComun.astro";
   >
 </div>
 
-<CrearProductoScriptComun>
-
-</CrearProductoScriptComun>
-
 <script>
   import { crearDialog } from "@libs/dialog/crearDialog";
+import { newColumn } from "./CrearProductoScriptComun";
 
   //Seleciono e inicializo lo necesario
   let boton = document.querySelector("#crearColeccion");
@@ -113,8 +109,13 @@ import CrearProductoScriptComun from "./CrearProductoScriptComun.astro";
   let collectionVisibility = document.querySelector(
     "#visibility",
   ) as HTMLInputElement;
+  let nuevaColumna = document.querySelector("#nuevaColumna");
+
+
 
   //Esta funcion crea una nueva columna
+
+  nuevaColumna?.addEventListener("click", newColumn);
 
   //Esta funcion selecciona toda la informacion y lo manda al servidor
   async function newProduct() {

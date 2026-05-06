@@ -1,16 +1,10 @@
----
 
----
-
-<script>
   //Seleciono e inicializo lo necesario
-  let nuevaColumna = document.querySelector("#nuevaColumna");
   let selectorColumnas = document.querySelector("#selectorColumnas");
-  nuevaColumna?.addEventListener("click", newColumn);
   let contador = 3;
 
   //Esta funcion crea una nueva columna
-  function newColumn() {
+  export function newColumn() {
     //Creo el fieldset el primer div, cada div contiene un label y un input.
     let divContenedor = document.createElement("div");
     divContenedor.classList.add(
@@ -48,4 +42,3 @@
 
     contador++;
   }
-</script>

@@ -1,5 +1,4 @@
 ---
-import CrearProductoScriptComun from "@components/crearProducto/CrearProductoScriptComun.astro";
 import { obtenerCookie } from "@libs/auth/controlCookies";
 import "@styles/global.css";
 const { id, poderEditar } = Astro.props;
@@ -116,10 +115,10 @@ const { id, poderEditar } = Astro.props;
   }
 </section>
 
-<CrearProductoScriptComun></CrearProductoScriptComun>
 
 <script>
-  import { crearDialog } from "@libs/dialog/crearDialog";
+  import { newColumn } from "@components/crearProducto/CrearProductoScriptComun";
+import { crearDialog } from "@libs/dialog/crearDialog";
 
   interface interfazProducto {
     name: string;
@@ -139,6 +138,10 @@ const { id, poderEditar } = Astro.props;
   ) as HTMLSelectElement;
   let editarProducto = document.querySelector("#editarProducto") as HTMLElement;
   let editando = false;
+
+    //Esta funcion crea una nueva columna
+  nuevaColumna?.addEventListener("click", newColumn);
+
 
   //Esta funcion selecciona toda la informacion y lo manda al servidor
   async function editProduct() {
