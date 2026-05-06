@@ -1,5 +1,4 @@
 ---
-import { obtenerCookie } from "@libs/auth/controlCookies";
 import "@styles/global.css";
 const { id, poderEditar } = Astro.props;
 ---
@@ -117,7 +116,7 @@ const { id, poderEditar } = Astro.props;
 
 
 <script>
-  import { borrarHeader, newColumn } from "@components/crearProducto/CrearProductoScriptComun";
+  import { borrarHeader, newColumn } from "@crearProducto/CrearProductoScriptComun";
 import { crearDialog } from "@libs/dialog/crearDialog";
 
   interface interfazProducto {

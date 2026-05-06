@@ -5,10 +5,15 @@
   "compilerOptions": {
     "paths": {
       "@components/*": ["./src/components/*"],
+      "@buscar/*": ["./src/components/buscar/*"],
+      "@coleccion/*": ["./src/components/coleccion/*"],
       "@crearFamilia/*": ["./src/components/crearFamilia/*"],
+      "@crearProducto/*": ["./src/components/crearProducto/*"],
       "@general/*": ["./src/components/general/*"],
       "@index/*": ["./src/components/index/*"],
-      "@tabla/*": ["./src/components/tabla/*"],
+      "@login/*": ["./src/components/login/*"],
+      "@producto/*": ["./src/components/producto/*"],
+      "@registro/*": ["./src/components/registro/*"],
       "@assets/*": ["./src/assets/*"],
       "@layouts/*": ["./src/layouts/*"],
       "@styles/*": ["./src/styles/*"],

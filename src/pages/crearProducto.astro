@@ -1,7 +1,7 @@
 ---
-import FormProducto from "@components/crearProducto/formProducto.astro";
+import FormProducto from "@crearProducto/FormProducto.astro";
 import Layout from "@layouts/Layout.astro";
-import { obtenerCookie } from "../libs/auth/controlCookies";
+import { obtenerCookie } from "@libs/auth/controlCookies";
 
 
 let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));

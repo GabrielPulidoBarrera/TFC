@@ -1,8 +1,8 @@
 ---
 
-import RegistoFormulario from "@components/registro/RegistoFormulario.astro";
+import RegistoFormulario from "@registro/RegistoFormulario.astro";
 import Layout from "@layouts/Layout.astro";
-import { obtenerCookie } from "../libs/auth/controlCookies";
+import { obtenerCookie } from "@libs/auth/controlCookies";
 let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 
 ---

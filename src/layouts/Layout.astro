@@ -2,8 +2,8 @@
 import "@styles/global.css";
 import GeneralNav from "@general/GeneralNav.astro";
 import FooterBonito from "@general/GeneralFooter.astro"
-import { obtenerCookie } from "../libs/auth/controlCookies";
-import GeneralHeader from "@components/general/GeneralHeader.astro";
+import { obtenerCookie } from "@libs/auth/controlCookies";
+import GeneralHeader from "@general/GeneralHeader.astro";
 const { titulo } = Astro.props;
 
         let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));

@@ -1,8 +1,7 @@
 ---
 import Layout from '@layouts/Layout.astro';
 import "@styles/global.css";
-import { obtenerCookie } from '../libs/auth/controlCookies';
-import { string } from 'astro:schema';
+import { obtenerCookie } from '@libs/auth/controlCookies';
 
 let cookie = await obtenerCookie(Astro.cookies?.get('sesion'));
 

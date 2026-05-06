@@ -1,8 +1,8 @@
 ---
 
 import Layout from "@layouts/Layout.astro";
-import LoginFormulario from "@components/login/LoginFormulario.astro";
-import { obtenerCookie } from "../libs/auth/controlCookies";
+import LoginFormulario from "@login/LoginFormulario.astro";
+import { obtenerCookie } from "@libs/auth/controlCookies";
 let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 ---
 <!--Prohibo el acceso a la pagina a los registrados, no miro a quien pertenece la cookie (en este componente), solo si tiene cookie de sesion o no -->
