@@ -58,22 +58,22 @@ import "@styles/global.css";
           <div class="contenedorInputLabel max-w-full overflow-hidden">
             <div>
               <input type="text" class="columna max-w-full" id="NombreColumna1" />
-              <label for="columna1">Nombre columna 1</label>
+              <label for="NombreColumna1">Nombre columna 1</label>
             </div>
             <div>
               <input type="text" class="columna max-w-full" id="ValorColumna1" />
-              <label for="columna1">Valor columna 1</label>
+              <label for="ValorColumna1">Valor columna 1</label>
             </div>
           </div>
 
           <div class="contenedorInputLabel max-w-full overflow-hidden">
             <div>
               <input type="text" class="columna max-w-full" id="NombreColumna2" />
-              <label for="columna2">Nombre columna 2</label>
+              <label for="NombreColumna2">Nombre columna 2</label>
             </div>
             <div>
               <input type="text" class="columna max-w-full" id="ValorColumna2" />
-              <label for="columna2">Valor columna 2</label>
+              <label for="ValorColumna2">Valor columna 2</label>
             </div>
           </div>
         </span>
@@ -130,7 +130,7 @@ import "@styles/global.css";
     nombreInput.classList.add("columna", "max-w-full");
     let nombreLabel = document.createElement("label");
     nombreLabel.textContent = "Nombre columna " + contador;
-    nombreLabel.htmlFor = "nombreColumna" + contador;
+    nombreLabel.htmlFor = "NombreColumna" + contador;
 
     div1.append(nombreInput, nombreLabel);
     divContenedor.append(div1);
@@ -143,7 +143,7 @@ import "@styles/global.css";
     valorInput.classList.add("columna");
     let valorLabel = document.createElement("label");
     valorLabel.textContent = "Valor columna " + contador;
-    valorLabel.htmlFor = "valorColumna" + contador;
+    valorLabel.htmlFor = "ValorColumna" + contador;
 
     div2.append(valorInput, valorLabel);
     divContenedor.append(div2);
