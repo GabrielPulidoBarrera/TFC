@@ -460,14 +460,14 @@ function borrarHeader(e: Event){
   console.log(label)
   console.log(columna)
 
-  let input = document.querySelector('#NombreColumna'+columna)
-  let valor = document.querySelector('#ValorColumna'+columna)
+  let input = document.querySelector('#NombreColumna'+columna) as HTMLInputElement
+  let valor = document.querySelector('#ValorColumna'+columna) as HTMLInputElement
 
   console.log(input)
   console.log(valor)
 
-  console.log(input?.textContent.trim())
-  console.log(valor?.textContent.trim())
+  console.log(input?.value.trim())
+  console.log(valor?.value.trim())
 
   if (input?.textContent.trim() == "" && valor?.textContent.trim() == ""){
     console.log("Me ejecuto!!")
