@@ -456,7 +456,7 @@ function borrarHeader(e: Event){
   }
   let label = (objetivo.parentElement?.querySelector('label'));
   console.log(label?.textContent.split(" "));
-  let columna = label?.textContent.split(" ")[2];
+  let columna = Number(label?.textContent.split(" ")[2])
   console.log(label)
   console.log(columna)
 
@@ -476,6 +476,51 @@ function borrarHeader(e: Event){
     }
 	valor.parentElement?.parentElement.remove()
   contador--
+
+      let selectorColumnasElementos = selectorColumnas?.querySelectorAll(
+      ".contenedorInputLabel",
+    );
+        if (selectorColumnasElementos == null) {
+      console.log("VAMOS A MORIR TODOS");
+      return;
+    }
+
+    for (
+      let contador = columna+1;
+      contador < selectorColumnasElementos?.length + 1;
+      contador++
+    ) {
+      let contadorReal = contador-1;
+      let atributoNombre = document.querySelector("#NombreColumna" + contador);
+      let atributoValor = document.querySelector("#ValorColumna" + contador);
+
+      if (atributoNombre == null || atributoValor == null) {
+        return;
+      }
+
+      console.log(atributoNombre);
+      console.log(atributoValor);
+
+      atributoNombre.id="#NombreColumna"+contadorReal;
+      atributoValor.id="#NombreColumna"+contadorReal;
+
+      let labelAtributoNombre = atributoNombre.parentElement?.querySelector('label');
+      if (labelAtributoNombre==null){
+        console.log("error en label atributo nombre")
+        return
+      }
+      labelAtributoNombre.textContent = "Nombre columna "+contadorReal;
+
+
+      let labelAtributoValor = atributoValor.parentElement?.querySelector('label');
+      if (labelAtributoValor==null){
+        console.log("error en label atributo valor")
+        return
+      }
+      labelAtributoValor.textContent = "Nombre columna "+contadorReal;
+
+    }
+
   }
 
 
