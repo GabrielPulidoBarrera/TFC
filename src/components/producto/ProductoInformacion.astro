@@ -85,7 +85,7 @@ const { id, poderEditar } = Astro.props;
           <button
             type="button"
             id="nuevaColumna"
-            class="self-center px-8 py-3 rounded bg-gray-300 hover:bg-gray-400 hover:cursor-pointer"
+            class="self-center px-8 py-3 rounded bg-gray-300 hover:bg-gray-400 hover:cursor-pointer hidden"
           >
             Añadir mas columnas
           </button>
@@ -129,7 +129,7 @@ import { crearDialog } from "@libs/dialog/crearDialog";
 
   //Seleciono e inicializo lo necesario
   let boton = document.querySelector("#crearColeccion") as HTMLElement;
-  let nuevaColumna = document.querySelector("#nuevaColumna");
+  let nuevaColumna = document.querySelector("#nuevaColumna") as HTMLElement;
   let selectorColumnas = document.querySelector("#selectorColumnas");
   let contador = 3;
   let collectionName = document.querySelector("#name") as HTMLInputElement;
@@ -374,6 +374,8 @@ import { crearDialog } from "@libs/dialog/crearDialog";
     select.disabled = true;
     editarProducto.style.display = "block";
     boton.style.display = "none";
+    nuevaColumna.style.display = "none"
+
   }
 
   //Deshabilito todos los campos nada mas iniciar la pagina.
@@ -400,6 +402,7 @@ import { crearDialog } from "@libs/dialog/crearDialog";
     select.disabled = false;
     editarProducto.style.display = "none";
     boton.style.display = "flex";
+    nuevaColumna.style.display = "block"
   }
   console.log("EDITAR PRODUCTO!!");
   console.log(editarProducto);
