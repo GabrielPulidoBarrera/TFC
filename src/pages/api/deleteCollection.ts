@@ -9,14 +9,14 @@ const prisma = await conectar()
 
 export const POST: APIRoute = async function({ request }) {
   
-  const { idLink } = await request.json();
+  const { idLink, cookie } = await request.json();
 
     console.log("SEVIDORrrr    "+idLink)
 
   const result = await prisma.collection.delete({
      where: {
-        id: idLink
-
+        id: idLink,
+        userID: cookie
       }
   })
     return new Response(

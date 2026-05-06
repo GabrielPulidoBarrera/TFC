@@ -520,12 +520,15 @@ function borrarHeader(e){
 	}
 }
 
-borrarColeccion.addEventListener("click", borrarColeccion)
+borrarColeccion.addEventListener("click", borrarColeccionFunction)
 
 async function borrarColeccionFunction(){
 	const response = await fetch("/api/deleteCollection", {
 	method: "POST",
-	body: JSON.stringify({ idLink: Number(idLink) }),
+	body: JSON.stringify({ 
+		idLink: Number(idLink),
+		cookie: cookie
+	}),
 	});
 }
 
