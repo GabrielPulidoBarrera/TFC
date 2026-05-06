@@ -1,4 +1,5 @@
 ---
+import CrearProductoScriptComun from "@components/crearProducto/CrearProductoScriptComun.astro";
 import { obtenerCookie } from "@libs/auth/controlCookies";
 import "@styles/global.css";
 const { id, poderEditar } = Astro.props;
@@ -115,6 +116,8 @@ const { id, poderEditar } = Astro.props;
   }
 </section>
 
+<CrearProductoScriptComun></CrearProductoScriptComun>
+
 <script>
   import { crearDialog } from "@libs/dialog/crearDialog";
 
@@ -129,7 +132,6 @@ const { id, poderEditar } = Astro.props;
   let boton = document.querySelector("#crearColeccion") as HTMLElement;
   let nuevaColumna = document.querySelector("#nuevaColumna");
   let selectorColumnas = document.querySelector("#selectorColumnas");
-  nuevaColumna?.addEventListener("click", newColumn);
   let contador = 3;
   let collectionName = document.querySelector("#name") as HTMLInputElement;
   let collectionVisibility = document.querySelector(
@@ -137,53 +139,6 @@ const { id, poderEditar } = Astro.props;
   ) as HTMLSelectElement;
   let editarProducto = document.querySelector("#editarProducto") as HTMLElement;
   let editando = false;
-
-  //Esta funcion crea una nueva columna
-  function newColumn() {
-    //Creo el fieldset el primer div, cada div contiene un label y un input.
-    let divContenedor = document.createElement("div");
-    divContenedor.classList.add(
-      "max-w-full",
-      "overflow-hidden",
-      "contenedorInputLabel",
-    );
-    let div1 = document.createElement("div");
-
-    //Div del nombre
-    let nombreInput = document.createElement("input");
-    nombreInput.id = "NombreColumna" + contador;
-    nombreInput.classList.add("columna", "max-w-full");
-    let nombreLabel = document.createElement("label");
-    nombreLabel.textContent = "Nombre columna " + contador;
-    nombreLabel.htmlFor = "NombreColumna" + contador;
-
-    div1.append(nombreInput, nombreLabel);
-    divContenedor.append(div1);
-
-    let div2 = document.createElement("div");
-
-    //Div del valor
-    let valorInput = document.createElement("input");
-    valorInput.id = "ValorColumna" + contador;
-    valorInput.classList.add("columna");
-    let valorLabel = document.createElement("label");
-    valorLabel.textContent = "Valor columna " + contador;
-    valorLabel.htmlFor = "ValorColumna" + contador;
-
-    //Si no estamos en modo edicion, la nueva columna estara deshabilitada.
-
-    if (editando == false) {
-      valorInput.disabled = true;
-      nombreInput.disabled = true;
-    }
-
-    div2.append(valorInput, valorLabel);
-    divContenedor.append(div2);
-
-    selectorColumnas?.append(divContenedor);
-
-    contador++;
-  }
 
   //Esta funcion selecciona toda la informacion y lo manda al servidor
   async function editProduct() {
