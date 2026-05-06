@@ -12,7 +12,7 @@ export function crearDialog(texto: string) {
   document.querySelector('body')?.append(dialog);
   button.classList.add("self-center", "px-8", "py-3", "font-semibold", "rounded", "bg-violet-600", "hover:bg-violet-700", "cursor-pointer", "text-gray-50")
   button.id = "cerrarDialog"
-  dialog.classList.add("fixed", "inset-0", "m-auto", "w-2/3", "lg:w-1/2", "h-1/2", "text-center", "*:m-10" );
+  dialog.classList.add("fixed", "inset-0", "m-auto", "w-3/4", "lg:w-1/2", "h-1/2", "text-center", "*:m-10" );
     dialog.showModal();
 
     button.addEventListener("click", cerrar)
