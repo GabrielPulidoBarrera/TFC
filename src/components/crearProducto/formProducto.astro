@@ -101,7 +101,7 @@ import "@styles/global.css";
 
 <script>
   import { crearDialog } from "@libs/dialog/crearDialog";
-import { newColumn } from "./CrearProductoScriptComun";
+import { borrarHeader, newColumn } from "./CrearProductoScriptComun";
 
   //Seleciono e inicializo lo necesario
   let boton = document.querySelector("#crearColeccion");
@@ -110,12 +110,15 @@ import { newColumn } from "./CrearProductoScriptComun";
     "#visibility",
   ) as HTMLInputElement;
   let nuevaColumna = document.querySelector("#nuevaColumna");
+  let selectorColumnas = document.querySelector("#selectorColumnas");
 
 
 
   //Esta funcion crea una nueva columna
 
-  nuevaColumna?.addEventListener("click", newColumn);
+  nuevaColumna?.addEventListener("click", e=> {
+    newColumn()
+  });
 
   //Esta funcion selecciona toda la informacion y lo manda al servidor
   async function newProduct() {
@@ -247,5 +250,10 @@ import { newColumn } from "./CrearProductoScriptComun";
   }
 
   boton?.addEventListener("click", newProduct);
+
+
+  //Funcion para borrar un campo si se deja vacio
+
+  selectorColumnas?.addEventListener("focusout", borrarHeader)
 </script>
 
