@@ -30,7 +30,7 @@
     //Div del valor
     let valorInput = document.createElement("input");
     valorInput.id = "ValorColumna" + contador;
-    valorInput.classList.add("columna");
+    valorInput.classList.add("columna", "max-w-full");
     let valorLabel = document.createElement("label");
     valorLabel.textContent = "Valor columna " + contador;
     valorLabel.htmlFor = "ValorColumna" + contador;
