@@ -4,7 +4,7 @@
   let contador = 3;
 
   //Esta funcion crea una nueva columna
-  export function newColumn() {
+  export function newColumn(editando = true) {
     //Creo el fieldset el primer div, cada div contiene un label y un input.
     let divContenedor = document.createElement("div");
     divContenedor.classList.add(
@@ -34,6 +34,12 @@
     let valorLabel = document.createElement("label");
     valorLabel.textContent = "Valor columna " + contador;
     valorLabel.htmlFor = "ValorColumna" + contador;
+
+
+    if (editando == false) {
+      valorInput.disabled = true;
+      nombreInput.disabled = true;
+    }
 
     div2.append(valorInput, valorLabel);
     divContenedor.append(div2);

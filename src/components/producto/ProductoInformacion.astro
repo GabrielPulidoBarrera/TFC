@@ -140,7 +140,9 @@ import { crearDialog } from "@libs/dialog/crearDialog";
   let editando = false;
 
     //Esta funcion crea una nueva columna
-  nuevaColumna?.addEventListener("click", newColumn);
+  nuevaColumna?.addEventListener("click", e => {
+    newColumn(editando)
+  });
 
 
   //Esta funcion selecciona toda la informacion y lo manda al servidor
@@ -315,7 +317,7 @@ import { crearDialog } from "@libs/dialog/crearDialog";
 
       if (!selectorColumnas?.children[contador]) {
         console.log("NYAAAAA NEW COLUMN");
-        newColumn();
+        newColumn(editando);
       }
 
       let contadorAcelerado = contador + 1;
