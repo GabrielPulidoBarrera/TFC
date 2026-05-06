@@ -91,25 +91,32 @@ import "@styles/global.css";
     let password = (document.querySelector("#password") as HTMLInputElement)
       .value;
     password = await getSHA256Hash(password);
-    const response = await fetch("../api/verifyLogin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: username,
-        password: password,
-      }),
-    });
+    try{
 
-    if (response.ok) {
-      //Si todo es correcto, redirecciono.
-      window.location.href = "/seleccion";
-    } else {
-      crearDialog("El nombre u la contraseña son incorrectas.");
-      //Oculto el spinner
-      cargar.style.display = "none";
-      textoBoton.style.display = "block";
+      const response = await fetch("../api/verifyLogin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: username,
+          password: password,
+        }),
+      });
+      
+      if (response.ok) {
+        //Si todo es correcto, redirecciono.
+        window.location.href = "/seleccion";
+      } else {
+        crearDialog("El nombre u la contraseña son incorrectas.");
+        //Oculto el spinner
+        cargar.style.display = "none";
+        textoBoton.style.display = "block";
+      }
+    }
+    catch(error){
+      console.error("Error con la llamada al servdor", error)
+      crearDialog("Error con la llamada al servidor")
     }
   }
 </script>

@@ -89,8 +89,6 @@ import "@styles/global.css";
 </div>
 
 <script>
-  import { crearDialog } from "@libs/dialog/crearDialog";
-
   //Defino y inicializo lo necesario
 
   let boton = document.querySelector("#crearColeccion");
@@ -165,24 +163,29 @@ import "@styles/global.css";
     }
 
     if (valido) {
-      const response = await fetch("/api/newCollection", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: nombre,
-          userID: userID,
-          visibility: visibilidad,
-          columns: columnasJSON,
-        }),
-      });
-      const result = await response.json();
-      if (response.ok) {
-        window.location.href = "/c/" + nombre + "-" + result.data.id;
+      try {
+        const response = await fetch("/api/newCollection", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: nombre,
+            userID: userID,
+            visibility: visibilidad,
+            columns: columnasJSON,
+          }),
+        });
+        const result = await response.json();
+        if (response.ok) {
+          window.location.href = "/c/" + nombre + "-" + result.data.id;
+        }
+      } catch(error) {
+        console.error("No se ha podido crear una nueva colección", error);
+        alert("No se ha podido crear una nueva colección");
       }
     } else {
-      crearDialog(textoError);
+      alert(textoError);
     }
   }
 

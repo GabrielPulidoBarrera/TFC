@@ -169,13 +169,15 @@ import "@styles/global.css";
     }
 
     if (valido == true) {
-      //Encripto la contraseña antes de enviarla al servidor.
-      password = await getSHA256Hash(password);
-      const response = await fetch("../api/newUser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+      try{
+
+        //Encripto la contraseña antes de enviarla al servidor.
+        password = await getSHA256Hash(password);
+        const response = await fetch("../api/newUser", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
         body: JSON.stringify({
           name: username,
           email: emailUsuario,
@@ -185,9 +187,9 @@ import "@styles/global.css";
       if (response.ok) {
         const responseData = await response.json();
         let id = responseData.data.id;
-
+        
         //Envio el email de confirmacion usuario.
-
+        
         const responseCorreo = await fetch("../api/sendEmail", {
           method: "POST",
           headers: {
@@ -206,6 +208,14 @@ import "@styles/global.css";
       }
       cargar.style.display = "none";
       textoBoton.style.display = "block";
+    }
+    catch(error){
+      console.error("Ha fallado la llamada al servidor ",error)
+      crearDialog("Ha fallado la llamada al servidor")
+    }
+      
+
+
     } else {
       // en caso de que algun campo haya sido einvalido, elimino el spinner y te doy el mensaje de error
       crearDialog(error);

@@ -186,23 +186,37 @@ const { idUsuario = 1, idColeccion } = Astro.props;
     //Dependiendo de que este seleccionado, elijo que buscar, Por defecto tipo = producto, 
 
     if (tipo == "producto") {
-      const response = await fetch("/api/readProductSearch", {
-        method: "POST",
-        body: JSON.stringify({
-          text: textoBuscado,
-          userID: cookie
-        }),
-      });
-      resultado = await response.json();
+      try{
+
+        const response = await fetch("/api/readProductSearch", {
+          method: "POST",
+          body: JSON.stringify({
+            text: textoBuscado,
+            userID: cookie
+          }),
+        });
+        resultado = await response.json();
+      }
+      catch(error){
+        console.error("Error al leer el listado de productos", error)
+        crearDialog("Error al leer el listado de productos")
+      }
     } else if (tipo == "coleccion") {
-      const response = await fetch("/api/readCollectionSearch", {
-        method: "POST",
-        body: JSON.stringify({
-          text: textoBuscado,
-          userID: cookie
-        }),
-      });
-      resultado = await response.json();
+      try{
+
+        const response = await fetch("/api/readCollectionSearch", {
+          method: "POST",
+          body: JSON.stringify({
+            text: textoBuscado,
+            userID: cookie
+          }),
+        });
+        resultado = await response.json();
+      }
+      catch(error){
+        console.error("Error al leer el listado de colecciones", error)
+        crearDialog("Error al leer el listado de colecciones")
+      }
     }
 
     if (resultado.data.length == 0) {
@@ -339,19 +353,26 @@ function conseguirIDColeccion(){
 
     let id = a.id;
     if (idColeccion) {
-      const response = await fetch("/api/newCollectionProduct", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          productID: Number(id),
-          collectionID: Number(idColeccion),
-        }),
-      });
-      const result = await response.json();
-      if (response.ok) {
-        crearDialog("Producto añadido a la coleccion exitosamente");
+      try{
+
+        const response = await fetch("/api/newCollectionProduct", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            productID: Number(id),
+            collectionID: Number(idColeccion),
+          }),
+        });
+        const result = await response.json();
+        if (response.ok) {
+          crearDialog("Producto añadido a la coleccion exitosamente");
+        }
+      }
+      catch(error){
+        console.error("El producto no se ha podido añadir a la coleccion.", error)
+        crearDialog("El producto no se ha podido añadir a la coleccion.")
       }
     }
     let panelBuscar = document.querySelector("#panelBuscar") as HTMLElement;

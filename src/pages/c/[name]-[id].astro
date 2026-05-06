@@ -11,28 +11,33 @@ let mostrar = true
 let cookie = await obtenerCookie(Astro.cookies?.get('sesion'));
 //Reviso los datos de la coleccion para poder determinar si puedes ver la pagina o no.
 const url = new URL('/api/readCollectionVisibility', Astro.url);
-	
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: Number(id)
-      }),
-    });
-	let respuesta = await response.json();
+	try{
 
-	console.log(respuesta.data.visibility)
-
-	if (respuesta.data.visibility == "Privado"){
-		if(respuesta.data.userID!=cookie){
-			console.log("naynay!")
-			mostrar=false
+		const response = await fetch(url, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				id: Number(id)
+			}),
+		});
+		let respuesta = await response.json();
+		
+		console.log(respuesta.data.visibility)
+		
+		if (respuesta.data.visibility == "Privado"){
+			if(respuesta.data.userID!=cookie){
+				console.log("naynay!")
+				mostrar=false
+			}
+			else{
+				console.log("Bieeen!")
+			}
 		}
-		else{
-			console.log("Bieeen!")
-		}
+	}
+	catch(error){
+		console.error(error)
 	}
 
 

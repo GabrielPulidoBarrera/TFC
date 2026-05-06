@@ -64,6 +64,8 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 </div>
 
 <script define:vars={{ idLink, cookie }}>
+import { crearDialog } from "@libs/dialog/crearDialog";
+
 
 
 	// Defino y selecciono lo necesario
@@ -107,27 +109,34 @@ async function readCollection() {
 		if (thead.firstElementChild == null) return;
 
 
-		const response = await fetch("/api/readSpecificCollection", {
-			method: "POST",
-			body: JSON.stringify({ idLink: Number(idLink) }),
-		});
-		resultado = await response.json();
-		let correcto = resultado.data
+		try{
 
-		columnas = JSON.parse(correcto.columns);
-		columnasOriginal = JSON.parse(correcto.columns);
-		titulo.textContent = correcto.name;
-		//Creo colgroups y th segun los datos que hayan.
-		for (let i of columnas) {
-			let colgroup = document.createElement('colgroup')
-			let th = document.createElement('th');
-			th.textContent = i;
-			thead?.firstElementChild.append(th);
-			tbody.firstElementChild?.append(document.createElement('td'));
-			tabla.prepend(colgroup);
+			const response = await fetch("/api/readSpecificCollection", {
+				method: "POST",
+				body: JSON.stringify({ idLink: Number(idLink) }),
+			});
+			resultado = await response.json();
+			let correcto = resultado.data
+			
+			columnas = JSON.parse(correcto.columns);
+			columnasOriginal = JSON.parse(correcto.columns);
+			titulo.textContent = correcto.name;
+			//Creo colgroups y th segun los datos que hayan.
+			for (let i of columnas) {
+				let colgroup = document.createElement('colgroup')
+				let th = document.createElement('th');
+				th.textContent = i;
+				thead?.firstElementChild.append(th);
+				tbody.firstElementChild?.append(document.createElement('td'));
+				tabla.prepend(colgroup);
+			}
+			id = correcto.id;
+			visibility.value=resultado.data.visibility;
 		}
-		id = correcto.id;
-		visibility.value=resultado.data.visibility;
+		catch(error){
+			console.error("Ha habido un error leyendo la colección.", error)
+			crearDialog("Ha habido un error leyendo la colección")
+		}
 	}
 
 
@@ -142,9 +151,10 @@ async function readCollection() {
 
 		idBien = Number(idLink);
 
-		
-		const response = await fetch("/api/readCollectionProducts", {
-			method: "POST",
+		try{
+
+			const response = await fetch("/api/readCollectionProducts", {
+				method: "POST",
 			body: JSON.stringify({ id: idBien }),
 		});
 		let resultado = await response.json();
@@ -155,7 +165,7 @@ async function readCollection() {
 		for (let iterable of data) {
 			arrayProductos.push(iterable.productID);
 		}
-
+		
 		// Obtener los productos completos
 		const responseProducts = await fetch("/api/readProductList", {
 			method: "POST",
@@ -163,11 +173,11 @@ async function readCollection() {
 		});
 		let resultadoProduct = await responseProducts.json();
 		let dataProduct = resultadoProduct.data;
-
-
+		
+		
 		// Rellenar la tabla con los datos
 		for (let objetoRaw of dataProduct) {
-
+			
 			crearTR(objetoRaw.id);
 			let objeto = JSON.parse(objetoRaw.columns);
 			for (let iterable in objeto) {
@@ -176,8 +186,13 @@ async function readCollection() {
 					tbody.lastElementChild?.childNodes[posicion].append(objeto[iterable]);
 				}
 			}
-
+			
 		}
+	}
+	catch(error){
+		console.error("Ha habido un error leyendo los productos de la colección.", error)
+		crearDialog("Ha habido un error leyendo los productos de la colección")		
+	}
 	}
 
 	
@@ -281,14 +296,21 @@ if (tbody == null) return;
 		
 
 		let objetoAPI = {collectionID: Number(idLink), productID: Number(id)};
-		const response = await fetch("/api/deleteCollectionProduct", {
+		try{
+
+			const response = await fetch("/api/deleteCollectionProduct", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(objetoAPI),
-			});
+		});
 		readCollecionProduct()
+		}
+		catch(error){
+			console.error("Ha habido un error borrando el producto de la colección.", error)
+			crearDialog("Ha habido un error borrando el producto de la colección")
+		}
 	}
 	//Activa el modo de borrar
 	function activarBorrar(){
@@ -533,17 +555,23 @@ async function borrarColeccionFunction(){
 	botonCerrar.addEventListener("click", cerrar)
 
     botonBorrar.addEventListener("click", async e => {
-	const response = await fetch("/api/deleteCollection", {
-	method: "POST",
-	body: JSON.stringify({ 
-		idLink: Number(idLink),
-		cookie: Number(cookie)
-	}),
-	});
-	if (response.ok){
-		window.location.href = "/seleccion";
-	}
-	})
+		try{
+			const response = await fetch("/api/deleteCollection", {
+				method: "POST",
+				body: JSON.stringify({ 
+				idLink: Number(idLink),
+				cookie: Number(cookie)
+				}),
+			});
+			if (response.ok){
+				window.location.href = "/seleccion";
+				}
+			}
+			catch(error){
+				console.error("No se ha podido borrar la colección", error)
+				crearDialog("No se ha podido borrar la colección")
+			}
+		})
     
     function cerrar() {
       dialog.close()

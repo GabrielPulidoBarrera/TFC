@@ -241,8 +241,10 @@ const { id, poderEditar } = Astro.props;
       textoError +=
         "\n Tienes demasiadas atributos o tienes un atributo cuyo nombre o valor es demasiado largo.";
     }
-    if (valido) {
-      const response = await fetch("/api/editProduct", {
+    try{
+
+      if (valido) {
+        const response = await fetch("/api/editProduct", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -257,7 +259,7 @@ const { id, poderEditar } = Astro.props;
         }),
       });
       const result = await response.json();
-
+      
       if (response.ok) {
         crearDialog("Cambios realizados con exito");
         deshabilitarCampos();
@@ -266,7 +268,14 @@ const { id, poderEditar } = Astro.props;
       crearDialog(textoError);
     }
   }
+  catch(error){
+    console.error("Error editando el producto",error)
+    crearDialog("Error editando el producto")
+  
+  }
 
+}
+  
   boton?.addEventListener("click", editProduct);
 
   //Esta funcion selecciona la ID del producto.

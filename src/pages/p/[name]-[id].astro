@@ -15,40 +15,46 @@ let poderEditar = false;
 //Reviso los datos del producto para definir si puedes verlo o editarlo.
 	const url = new URL('/api/readProduct', Astro.url);
 	
-	
-    const response = await fetch(url, {
-		method: "POST",
-		headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-		  id: id
-		}),
-    });
-	let respuesta = await response.json();
+	try{
 
-//Si es privado y no eres el dueño, no te deja verlo, si es privado pero eres el dueño, puedes ver y editarlo, si eres el dueño y es publico/oculto, puedes ver y editarlo también. Si no eres el dueño y es publico/oculto, puedes verlo pero no editarlo.
-	if (respuesta.data.visibility == "Privado"){
-		if(respuesta.data.userID!=cookie){
-			console.log("naynay!")
-			mostrar=false
+		const response = await fetch(url, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				id: id
+			}),
+		});
+		let respuesta = await response.json();
+		
+		//Si es privado y no eres el dueño, no te deja verlo, si es privado pero eres el dueño, puedes ver y editarlo, si eres el dueño y es publico/oculto, puedes ver y editarlo también. Si no eres el dueño y es publico/oculto, puedes verlo pero no editarlo.
+		if (respuesta.data.visibility == "Privado"){
+			if(respuesta.data.userID!=cookie){
+				console.log("naynay!")
+				mostrar=false
+			}
+			else{
+				console.log("Bieeen!")
+			}
 		}
-		else{
-			console.log("Bieeen!")
+		
+		if (cookie){
+			if (respuesta.data.userID == cookie){
+				poderEditar = true;
+			}
 		}
-}
-if (cookie){
-	if (respuesta.data.userID == cookie){
-		poderEditar = true;
+		
+		
+		console.log("RESPUESTA")
+		console.log(respuesta.data)
+		
+		console.log("PODER EDITAR "+poderEditar)
+		console.log("MOSTRAR "+mostrar)
 	}
-}
-
-
-console.log("RESPUESTA")
-console.log(respuesta.data)
-
-console.log("PODER EDITAR "+poderEditar)
-console.log("MOSTRAR "+mostrar)
+	catch(error){
+		console.error(error);
+	}
 
 
 ---

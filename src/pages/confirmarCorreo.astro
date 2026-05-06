@@ -3,7 +3,6 @@ import Layout from "@layouts/Layout.astro";
 //Esta pagina es la que accedes cuando haces click en el correo que te llega para validar tu correo.
 const id = Astro.url.searchParams.get("id");
 const url = new URL("/api/validateUser", Astro.url);
-
 const responseCorreo = await fetch(url, {
   method: "POST",
   headers: {

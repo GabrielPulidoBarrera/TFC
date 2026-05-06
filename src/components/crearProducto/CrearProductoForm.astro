@@ -231,6 +231,7 @@ import "@styles/global.css";
     }
 
     if (valido) {
+      try{
       const response = await fetch("/api/newProduct", {
         method: "POST",
         headers: {
@@ -248,10 +249,16 @@ import "@styles/global.css";
       if (response.ok) {
         crearDialog("Producto creado correctamente");
       }
-    } else {
+    else {
       crearDialog(textoError);
     }
   }
+  catch(error){
+    console.error("Error creando el producto", error)
+    crearDialog("Error creando el producto")
+  }
+  }
+}
 
   boton?.addEventListener("click", newProduct);
 
