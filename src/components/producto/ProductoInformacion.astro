@@ -441,6 +441,36 @@ const { id, poderEditar } = Astro.props;
   console.log("EDITAR PRODUCTO!!");
   console.log(editarProducto);
   editarProducto?.addEventListener("click", habilitarCampos);
+
+
+  //Funcion para borrar un campo si se deja vacio
+
+  selectorColumnas?.addEventListener("focusout", borrarHeader)
+
+function borrarHeader(e: Event){
+  let objetivo = (e.target as HTMLInputElement);
+  console.log(objetivo);
+
+  if (!objetivo){
+    return
+  }
+  console.log(objetivo.id)
+  console.log(objetivo.id[objetivo.id.length])
+
+  let input = document.querySelector('#NombreColumna'+objetivo.id[objetivo.id.length])
+  let valor = document.querySelector('#valorColumna'+objetivo.id[objetivo.id.length])
+
+  if (input?.textContent.trim() == "" && valor?.textContent.trim() == ""){
+    if (objetivo.parentElement==null){
+      return
+    }
+	objetivo.parentElement.remove()
+  contador--
+  }
+
+
+
+}
+
 </script>
 
-<!-- TODO: Control de errores!!! -->
