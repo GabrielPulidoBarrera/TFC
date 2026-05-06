@@ -1,51 +1,47 @@
 ---
 import "@styles/global.css";
 import GeneralNav from "@general/GeneralNav.astro";
-import FooterBonito from "@general/GeneralFooter.astro"
+import FooterBonito from "@general/GeneralFooter.astro";
 import { obtenerCookie } from "@libs/auth/controlCookies";
 import GeneralHeader from "@general/GeneralHeader.astro";
 const { titulo } = Astro.props;
 
-        let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
+let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 ---
+
 <!doctype html>
 <html lang="es">
-    <GeneralHeader titulo={titulo}></GeneralHeader>
+    <GeneralHeader titulo={titulo} />
 
-	<body class="min-h-screen flex flex-col">
-        <GeneralNav>
-
-        </GeneralNav>
+    <body class="min-h-screen flex flex-col">
+        <GeneralNav />
         <main data-cookie={cookie} class="flex-1">
             <slot />
         </main>
-        <FooterBonito>
-
-        </FooterBonito>
-	</body>
+        <FooterBonito />
+    </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
+    html,
+    body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr auto;
-	}
-    header{
+    }
+    header {
         grid-column: 1/-1;
         grid-row: 1;
     }
-    main{
+    main {
         grid-column: 1/-1;
         grid-row: 2;
     }
-    footer{
+    footer {
         grid-column: 1/-1;
         grid-row: 3;
     }
-    
 </style>

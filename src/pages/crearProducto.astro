@@ -3,12 +3,12 @@ import CrearProductoForm from "@crearProducto/CrearProductoForm.astro";
 import Layout from "@layouts/Layout.astro";
 import { obtenerCookie } from "@libs/auth/controlCookies";
 
-
 let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
 ---
+
 <!--Prohibo el acceso a la pagina a los no registrado, no miro a quien pertenece la cookie (en este componente), solo si tiene cookie de sesion o no -->
 <Layout titulo="Crear producto">
-  {cookie && <CrearProductoForm></CrearProductoForm>}
+  {cookie && <CrearProductoForm />}
   {
     !cookie && (
       <div class="text-center">

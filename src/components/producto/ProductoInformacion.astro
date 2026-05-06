@@ -21,7 +21,10 @@ const { id, poderEditar } = Astro.props;
           búsqueda o no.
         </p>
         <p class="text-xs">
-          Las atributos definiarn el contenido del producto. Puedes añadir tantos cuantos quieren, aunque todos deben de tener un nombre (El nombre de la columna donde quieres que aparezca esta informacion), y un valor (El propio contenido del atributo)
+          Las atributos definiarn el contenido del producto. Puedes añadir
+          tantos cuantos quieren, aunque todos deben de tener un nombre (El
+          nombre de la columna donde quieres que aparezca esta informacion), y
+          un valor (El propio contenido del atributo)
         </p>
         <p class="text-xs">
           Todos estos valores pueden ser modificados en cualquier momento.
@@ -58,22 +61,38 @@ const { id, poderEditar } = Astro.props;
         >
           <div class="contenedorInputLabel max-w-full overflow-hidden">
             <div>
-              <input type="text" class="columna max-w-full" id="NombreColumna1" />
+              <input
+                type="text"
+                class="columna max-w-full"
+                id="NombreColumna1"
+              />
               <label for="NombreColumna1">Nombre columna 1</label>
             </div>
             <div>
-              <input type="text" class="columna max-w-full" id="ValorColumna1" />
+              <input
+                type="text"
+                class="columna max-w-full"
+                id="ValorColumna1"
+              />
               <label for="ValorColumna1">Valor columna 1</label>
             </div>
           </div>
 
           <div class="contenedorInputLabel max-w-full overflow-hidden">
             <div>
-              <input type="text" class="columna max-w-full" id="NombreColumna2" />
+              <input
+                type="text"
+                class="columna max-w-full"
+                id="NombreColumna2"
+              />
               <label for="NombreColumna2">Nombre columna 2</label>
             </div>
             <div>
-              <input type="text" class="columna max-w-full" id="ValorColumna2" />
+              <input
+                type="text"
+                class="columna max-w-full"
+                id="ValorColumna2"
+              />
               <label for="ValorColumna2">Valor columna 2</label>
             </div>
           </div>
@@ -81,14 +100,14 @@ const { id, poderEditar } = Astro.props;
       </div>
       {
         poderEditar && (
-                <div class="col-span-full flex justify-center">
-          <button
-            type="button"
-            id="nuevaColumna"
-            class="self-center px-8 py-3 rounded bg-gray-300 hover:bg-gray-400 hover:cursor-pointer hidden"
-          >
-            Añadir mas columnas
-          </button>
+          <div class="col-span-full flex justify-center">
+            <button
+              type="button"
+              id="nuevaColumna"
+              class="self-center px-8 py-3 rounded bg-gray-300 hover:bg-gray-400 hover:cursor-pointer hidden"
+            >
+              Añadir mas columnas
+            </button>
           </div>
         )
       }
@@ -116,10 +135,12 @@ const { id, poderEditar } = Astro.props;
   }
 </section>
 
-
 <script>
-  import { borrarHeader, newColumn } from "@crearProducto/CrearProductoScriptComun";
-import { crearDialog } from "@libs/dialog/crearDialog";
+  import {
+    borrarHeader,
+    newColumn,
+  } from "@crearProducto/CrearProductoScriptComun";
+  import { crearDialog } from "@libs/dialog/crearDialog";
 
   interface interfazProducto {
     name: string;
@@ -139,16 +160,15 @@ import { crearDialog } from "@libs/dialog/crearDialog";
   let editarProducto = document.querySelector("#editarProducto") as HTMLElement;
   let editando = false;
 
-    //Esta funcion crea una nueva columna
-  nuevaColumna?.addEventListener("click", e => {
-    newColumn(editando)
+  //Esta funcion crea una nueva columna
+  nuevaColumna?.addEventListener("click", (e) => {
+    newColumn(editando);
   });
-
 
   //Esta funcion selecciona toda la informacion y lo manda al servidor
   async function editProduct() {
     let valido = true;
-    let textoError = "";    
+    let textoError = "";
     let nombre = collectionName.value;
     let cookie = 0; //No puede haber usuario con ID 0;
     let main = document.querySelector("main");
@@ -170,7 +190,6 @@ import { crearDialog } from "@libs/dialog/crearDialog";
     );
 
     if (selectorColumnasElementos == null) {
-      console.log("VAMOS A MORIR TODOS");
       return;
     }
 
@@ -182,9 +201,6 @@ import { crearDialog } from "@libs/dialog/crearDialog";
       let atributoNombre = document.querySelector("#NombreColumna" + contador);
       let atributoValor = document.querySelector("#ValorColumna" + contador);
 
-      console.log(atributoNombre);
-      console.log(atributoValor);
-
       if (atributoNombre == null || atributoValor == null) {
         return;
       }
@@ -192,24 +208,18 @@ import { crearDialog } from "@libs/dialog/crearDialog";
       let nombre = (atributoNombre as HTMLInputElement).value;
       let valor = (atributoValor as HTMLInputElement).value;
 
-      console.log("#NombreColumna" + contador);
-      console.log(nombre);
-      console.log(valor);
-
       if (nombre != null && valor != null) {
         //Valido que no haya dos atributos iguales
-        if (columnas[nombre]!=null){
-            valido = false;
-            textoError += "\n No puedes tener dos atributos con el mismo nombre.";
-        }        
+        if (columnas[nombre] != null) {
+          valido = false;
+          textoError += "\n No puedes tener dos atributos con el mismo nombre.";
+        }
         columnas[nombre] = valor;
       }
     }
 
-    console.log(columnas);
     let columnasJSON = JSON.stringify(columnas);
 
-    console.log(columnasJSON);
     // Validacion de errores.
 
     //Reviso que el nombre no sea null
@@ -217,8 +227,8 @@ import { crearDialog } from "@libs/dialog/crearDialog";
       valido = false;
       textoError += "\n El producto debe de tener un nombre";
     }
-    if(nombre.length>100){
-      valido=false;
+    if (nombre.length > 100) {
+      valido = false;
       textoError += "\n el nombre de la colección es demasiado largo";
     }
     //Reviso que hayan columnas
@@ -226,41 +236,36 @@ import { crearDialog } from "@libs/dialog/crearDialog";
       valido = false;
       textoError += "\n El producto debe de tener atributos";
     }
-    if(columnasJSON.length>=1000){
-      valido=false;
-      textoError += "\n Tienes demasiadas atributos o tienes un atributo cuyo nombre o valor es demasiado largo.";
+    if (columnasJSON.length >= 1000) {
+      valido = false;
+      textoError +=
+        "\n Tienes demasiadas atributos o tienes un atributo cuyo nombre o valor es demasiado largo.";
     }
-    if(valido){
+    if (valido) {
+      const response = await fetch("/api/editProduct", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+          name: nombre,
+          userID: userID,
+          visibility: visibilidad,
+          cookie: cookie,
+          columns: columnasJSON,
+        }),
+      });
+      const result = await response.json();
 
-    const response = await fetch("/api/editProduct", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: id,
-        name: nombre,
-        userID: userID,
-        visibility: visibilidad,
-        cookie: cookie,
-        columns: columnasJSON,
-      }),
-    });
-    console.log(response);
-    const result = await response.json();
-    console.log("Response data:", result);
-    
-
-    if (response.ok) {
-      crearDialog("Cambios realizados con exito");
-      deshabilitarCampos();
+      if (response.ok) {
+        crearDialog("Cambios realizados con exito");
+        deshabilitarCampos();
+      }
+    } else {
+      crearDialog(textoError);
     }
   }
-  else{
-    crearDialog(textoError)
-  }
-}
-
 
   boton?.addEventListener("click", editProduct);
 
@@ -271,7 +276,6 @@ import { crearDialog } from "@libs/dialog/crearDialog";
 
   let id = conseguirID();
 
-
   //Esta funcion recupera los datos del producto
   async function leerProducto() {
     const response = await fetch("/api/readProduct", {
@@ -280,28 +284,22 @@ import { crearDialog } from "@libs/dialog/crearDialog";
     });
     let resultado = await response.json();
     let correcto = resultado.data;
-    console.log("RESULTADO!!");
-    console.log(resultado.data);
+
     asignarDatos(correcto);
   }
   //Esta funcion edita todos los campos para que contengan la informacion del proudcto anteriormente recuperada.
   async function asignarDatos(datos: interfazProducto) {
     //Nombre
-    console.log(datos.name);
-    console.log(datos);
 
     collectionName.value = datos.name;
 
     //Visibilidad
-    console.log(datos.visibility);
 
     const todosOptions: HTMLOptionElement[] = Array.from(
       collectionVisibility.options,
     );
     todosOptions.map((e: HTMLOptionElement) => {
       if (e.textContent == datos.visibility) {
-        console.log("NYA :3");
-        console.log(e);
         e.selected = true;
       }
     });
@@ -309,14 +307,8 @@ import { crearDialog } from "@libs/dialog/crearDialog";
     //Columnas
     let columnasOriginal = await JSON.parse(datos.columns);
     let contador = 0;
-    console.log(columnasOriginal);
     for (let iterable of Object.entries(columnasOriginal)) {
-      console.log(contador);
-      console.log(iterable);
-      console.log(document.querySelector("#NombreColumna1"));
-
       if (!selectorColumnas?.children[contador]) {
-        console.log("NYAAAAA NEW COLUMN");
         newColumn(editando);
       }
 
@@ -329,9 +321,6 @@ import { crearDialog } from "@libs/dialog/crearDialog";
         "#ValorColumna" + contadorAcelerado,
       ) as HTMLInputElement;
 
-      console.log(nombre);
-      console.log(valor);
-
       if (nombre == null) {
         return;
       }
@@ -342,18 +331,12 @@ import { crearDialog } from "@libs/dialog/crearDialog";
       nombre.value = iterable[0];
       valor.value = iterable[1] as string;
 
-      console.log(nombre);
-      console.log(valor);
-
       contador += 1;
     }
   }
 
-
   //Ejecuto la funcion de leer producto (Y por lo tanto, la de asignar datos), nada mas encener la pagina.
   leerProducto();
-
-
 
   //Esta funcion deshabilita todos los campos en caso de no estar en modo edición. No es necesario como tal, pero mejora la experiencia de usuario.
   function deshabilitarCampos() {
@@ -369,13 +352,10 @@ import { crearDialog } from "@libs/dialog/crearDialog";
       e.disabled = true;
     });
 
-    console.log("me ejecuto!");
-
     select.disabled = true;
     editarProducto.style.display = "block";
     boton.style.display = "none";
-    nuevaColumna.style.display = "none"
-
+    nuevaColumna.style.display = "none";
   }
 
   //Deshabilito todos los campos nada mas iniciar la pagina.
@@ -384,8 +364,7 @@ import { crearDialog } from "@libs/dialog/crearDialog";
 
   function habilitarCampos() {
     editando = true;
-    console.log("holiwissss");
-    console.log(boton);
+
     let todosInput = Array.from(document.querySelectorAll("input"));
     let select = document.querySelector("select");
 
@@ -397,22 +376,15 @@ import { crearDialog } from "@libs/dialog/crearDialog";
       e.disabled = false;
     });
 
-    console.log("me ejecuto!");
-
     select.disabled = false;
     editarProducto.style.display = "none";
     boton.style.display = "flex";
-    nuevaColumna.style.display = "block"
+    nuevaColumna.style.display = "block";
   }
-  console.log("EDITAR PRODUCTO!!");
-  console.log(editarProducto);
-  editarProducto?.addEventListener("click", habilitarCampos);
 
+  editarProducto?.addEventListener("click", habilitarCampos);
 
   //Funcion para borrar un campo si se deja vacio
 
-  selectorColumnas?.addEventListener("focusout", borrarHeader)
-
-
+  selectorColumnas?.addEventListener("focusout", borrarHeader);
 </script>
-

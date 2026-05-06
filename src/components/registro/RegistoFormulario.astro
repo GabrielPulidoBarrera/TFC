@@ -8,7 +8,9 @@ import "@styles/global.css";
     action=""
     class="container flex flex-col mx-auto space-y-12"
   >
-    <fieldset class="grid grid-cols-1 md:grid-cols-4 gap-6 p-6 rounded-md shadow-sm">
+    <fieldset
+      class="grid grid-cols-1 md:grid-cols-4 gap-6 p-6 rounded-md shadow-sm"
+    >
       <div>
         <label for="correo" class="text-sm">Coreo</label>
         <input
@@ -38,8 +40,14 @@ import "@styles/global.css";
       </div>
       <div>
         <p>Reglas para el registro:</p>
-        <p>El usuario no debe de contener caracteres especiales y debe de tener al menos 4 caracteres</p>
-        <p>La contraseña debe de tener al menos una mayuscula, una minuscula, un numero, y 8 caracteres de longitud.</p>
+        <p>
+          El usuario no debe de contener caracteres especiales y debe de tener
+          al menos 4 caracteres
+        </p>
+        <p>
+          La contraseña debe de tener al menos una mayuscula, una minuscula, un
+          numero, y 8 caracteres de longitud.
+        </p>
       </div>
     </fieldset>
     <button
@@ -107,58 +115,56 @@ import "@styles/global.css";
     let password = (document.querySelector("#password") as HTMLInputElement)
       .value;
 
-
     //Validacion de errores
 
     //He copiado y pegado este regex de google. Valida si un email es valido o no. Parece funcionar bien.
     let emailRegex =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (emailRegex.test(emailUsuario) == false) {
-      error+="\n Tu email es invalido";
+      error += "\n Tu email es invalido";
       valido = false;
     }
     //Este regex se asegura de que no tenga carateres especiales.
     let usuarioRegex = /^[A-Za-z0-9]*$/;
     if (usuarioRegex.test(username) == false) {
-      error+="\n Tu usuario no puede contener caracteres especiales";
+      error += "\n Tu usuario no puede contener caracteres especiales";
       valido = false;
     }
     //Reviso la longitud del usuario
-    if (username.length<4){
-      error+="\n Tu usuario es demasiado corto"
+    if (username.length < 4) {
+      error += "\n Tu usuario es demasiado corto";
       valido = false;
     }
-        if (username.length>60){
-      error+="\n Tu usuario es demasiado largo"
+    if (username.length > 60) {
+      error += "\n Tu usuario es demasiado largo";
       valido = false;
     }
 
-    
     //Defino regex que voy a usar luego.
 
     let mayusculaRegex = /[A-Z]/;
     let minusculaRegex = /[a-z]/;
     let numeroRegex = /[0-9]/;
 
-    //Reviso la longitud de la contraseña 
+    //Reviso la longitud de la contraseña
     if (password.length < 8) {
-      error+="\n Tu contraseña es muy corta";
+      error += "\n Tu contraseña es muy corta";
       valido = false;
     }
 
     //Reviso si la contraseña tiene al menos una mayuscula
     if (mayusculaRegex.test(password) == false) {
-      error+="\n Tu contraseña debe de contener al menos una mayuscula.";
+      error += "\n Tu contraseña debe de contener al menos una mayuscula.";
       valido = false;
     }
     //Reviso si la contraseña tiene al menos una minuscula.
     if (minusculaRegex.test(password) == false) {
-      error+="\n Tu contraseña debe de contener al menos una minuscula.";
+      error += "\n Tu contraseña debe de contener al menos una minuscula.";
       valido = false;
     }
     //Reviso si la contraseña tiene un numero.
     if (numeroRegex.test(password) == false) {
-      error+="\n Tu contraseña debe de contener al menos un numero.";
+      error += "\n Tu contraseña debe de contener al menos un numero.";
       valido = false;
     }
 
@@ -176,7 +182,6 @@ import "@styles/global.css";
           password: password,
         }),
       });
-      console.log(response);
       if (response.ok) {
         const responseData = await response.json();
         let id = responseData.data.id;
@@ -193,19 +198,20 @@ import "@styles/global.css";
             id: id,
           }),
         });
-        console.info(responseCorreo);
-        crearDialog("El registro ha funcionado. Revisa tu correo electronico para verificar el email.")
-      }
-      else{
-        crearDialog("El registro ha fallado.")
+        crearDialog(
+          "El registro ha funcionado. Revisa tu correo electronico para verificar el email.",
+        );
+      } else {
+        crearDialog("El registro ha fallado.");
       }
       cargar.style.display = "none";
       textoBoton.style.display = "block";
-    } else { // en caso de que algun campo haya sido einvalido, elimino el spinner y te doy el mensaje de error
-      crearDialog(error)
+    } else {
+      // en caso de que algun campo haya sido einvalido, elimino el spinner y te doy el mensaje de error
+      crearDialog(error);
       cargar.style.display = "none";
       textoBoton.style.display = "block";
-      return
+      return;
     }
   }
 </script>

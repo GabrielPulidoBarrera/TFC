@@ -3,7 +3,7 @@ import Buscar from "@buscar/Buscar.astro";
 import "@styles/global.css";
 import { obtenerCookie } from "@libs/auth/controlCookies";
 const { idLink } = Astro.props;
-//console.log(idLink)
+console.log(idLink)
 
 
 let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
@@ -66,7 +66,6 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 <script define:vars={{ idLink, cookie }}>
 
 
-	console.log(idLink)
 	// Defino y selecciono lo necesario
 	let tbody = document.querySelector('tbody');
 	let editar = document.querySelector('#editar');
@@ -114,12 +113,9 @@ async function readCollection() {
 		});
 		resultado = await response.json();
 		let correcto = resultado.data
-		console.log("RESULTADO!!")
-		console.log(resultado.data);
 
 		columnas = JSON.parse(correcto.columns);
 		columnasOriginal = JSON.parse(correcto.columns);
-		//console.log(columnasOriginal)
 		titulo.textContent = correcto.name;
 		//Creo colgroups y th segun los datos que hayan.
 		for (let i of columnas) {
@@ -154,7 +150,6 @@ async function readCollection() {
 		let resultado = await response.json();
 		let data = resultado.data;
 
-		console.log(data)
 		// Extraer los IDs de producto
 		let arrayProductos = [];
 		for (let iterable of data) {
@@ -169,12 +164,10 @@ async function readCollection() {
 		let resultadoProduct = await responseProducts.json();
 		let dataProduct = resultadoProduct.data;
 
-		console.log(resultadoProduct);
 
 		// Rellenar la tabla con los datos
 		for (let objetoRaw of dataProduct) {
 
-			console.log(columnas)
 			crearTR(objetoRaw.id);
 			let objeto = JSON.parse(objetoRaw.columns);
 			for (let iterable in objeto) {
@@ -249,8 +242,6 @@ if (tbody == null) return;
 			return
 		}
 		if (!e.altKey){
-			console.log("No es alt!")
-			console.log(e.key)
 			return
 		}
 
@@ -269,12 +260,10 @@ if (tbody == null) return;
 	//Esta funcion borra un elemento
 	async function borrarElemento(e){
 		if (!editando){
-			console.log("No es editando")
 			return
 		}
 
 		if (!e.target.closest("tr")){
-			console.log("no es tr!")
 			return
 		}
 		if (e.target.closest("tr").id=="trDeThead"){
@@ -283,8 +272,6 @@ if (tbody == null) return;
 			//Detecta un click con alt en caso de que estes en modo de edicion pero no en el modo de borrado.
 		if (!modoBorrar){
 			if (!e.altKey){
-				console.log("No es alt!")
-				console.log(e.key)
 				return
 			}
 		}
@@ -301,7 +288,6 @@ if (tbody == null) return;
 			},
 			body: JSON.stringify(objetoAPI),
 			});
-			console.log(response);
 		readCollecionProduct()
 	}
 	//Activa el modo de borrar
@@ -392,9 +378,8 @@ if (tbody == null) return;
 		}
 
 		columnas = nuevaColumnas;
-		console.log("EDITADO!");
-		console.log(columnas)
-				modoBorrar = false
+
+		modoBorrar = false
 		desmarcarRojo()
 		dejarBorrar.style.display="none";
 		borrar.style.display="block"
@@ -436,7 +421,6 @@ readCollecionProduct()
 		tr.id = id
 		//leo cuantas columnas crear para para determinar cuantos TD crear.
 		let numeroTD = thead.lastElementChild?.childElementCount;
-		console.log(numeroTD)
 		if (numeroTD == null) return;
 		for (let i = 0; i < numeroTD; i++) {
 			let td = document.createElement('td');
@@ -463,7 +447,6 @@ readCollecionProduct()
 		for (let iterable of lista){
 			//Si estoy en el modo de edicion, hago que las casillas sean editables.
 			let td = document.createElement('td');
-			//console.log(iterable);
 			iterable.append(td)
 		}
 		tabla.prepend(colgroup)
@@ -486,7 +469,6 @@ readCollecionProduct()
 		if (!panelBuscar.style.display=="flex"){
 			return
 		}
-		console.log(e.target)
 		if(e.target===panelBuscar){
 			desactivarPanelNuevaFila()
 		}	
@@ -504,11 +486,7 @@ thead.addEventListener("focusout", borrarHeader)
 
 function borrarHeader(e){
 	if (e.target.textContent.trim()==""){
-		console.log("Hola!")
-		console.log(e.target.textContent)
-		console.log(e.target)
-		console.log(Array.from(thead.children[0].children))
-		console.log(Array.from(thead.children[0].children).indexOf(e.target))
+
 		let posicion = Array.from(thead.children[0].children).indexOf(e.target)
 		e.target.remove()
 

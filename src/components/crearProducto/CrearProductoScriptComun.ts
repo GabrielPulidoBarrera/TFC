@@ -55,32 +55,23 @@
 
 export function borrarHeader(e: Event){
   let objetivo = (e.target as HTMLInputElement);
-  console.log(objetivo);
 
   if (!objetivo){
     return
   }
   //Vamos a obtener el numero de columna, para ellos, vamos a mirar el numero que tiene el label
   let label = (objetivo.parentElement?.querySelector('label'));
-  console.log(label?.textContent.split(" "));
   //para sacar el label, hacemos un split y pillamos el ultimo, el label siempre tiene 3 palabras, siendo esto columna/valor columna (numero) 
   let columna = Number(label?.textContent.split(" ")[2])
-  console.log(label)
-  console.log(columna)
+
 
   //Seleccionamos el nombre y el valor, no nos preocupamos con que tienes en el e.target ya, eso es irrelevante.
   let input = document.querySelector('#NombreColumna'+columna) as HTMLInputElement
   let valor = document.querySelector('#ValorColumna'+columna) as HTMLInputElement
 
-  console.log(input)
-  console.log(valor)
-
-  console.log(input?.value.trim())
-  console.log(valor?.value.trim())
 
   //Miramos si ambos campos esta vacio
   if (input?.value.trim() == "" && valor?.value.trim() == ""){
-    console.log("Me ejecuto!!")
     if (valor.parentElement?.parentElement==null){
       return
     }
@@ -92,7 +83,6 @@ export function borrarHeader(e: Event){
       ".contenedorInputLabel",
     );
         if (selectorColumnasElementos == null) {
-      console.error("Error en selectorColumnasElementos");
       return;
     }
     //El contador empezara desde el numero que hemos borrado, pero le sumaremos 1, para seleccionar el siguiente

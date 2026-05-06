@@ -171,8 +171,6 @@ const { idUsuario = 1, idColeccion } = Astro.props;
     let textoBuscado = buscar.value;
     let resultado;
 
-    console.log("HOLAAAAAAAAAAAA " + textoBuscado);
-
     if (textoBuscado.length <= 0) {
       return;
     }
@@ -196,7 +194,6 @@ const { idUsuario = 1, idColeccion } = Astro.props;
         }),
       });
       resultado = await response.json();
-      console.log(resultado.data);
     } else if (tipo == "coleccion") {
       const response = await fetch("/api/readCollectionSearch", {
         method: "POST",
@@ -206,16 +203,12 @@ const { idUsuario = 1, idColeccion } = Astro.props;
         }),
       });
       resultado = await response.json();
-      console.log("estas coleccionando!!!!!!!!");
-      console.log(resultado.data);
     }
 
     if (resultado.data.length == 0) {
-      console.log("RESULTADO ES 0");
       mensajeError.textContent =
         "No se ha encontrado ningun elemento que coincida con el termino buscado.";
     }
-    console.log("LENGTH " + resultado.data.length);
 
     //borro los resultados antiguos
 
@@ -223,7 +216,6 @@ const { idUsuario = 1, idColeccion } = Astro.props;
       contenedor.removeChild(contenedor.firstChild);
     }
     resultado.data.map((e: interfazBusqueda) => {
-      console.log(e);
       //creo el enlace
       let a = document.createElement("a");
 
@@ -246,15 +238,6 @@ const { idUsuario = 1, idColeccion } = Astro.props;
       let nuevoTexto = e.name.slice(posicion, posicion + textoBuscado.length);
       let parte1 = e.name.slice(0, posicion);
       let parte2 = e.name.slice(posicion + nuevoTexto.length);
-
-      console.log("parte1 " + parte1);
-      console.log("parte2 " + parte2);
-
-      console.log("nombre! " + e.name);
-      console.log(posicion);
-      console.log("textoBuscado! " + textoBuscado);
-
-      console.log(nuevoTexto);
 
       //creo varios div con el nombre, con la parte encontrada en rojo
       let entradilla = document.createElement("span");
@@ -313,18 +296,12 @@ function conseguirIDColeccion(){
       "#contenedorBuscar",
     ) as HTMLInputElement;
     if (contenedorBuscar == null) {
-      console.log("regreso en contenedorBuscar");
-
       return;
     }
     if (contenedorBuscar.dataset == null) {
-      console.log("regreso en contenedorBuscar dataset");
-
       return;
     }
     if (contenedorBuscar.dataset.idcoleccion == null) {
-      console.log("regreso en contenedorBuscar dataset idcoleccion");
-
       return;
     }
 
@@ -338,21 +315,17 @@ function conseguirIDColeccion(){
     let elementoBuscado: HTMLElement = (e.target as HTMLElement);
     
   if (elementoBuscado == null) {
-      console.log("regreso en e.target");
       return;
 
 
     }
-    console.log(elementoBuscado.id);
     if (elementoBuscado.id != "meterColeccion") {
-      console.log("regreso en meterColeccion");
 
       return;
     }
 
     let idColeccion = conseguirIDColeccion();
 
-    console.log("idcoleccion = " + idColeccion);
 
     e.preventDefault();
     e.stopPropagation();
@@ -376,9 +349,7 @@ function conseguirIDColeccion(){
           collectionID: Number(idColeccion),
         }),
       });
-      console.log(response);
       const result = await response.json();
-      console.log("Response data:", result);
       if (response.ok) {
         crearDialog("Producto añadido a la coleccion exitosamente");
       }

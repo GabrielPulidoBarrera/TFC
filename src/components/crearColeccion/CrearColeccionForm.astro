@@ -88,7 +88,6 @@ import "@styles/global.css";
   >
 </div>
 
-
 <script>
   import { crearDialog } from "@libs/dialog/crearDialog";
 
@@ -145,7 +144,6 @@ import "@styles/global.css";
       columnas.push(iterable.value);
     }
     let columnasJSON = JSON.stringify(columnas);
-    console.log(columnasJSON);
 
     //Validacion de errores.
 
@@ -155,14 +153,15 @@ import "@styles/global.css";
       valido = false;
       textoError += "\n La coleccion debe de tener un nombre";
     }
-    if(nombre.length>100){
-      valido=false;
+    if (nombre.length > 100) {
+      valido = false;
       textoError += "\n el nombre de la colección es demasiado largo";
     }
 
-    if(columnasJSON.length>=1000){
-      valido=false;
-      textoError += "\n Tienes demasiadas columnas o tienes una columna cuyo nombre es demasiado largo.";
+    if (columnasJSON.length >= 1000) {
+      valido = false;
+      textoError +=
+        "\n Tienes demasiadas columnas o tienes una columna cuyo nombre es demasiado largo.";
     }
 
     if (valido) {
@@ -178,9 +177,7 @@ import "@styles/global.css";
           columns: columnasJSON,
         }),
       });
-      console.log(response);
       const result = await response.json();
-      console.log("Response data:", result);
       if (response.ok) {
         window.location.href = "/c/" + nombre + "-" + result.data.id;
       }
@@ -191,4 +188,3 @@ import "@styles/global.css";
 
   boton?.addEventListener("click", newCollection);
 </script>
-

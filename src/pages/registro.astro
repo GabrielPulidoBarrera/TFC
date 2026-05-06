@@ -1,17 +1,18 @@
 ---
-
 import RegistoFormulario from "@registro/RegistoFormulario.astro";
 import Layout from "@layouts/Layout.astro";
 import { obtenerCookie } from "@libs/auth/controlCookies";
 let cookie = await obtenerCookie(Astro.cookies?.get("sesion"));
-
 ---
+
 <!--Prohibo el acceso a la pagina a los registrados, no miro a quien pertenece la cookie (en este componente), solo si tiene cookie de sesion o no -->
 <Layout titulo="Registro">
-    {!cookie &&
-    <RegistoFormulario></RegistoFormulario>
-    }
-    {cookie &&
-        <div class="text-center">Cierra sesion antes de volver a registrarte.</div>
+    {!cookie && <RegistoFormulario />}
+    {
+        cookie && (
+            <div class="text-center">
+                Cierra sesion antes de volver a registrarte.
+            </div>
+        )
     }
 </Layout>

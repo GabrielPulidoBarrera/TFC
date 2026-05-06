@@ -20,7 +20,10 @@ import "@styles/global.css";
           búsqueda o no.
         </p>
         <p class="text-xs">
-          Los atributos definiran el contenido del producto. Puedes añadir tantos como quieran, aunque todos deben tener un nombre (el nombre de la columna donde quieres que aparezca esta información), y un valor (el propio contenido del atributo)
+          Los atributos definiran el contenido del producto. Puedes añadir
+          tantos como quieran, aunque todos deben tener un nombre (el nombre de
+          la columna donde quieres que aparezca esta información), y un valor
+          (el propio contenido del atributo)
         </p>
         <p class="text-xs">
           Todos estos valores pueden ser modificados en cualquier momento.
@@ -57,34 +60,50 @@ import "@styles/global.css";
         >
           <div class="contenedorInputLabel max-w-full overflow-hidden">
             <div>
-              <input type="text" class="columna max-w-full" id="NombreColumna1" />
+              <input
+                type="text"
+                class="columna max-w-full"
+                id="NombreColumna1"
+              />
               <label for="NombreColumna1">Nombre columna 1</label>
             </div>
             <div>
-              <input type="text" class="columna max-w-full" id="ValorColumna1" />
+              <input
+                type="text"
+                class="columna max-w-full"
+                id="ValorColumna1"
+              />
               <label for="ValorColumna1">Valor columna 1</label>
             </div>
           </div>
 
           <div class="contenedorInputLabel max-w-full overflow-hidden">
             <div>
-              <input type="text" class="columna max-w-full" id="NombreColumna2" />
+              <input
+                type="text"
+                class="columna max-w-full"
+                id="NombreColumna2"
+              />
               <label for="NombreColumna2">Nombre columna 2</label>
             </div>
             <div>
-              <input type="text" class="columna max-w-full" id="ValorColumna2" />
+              <input
+                type="text"
+                class="columna max-w-full"
+                id="ValorColumna2"
+              />
               <label for="ValorColumna2">Valor columna 2</label>
             </div>
           </div>
         </span>
       </div>
       <div class="col-span-full flex justify-center">
-      <button
-        type="button"
-        id="nuevaColumna"
-        class="self-center px-8 py-3 rounded my-2 bg-gray-300 hover:bg-gray-400 hover:cursor-pointer"
-        >Añadir mas columnas</button
-      >
+        <button
+          type="button"
+          id="nuevaColumna"
+          class="self-center px-8 py-3 rounded my-2 bg-gray-300 hover:bg-gray-400 hover:cursor-pointer"
+          >Añadir mas columnas</button
+        >
       </div>
     </fieldset>
   </form>
@@ -103,7 +122,7 @@ import "@styles/global.css";
 
 <script>
   import { crearDialog } from "@libs/dialog/crearDialog";
-import { borrarHeader, newColumn } from "./CrearProductoScriptComun";
+  import { borrarHeader, newColumn } from "./CrearProductoScriptComun";
 
   //Seleciono e inicializo lo necesario
   let boton = document.querySelector("#crearColeccion");
@@ -114,12 +133,10 @@ import { borrarHeader, newColumn } from "./CrearProductoScriptComun";
   let nuevaColumna = document.querySelector("#nuevaColumna");
   let selectorColumnas = document.querySelector("#selectorColumnas");
 
-
-
   //Esta funcion crea una nueva columna
 
-  nuevaColumna?.addEventListener("click", e=> {
-    newColumn()
+  nuevaColumna?.addEventListener("click", (e) => {
+    newColumn();
   });
 
   //Esta funcion selecciona toda la informacion y lo manda al servidor
@@ -142,62 +159,48 @@ import { borrarHeader, newColumn } from "./CrearProductoScriptComun";
 
     let userID = Number(cookie);
     let visibilidad = collectionVisibility.value;
-    let duplicado=false;
+    let duplicado = false;
     //Las columnas los guardo en JSON, la estructura es un objeto con estructura clave valor.
-        console.log("ME EJECUTO")
 
     let columnas: { [key: string]: string } = {};
 
     let selectorColumnas = document.querySelector("#selectorColumnas");
-    let selectorColumnasElementos =
-      selectorColumnas?.querySelectorAll(".contenedorInputLabel");
+    let selectorColumnasElementos = selectorColumnas?.querySelectorAll(
+      ".contenedorInputLabel",
+    );
 
     if (selectorColumnasElementos == null) {
       return;
     }
-        console.log(selectorColumnasElementos)
-        console.log(selectorColumnasElementos.length)
 
     for (
       let contador = 1;
       contador < selectorColumnasElementos?.length + 1;
       contador++
     ) {
-      
-      console.log(contador)
-      
       let atributoNombre = document.querySelector("#NombreColumna" + contador);
       let atributoValor = document.querySelector("#ValorColumna" + contador);
-
-
-      console.log(atributoNombre)
-        console.log(atributoValor)
 
       if (atributoNombre == null || atributoValor == null) {
         return;
       }
-        console.log("ME EJECUTO")
 
       let nombre = (atributoNombre as HTMLInputElement).value;
       let valor = (atributoValor as HTMLInputElement).value;
 
-
       if (nombre != null && valor != null) {
-        console.log("ME EJECUTO")
         //Valido que no haya dos atributos iguales
-        console.log(columnas[nombre])
-        if (columnas[nombre]!=null){
-          duplicado=true;
+        if (columnas[nombre] != null) {
+          duplicado = true;
           valido = false;
         }
         columnas[nombre] = valor;
       }
     }
-    if (duplicado){
+    if (duplicado) {
       textoError += "\n No puedes tener dos atributos con el mismo nombre.";
     }
 
-    console.log(columnas);
     let columnasJSON = JSON.stringify(columnas);
 
     // Validacion de errores.
@@ -207,8 +210,8 @@ import { borrarHeader, newColumn } from "./CrearProductoScriptComun";
       valido = false;
       textoError += "\n El producto debe de tener un nombre";
     }
-    if(nombre.length>100){
-      valido=false;
+    if (nombre.length > 100) {
+      valido = false;
       textoError += "\n el nombre de la colección es demasiado largo";
     }
     //Reviso que hayan columnas
@@ -221,9 +224,10 @@ import { borrarHeader, newColumn } from "./CrearProductoScriptComun";
       valido = false;
       textoError += "\n El producto debe de tener atributos";
     }
-    if(columnasJSON.length>=1000){
-      valido=false;
-      textoError += "\n Tienes demasiadas atributos o tienes un atributo cuyo nombre o valor es demasiado largo.";
+    if (columnasJSON.length >= 1000) {
+      valido = false;
+      textoError +=
+        "\n Tienes demasiadas atributos o tienes un atributo cuyo nombre o valor es demasiado largo.";
     }
 
     if (valido) {
@@ -239,9 +243,7 @@ import { borrarHeader, newColumn } from "./CrearProductoScriptComun";
           columns: columnasJSON,
         }),
       });
-      console.log(response);
       const result = await response.json();
-      console.log("Response data:", result);
 
       if (response.ok) {
         crearDialog("Producto creado correctamente");
@@ -253,9 +255,7 @@ import { borrarHeader, newColumn } from "./CrearProductoScriptComun";
 
   boton?.addEventListener("click", newProduct);
 
-
   //Funcion para borrar un campo si se deja vacio
 
-  selectorColumnas?.addEventListener("focusout", borrarHeader)
+  selectorColumnas?.addEventListener("focusout", borrarHeader);
 </script>
-
