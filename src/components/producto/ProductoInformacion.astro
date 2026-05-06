@@ -222,6 +222,9 @@ const { id, poderEditar } = Astro.props;
       let atributoNombre = document.querySelector("#NombreColumna" + contador);
       let atributoValor = document.querySelector("#ValorColumna" + contador);
 
+      console.log(atributoNombre);
+      console.log(atributoValor);
+
       if (atributoNombre == null || atributoValor == null) {
         return;
       }
@@ -502,7 +505,7 @@ function borrarHeader(e: Event){
       console.log(atributoValor);
 
       atributoNombre.id="NombreColumna"+contadorReal;
-      atributoValor.id="NombreColumna"+contadorReal;
+      atributoValor.id="ValorColumna"+contadorReal;
 
       let labelAtributoNombre = atributoNombre.parentElement?.querySelector('label');
       if (labelAtributoNombre==null){
@@ -510,6 +513,7 @@ function borrarHeader(e: Event){
         return
       }
       labelAtributoNombre.textContent = "Nombre columna "+contadorReal;
+      labelAtributoNombre.htmlFor="NombreColumna"+contadorReal
 
 
       let labelAtributoValor = atributoValor.parentElement?.querySelector('label');
@@ -517,8 +521,8 @@ function borrarHeader(e: Event){
         console.log("error en label atributo valor")
         return
       }
-      labelAtributoValor.textContent = "Nombre columna "+contadorReal;
-
+      labelAtributoValor.textContent = "Valor columna "+contadorReal;
+      labelAtributoValor.htmlFor="ValorColumna"+contadorReal
     }
 
   }
