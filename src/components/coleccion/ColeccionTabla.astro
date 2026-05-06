@@ -64,7 +64,6 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 </div>
 
 <script define:vars={{ idLink, cookie }}>
-import { crearDialog } from "@libs/dialog/crearDialog";
 
 
 
@@ -135,7 +134,7 @@ async function readCollection() {
 		}
 		catch(error){
 			console.error("Ha habido un error leyendo la colección.", error)
-			crearDialog("Ha habido un error leyendo la colección")
+			alert("Ha habido un error leyendo la colección")
 		}
 	}
 
@@ -191,7 +190,7 @@ async function readCollection() {
 	}
 	catch(error){
 		console.error("Ha habido un error leyendo los productos de la colección.", error)
-		crearDialog("Ha habido un error leyendo los productos de la colección")		
+		alert("Ha habido un error leyendo los productos de la colección")		
 	}
 	}
 
@@ -309,7 +308,7 @@ if (tbody == null) return;
 		}
 		catch(error){
 			console.error("Ha habido un error borrando el producto de la colección.", error)
-			crearDialog("Ha habido un error borrando el producto de la colección")
+			alert("Ha habido un error borrando el producto de la colección")
 		}
 	}
 	//Activa el modo de borrar
@@ -569,7 +568,7 @@ async function borrarColeccionFunction(){
 			}
 			catch(error){
 				console.error("No se ha podido borrar la colección", error)
-				crearDialog("No se ha podido borrar la colección")
+				alert("No se ha podido borrar la colección")
 			}
 		})
     

@@ -91,6 +91,8 @@ import "@styles/global.css";
 <script>
   //Defino y inicializo lo necesario
 
+import { crearDialog } from "@libs/dialog/crearDialog";
+
   let boton = document.querySelector("#crearColeccion");
   let nuevaColumna = document.querySelector("#nuevaColumna");
   let selectorColumnas = document.querySelector("#selectorColumnas");
@@ -182,10 +184,10 @@ import "@styles/global.css";
         }
       } catch(error) {
         console.error("No se ha podido crear una nueva colección", error);
-        alert("No se ha podido crear una nueva colección");
+        crearDialog("No se ha podido crear una nueva colección");
       }
     } else {
-      alert(textoError);
+      crearDialog(textoError);
     }
   }
 
