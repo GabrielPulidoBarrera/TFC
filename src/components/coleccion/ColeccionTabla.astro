@@ -57,6 +57,10 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 		</div>
 		<div class="hidden bg-white border-dashed border-black border-3 text-center items-center justify-center text-7xl cursor-pointer" id="nuevaColumna">+</div>
 	</div>
+
+	<button class="self-center px-8 py-3 font-semibold rounded bg-red-600 text-gray-50 cursor-pointer hidden hover:bg-red-700" id="borrarColeccion">Borrar coleccion</button>
+
+
 </div>
 
 <script define:vars={{ idLink, cookie }}>
@@ -84,6 +88,7 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 	let dejarBorrar = document.querySelector('#dejarBorrar')
 	let visibility = document.querySelector('#visibility')
 	let visibilidadContenedor = document.querySelector('#visibilidadContenedor')
+	let borrarColeccion = document.querySelector('#borrarColeccion')
 	nuevaColumna.addEventListener("click", crearColumna)
 	
 	readCollection();
@@ -200,6 +205,7 @@ async function readCollection() {
 		terminar.style.display = "block";
 		borrar.style.display = "block";
 		visibilidadContenedor.style.display = "block"
+		borrarColeccion.style.display="block"
 
 
 		//creo el selector para crear una nueva columna
@@ -400,7 +406,7 @@ if (tbody == null) return;
 		crearNuevaFila.style.display = "none"
 		terminar.style.display = "none";
 		borrar.style.display = "none"
-
+		borrarColeccion.style.display="none"
 
 
 
@@ -512,6 +518,15 @@ function borrarHeader(e){
 			e.children[posicion].remove()
 		})
 	}
+}
+
+borrarColeccion.addEventListener("click", borrarColeccion)
+
+async function borrarColeccionFunction(){
+	const response = await fetch("/api/deleteCollection", {
+	method: "POST",
+	body: JSON.stringify({ idLink: Number(idLink) }),
+	});
 }
 
 

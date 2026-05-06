@@ -7,7 +7,7 @@ import Layout from "@layouts/Layout.astro";
 
 <script>
 	try {
-		const response = await fetch("/api/borrarCookie", { method: "POST" });
+		const response = await fetch("/api/deleteCookie", { method: "POST" });
 		if (response.ok) window.location.href = "/login";
 	} catch (error) {
 		console.log(error);
