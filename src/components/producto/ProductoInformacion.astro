@@ -60,22 +60,22 @@ const { id, poderEditar } = Astro.props;
           <div class="contenedorInputLabel max-w-full overflow-hidden">
             <div>
               <input type="text" class="columna max-w-full" id="NombreColumna1" />
-              <label for="columna1">Nombre columna 1</label>
+              <label for="NombreColumna1">Nombre columna 1</label>
             </div>
             <div>
               <input type="text" class="columna max-w-full" id="ValorColumna1" />
-              <label for="columna1">Valor columna 1</label>
+              <label for="ValorColumna1">Valor columna 1</label>
             </div>
           </div>
 
           <div class="contenedorInputLabel max-w-full overflow-hidden">
             <div>
               <input type="text" class="columna max-w-full" id="NombreColumna2" />
-              <label for="columna2">Nombre columna 2</label>
+              <label for="NombreColumna2">Nombre columna 2</label>
             </div>
             <div>
               <input type="text" class="columna max-w-full" id="ValorColumna2" />
-              <label for="columna2">Valor columna 2</label>
+              <label for="ValorColumna2">Valor columna 2</label>
             </div>
           </div>
         </span>
@@ -155,7 +155,7 @@ const { id, poderEditar } = Astro.props;
     nombreInput.classList.add("columna", "max-w-full");
     let nombreLabel = document.createElement("label");
     nombreLabel.textContent = "Nombre columna " + contador;
-    nombreLabel.htmlFor = "nombreColumna" + contador;
+    nombreLabel.htmlFor = "NombreColumna" + contador;
 
     div1.append(nombreInput, nombreLabel);
     divContenedor.append(div1);
@@ -168,7 +168,7 @@ const { id, poderEditar } = Astro.props;
     valorInput.classList.add("columna");
     let valorLabel = document.createElement("label");
     valorLabel.textContent = "Valor columna " + contador;
-    valorLabel.htmlFor = "valorColumna" + contador;
+    valorLabel.htmlFor = "ValorColumna" + contador;
 
     //Si no estamos en modo edicion, la nueva columna estara deshabilitada.
 
@@ -501,8 +501,8 @@ function borrarHeader(e: Event){
       console.log(atributoNombre);
       console.log(atributoValor);
 
-      atributoNombre.id="#NombreColumna"+contadorReal;
-      atributoValor.id="#NombreColumna"+contadorReal;
+      atributoNombre.id="NombreColumna"+contadorReal;
+      atributoValor.id="NombreColumna"+contadorReal;
 
       let labelAtributoNombre = atributoNombre.parentElement?.querySelector('label');
       if (labelAtributoNombre==null){
