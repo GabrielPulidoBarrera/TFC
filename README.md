@@ -11,6 +11,8 @@ npm install
 ```
 Tras eso, tendrás que crear un archivo .env en la raíz y colocarle los atributos JWT_TOKEN y DATABASE_URL, que deberá de ir conectada a tu base de datos MySQL (puede que MariaDB también sea compatible, no lo he probado).
 
+Los scripts para crear la base de datos están en la carpeta SQL.
+
 Inicia la pagina con
 ```
 npm run dev
