@@ -146,19 +146,15 @@ import "@styles/global.css";
     let nombre = collectionName.value;
 
     let main = document.querySelector("main");
-    console.log("1")
     if (main == null) {
       return;
     }
-    console.log("2")
     if (main.dataset == null) {
       return;
     }
-    console.log("3")
     if (main.dataset.cookie == null) {
       return;
     }
-    console.log("4")
     let cookie = main.dataset.cookie;
 
     let userID = Number(cookie);
@@ -176,7 +172,6 @@ import "@styles/global.css";
     if (selectorColumnasElementos == null) {
       return;
     }
-    console.log("5")
 
     for (
       let contador = 1;
@@ -189,7 +184,6 @@ import "@styles/global.css";
       if (atributoNombre == null || atributoValor == null) {
         return;
       }
-      console.log("6")
 
       let nombre = (atributoNombre as HTMLInputElement).value;
       let valor = (atributoValor as HTMLInputElement).value;
@@ -236,6 +230,7 @@ import "@styles/global.css";
         "\n Tienes demasiadas atributos o tienes un atributo cuyo nombre o valor es demasiado largo.";
     }
 
+
     if (valido) {
       try{
       const response = await fetch("/api/newProduct", {
@@ -255,14 +250,15 @@ import "@styles/global.css";
       if (response.ok) {
         crearDialog("Producto creado correctamente");
       }
-    else {
-      crearDialog(textoError);
-    }
+
   }
   catch(error){
     console.error("Error creando el producto", error)
     crearDialog("Error creando el producto")
   }
+  }
+  else {
+  crearDialog(textoError);
   }
 }
 
