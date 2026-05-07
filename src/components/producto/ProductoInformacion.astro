@@ -287,17 +287,24 @@ const { id, poderEditar } = Astro.props;
 
   //Esta funcion recupera los datos del producto
   async function leerProducto() {
-    const response = await fetch("/api/readProduct", {
-      method: "POST",
-      body: JSON.stringify({ id: id }),
-    });
-    let resultado = await response.json();
-    let correcto = resultado.data;
+    try{
 
-    asignarDatos(correcto);
+      const response = await fetch("/api/readProduct", {
+        method: "POST",
+        body: JSON.stringify({ id: id }),
+      });
+      let resultado = await response.json();
+      let correcto = resultado.data;
+      
+      asignarDatos(correcto);
+    }
+    catch(error){
+      console.error("Error leyendo el producto", error)
+      crearDialog("Error leyendo el producto")
+    }
   }
   //Esta funcion edita todos los campos para que contengan la informacion del proudcto anteriormente recuperada.
-  async function asignarDatos(datos: interfazProducto) {
+  async function asignarDatos(datos: interfazProducto) { 
     //Nombre
 
     collectionName.value = datos.name;
