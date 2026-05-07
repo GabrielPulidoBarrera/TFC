@@ -130,7 +130,9 @@ async function readCollection() {
 				tabla.prepend(colgroup);
 			}
 			id = correcto.id;
-			visibility.value=resultado.data.visibility;
+			if (visibility){
+				visibility.value=resultado.data.visibility;
+			}
 		}
 		catch(error){
 			console.error("Ha habido un error leyendo la colección.", error)
@@ -330,8 +332,12 @@ if (tbody == null) return;
 	document.addEventListener("keydown", seleccionBorrar)
 	document.addEventListener("keyup", deshacerSeleccionBorrar)
 
-	borrar.addEventListener("click", activarBorrar)
-	dejarBorrar.addEventListener("click", desactivarBorrar)
+	if(borrar){	
+		borrar.addEventListener("click", activarBorrar)
+	}
+	if (dejarBorrar){
+		dejarBorrar.addEventListener("click", desactivarBorrar)
+	}
 
 
 
