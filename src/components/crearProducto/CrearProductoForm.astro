@@ -110,11 +110,11 @@ import "@styles/global.css";
 </section>
 
 <div
-  id="crearColeccion"
+  id="crearProducto"
   class="flex items-center justify-center cursor-pointer"
 >
   <button
-    id="crearColeccion"
+    id="crearProducto"
     class="self-center px-8 py-3 font-semibold rounded bg-violet-600 hover:bg-violet-700 text-gray-50 hover:cursor-pointer"
     >Añadir</button
   >
@@ -125,7 +125,7 @@ import "@styles/global.css";
   import { borrarHeader, newColumn } from "./CrearProductoScriptComun";
 
   //Seleciono e inicializo lo necesario
-  let boton = document.querySelector("#crearColeccion");
+  let boton = document.querySelector("#crearProducto");
   let collectionName = document.querySelector("#name") as HTMLInputElement;
   let collectionVisibility = document.querySelector(
     "#visibility",
@@ -146,15 +146,19 @@ import "@styles/global.css";
     let nombre = collectionName.value;
 
     let main = document.querySelector("main");
+    console.log("1")
     if (main == null) {
       return;
     }
+    console.log("2")
     if (main.dataset == null) {
       return;
     }
+    console.log("3")
     if (main.dataset.cookie == null) {
       return;
     }
+    console.log("4")
     let cookie = main.dataset.cookie;
 
     let userID = Number(cookie);
@@ -172,6 +176,7 @@ import "@styles/global.css";
     if (selectorColumnasElementos == null) {
       return;
     }
+    console.log("5")
 
     for (
       let contador = 1;
