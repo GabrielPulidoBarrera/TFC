@@ -21,7 +21,7 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
 		</div>
 	</div>
 	
-	<div class="flex justify-between mb-2 lg:flex-col flex-row">
+	<div class="flex justify-between mb-2 lg:flex-row flex-col">
 		<h2 class="mb-4 text-2xl font-semibold leading-tight" id="collectionTitle"> TITULO ASTRO</h2>
 		{ cookie &&
 			<div id="visibilidadContenedor" class="hidden">
@@ -36,10 +36,10 @@ let cookie = obtenerCookie(Astro.cookies?.get('sesion'));
           </select>
 
 			</div>
-			<button class="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-gray-50 cursor-pointer hover:bg-violet-700" id="editar">Editar</button>
-			<button class="self-center px-8 py-3 font-semibold rounded bg-red-600 text-gray-50 cursor-pointer hidden hover:bg-red-700" id="borrar">Borrar</button>
-			<button class="self-center px-8 py-3 font-semibold rounded bg-red-600 text-gray-50 cursor-pointer hidden hover:bg-red-700" id="dejarBorrar">Dejar de borrar</button>
-			<button class="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-gray-50 cursor-pointer hidden hover:bg-violet-700" id="terminar">Terminar</button>
+			<button class="self-center px-8 my-3 py-3 font-semibold rounded bg-violet-600 text-gray-50 cursor-pointer hover:bg-violet-700" id="editar">Editar</button>
+			<button class="self-center px-8 my-3 py-3 font-semibold rounded bg-red-600 text-gray-50 cursor-pointer hidden hover:bg-red-700" id="borrar">Borrar</button>
+			<button class="self-center px-8 my-3 py-3 font-semibold rounded bg-red-600 text-gray-50 cursor-pointer hidden hover:bg-red-700" id="dejarBorrar">Dejar de borrar</button>
+			<button class="self-center px-8 my-3 py-3 font-semibold rounded bg-violet-600 text-gray-50 cursor-pointer hidden hover:bg-violet-700" id="terminar">Terminar</button>
 		}
 	</div>
 	<div class="flex">
