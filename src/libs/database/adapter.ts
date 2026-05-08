@@ -4,16 +4,13 @@ import fs from 'fs';
 
 export const prerender = false;
 export async function conectar() {
-    // Parse DATABASE_URL instead of individual variables
+    // Si esta en deploy, usa process.env, si esta en cliente, usa import.meta.env. Si se usa el incorrecto en el lugar incorrecto, la aplicación no funciona, por lo que es importante.
     const databaseUrl = process.env.DATABASE_URL || import.meta.env.DATABASE_URL;
     
     if (!databaseUrl) {
         throw new Error('DATABASE_URL is not set');
     }
-    
-    // Parse the MySQL URL
-    // mysql://mysql:password@host:3306/database
-    const url = new URL(databaseUrl);
+        const url = new URL(databaseUrl);
     
     const adapter = new PrismaMariaDb({
         host: url.hostname,

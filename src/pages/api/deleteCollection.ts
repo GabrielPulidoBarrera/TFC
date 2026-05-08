@@ -11,7 +11,7 @@ export const POST: APIRoute = async function({ request }) {
   
   const { idLink, cookie } = await request.json();
 
-    console.log("SEVIDORrrr    "+idLink)
+    console.log("idLink servidor    "+idLink)
 
   const result = await prisma.collection.delete({
      where: {
