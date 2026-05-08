@@ -24,9 +24,6 @@ export const POST: APIRoute = async function({ request }) {
       }
     });
 
-
-
-
     return new Response(
       JSON.stringify({ 
         success: true, 

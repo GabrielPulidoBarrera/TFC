@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-05-2026 a las 14:00:15
+-- Tiempo de generación: 08-05-2026 a las 16:28:29
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -103,7 +103,8 @@ ALTER TABLE `product`
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_key` (`email`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -141,8 +142,8 @@ ALTER TABLE `collection`
 -- Filtros para la tabla `collectionproducts`
 --
 ALTER TABLE `collectionproducts`
-  ADD CONSTRAINT `collectionProducts_collectionID_fkey` FOREIGN KEY (`collectionID`) REFERENCES `collection` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `collectionProducts_productID_fkey` FOREIGN KEY (`productID`) REFERENCES `product` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `collectionProducts_collectionID_fkey` FOREIGN KEY (`collectionID`) REFERENCES `collection` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `collectionProducts_productID_fkey` FOREIGN KEY (`productID`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `product`
