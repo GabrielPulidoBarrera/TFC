@@ -22,9 +22,9 @@ RUN npx prisma generate
 
 #Para aplicar un cambio en la schema de la base de datos de coolify, primero, desactiva por completo el SSL de la base de datos, segundo, quita el comentario de los siguientes 3 atributos, tercero, haz deploy, y finalmente, con los cambios aplicados, deshaz todos estos cambios.
 
-# ARG DATABASE_URL
-# COPY prisma.config.ts ./prisma.config.ts
-# RUN npx prisma db push --force-reset
+ARG DATABASE_URL
+COPY prisma.config.ts ./prisma.config.ts
+RUN npx prisma db push --force-reset
 
 # Run the build
 RUN ./node_modules/.bin/astro build
