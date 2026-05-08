@@ -204,7 +204,7 @@ import "@styles/global.css";
           "El registro ha funcionado. Revisa tu correo electronico para verificar el email.",
         );
       } else {
-        crearDialog("El registro ha fallado.");
+        crearDialog("El registro ha fallado. Es probable que el usuario ya exista.");
       }
       cargar.style.display = "none";
       textoBoton.style.display = "block";
