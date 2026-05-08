@@ -32,9 +32,8 @@ model product {
 model collectionProducts {
   productID Int 
   collectionID Int
-  product product @relation(fields: [productID], references: [id])
-  collections collection @relation(fields: [collectionID], references: [id])
-
+  product product @relation(fields: [productID], references: [id], onDelete: Cascade)
+  collections collection @relation(fields: [collectionID], references: [id], onDelete: Cascade) 
   @@id([productID, collectionID])
 }
 
